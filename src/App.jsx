@@ -1,9 +1,9 @@
-import './App.css'
+import "./App.css"
 
 function App() {
   return (
     <>
-      <h1>Welcome to Niche Nest!</h1>
+      <h1 className="text-red-400">Welcome to Niche Nest!</h1>
     </>
   )
 }
