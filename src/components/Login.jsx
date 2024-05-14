@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react"
+import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../auth/authContext"
 
-const Register = () => {
+const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
-  const { fireSignUp } = useContext(AuthContext)
+  const { fireSignIn } = useContext(AuthContext)
+
+  const navigate = useNavigate()
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -18,8 +21,16 @@ const Register = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    fireSignUp(formData)
-    console.log("Form data submitted:", formData)
+    console.log(formData)
+    fireSignIn(formData)
+  }
+
+  const handleForgotPassword = () => {
+    navigate.push("/reset-password")
+  }
+
+  const handleRegister = () => {
+    navigate.push("/register")
   }
 
   return (
@@ -46,9 +57,15 @@ const Register = () => {
           required
         />
       </div>
-      <button type="submit">Register Now</button>
+      <button type="submit">Login</button>
+      <button type="button" onClick={handleForgotPassword}>
+        Forgot Password?
+      </button>
+      <button type="button" onClick={handleRegister}>
+        New user? Register here
+      </button>
     </form>
   )
 }
 
-export default Register
+export default Login

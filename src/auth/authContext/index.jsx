@@ -21,8 +21,9 @@ function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
+        console.log(user)
         //everytime user signs in maybe fetch user info and then insert in user state
-        setUserId(user.uid)
+        setUserId(user.email, user.uid)
         setIsFetching(false)
         return
       }
@@ -32,13 +33,14 @@ function AuthProvider({ children }) {
     return () => unsubscribe()
   }, [])
 
-  const fireSignUp = async (email, password) => {
+  const fireSignUp = async ({ email, password }) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       )
+      navigate("/")
       console.log("User Successfully Created", userCredential)
     } catch (error) {
       setError(error)
@@ -46,13 +48,14 @@ function AuthProvider({ children }) {
     }
   }
 
-  async function fireSignIn(email, password) {
+  async function fireSignIn({ email, password }) {
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password
       )
+      navigate("/")
       console.log("User Signed in successfully", userCredential)
     } catch (error) {
       setError(error)
@@ -66,6 +69,7 @@ function AuthProvider({ children }) {
       await signOut(auth)
       //if we need to navigate on logout
       //setUser(null);
+      navigate("/")
       console.log("User signed out successfully")
     } catch (error) {
       console.error(error, "logged out unsuccessfully")
