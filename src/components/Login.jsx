@@ -1,34 +1,33 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+    email: "",
+    password: "",
+  })
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = e => {
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [name]: value
-    });
-  };
+      [name]: value,
+    })
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
- 
-  };
+  const handleSubmit = e => {
+    e.preventDefault()
+  }
 
   const handleForgotPassword = () => {
-    navigate.push('/reset-password');
-  };
+    navigate.push("/reset-password")
+  }
 
   const handleRegister = () => {
-    navigate.push('/register');
-  };
+    navigate.push("/register")
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -55,11 +54,14 @@ const Login = () => {
         />
       </div>
       <button type="submit">Login</button>
-      <button type="button" onClick={handleForgotPassword}>Forgot Password?</button>
-      <button type="button" onClick={handleRegister}>New user? Register here</button>
+      <button type="button" onClick={handleForgotPassword}>
+        Forgot Password?
+      </button>
+      <button type="button" onClick={handleRegister}>
+        New user? Register here
+      </button>
     </form>
-  );
-};
+  )
+}
 
-export default Login;
-
+export default Login
