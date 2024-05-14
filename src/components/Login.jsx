@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../auth/authContext"
+import GoogleButton from "react-google-button"
+import { signInWithGoogleRedirect } from "../auth/firebase"
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +19,10 @@ const Login = () => {
       ...formData,
       [name]: value,
     })
+  }
+
+  const handleSignInWithGoogle = async () => {
+    signInWithGoogleRedirect()
   }
 
   const handleSubmit = e => {
@@ -58,6 +64,9 @@ const Login = () => {
         />
       </div>
       <button type="submit">Login</button>
+      <div>
+        <GoogleButton onClick={handleSignInWithGoogle} />
+      </div>
       <button type="button" onClick={handleForgotPassword}>
         Forgot Password?
       </button>
