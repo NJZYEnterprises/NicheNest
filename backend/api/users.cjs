@@ -14,7 +14,7 @@ userRouter.get('/freelancers/', async(req, res, next)=>{
   try{
     const freelancers = await prisma.user.findMany ({
       where:{
-        services: !null
+        services: {some:{}}
       }
     })
     res.send(freelancers)
