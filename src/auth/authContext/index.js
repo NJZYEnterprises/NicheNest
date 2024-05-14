@@ -20,11 +20,6 @@ function AuthProvider({ children }) {
   const [error, setError] = useState(null)
   const [isFetching, setIsFetching] = useState(true)
   const navigate = useNavigate()
-  //const [user, setUser] = useLocalStorage("user", null);
-  const [userInfo, setUserInfo] = useLocalStorage("userInfo", {
-    user: null,
-    anotherValue: null,
-  })
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
@@ -39,32 +34,14 @@ function AuthProvider({ children }) {
     return () => unsubscribe()
   }, [])
 
-  const fireSignUp = async (email, password, fname, lname, role) => {
+  const fireSignUp = async (email, password) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       )
-      const userId = userCredential.user.uid
-
-      //IF WE NEED TO ADD THINGS TO DB ON SIGN UP
-      // const usersRef = collection(db, "users")
-      // const userDocRef = doc(usersRef, userId)
-      // await setDoc(userDocRef, {
-      //   uid: userId,
-      //   email: email,
-      //   role: "student",
-      // })
-      // const userData = await fetchUserData(userId)
-      addUser(userId, fname, lname, email, role)
-
-      console.log("User Successfully Created", userId)
-
-      // navigate to student home-protected route will reroute if not student
-      navigate("/student-home")
-      //setUser(userCredential.user.uid);
-      setUserInfo({ user: userId, role: role })
+      console.log("User Successfully Created", userCredential)
     } catch (error) {
       setError(error)
       console.error("Error creating user:", error)
@@ -78,23 +55,7 @@ function AuthProvider({ children }) {
         email,
         password
       )
-
-      const fbid = userCredential.user.uid
-
-      console.log("User Signed in successfully", fbid)
-
-      // get the user role
-      const user_role = await fetchUser(fbid, setUserId)
-      console.log("logging in as a " + user_role.role)
-
-      // Update the userInfo object with the new values
-      const updatedUserInfo = { ...userInfo, user: fbid, role: user_role.role }
-
-      // Set the updated userInfo object in localStorage
-      setUserInfo(updatedUserInfo)
-
-      // navigate to student home-protected route will reroute if not student
-      navigate("/student-home")
+      console.log("User Signed in successfully", userCredential)
     } catch (error) {
       setError(error)
       console.log("User Signed in failed", error)

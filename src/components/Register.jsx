@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from "react"
+import { AuthContext } from "../auth/authContext"
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    location: ''
-  });
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    location: "",
+  })
+  const { fireSignUp } = useContext(AuthContext)
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = e => {
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [name]: value
-    });
-  };
+      [name]: value,
+    })
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form data submitted:', formData);
-  };
+  const handleSubmit = e => {
+    e.preventDefault()
+    fireSubmit(formData)
+    console.log("Form data submitted:", formData)
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -81,9 +84,7 @@ const Register = () => {
       </div>
       <button type="submit">Register Now</button>
     </form>
-  );
-};
+  )
+}
 
-export default Register;
-
-
+export default Register
