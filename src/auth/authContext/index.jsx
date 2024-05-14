@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react"
-import { useNavigate, Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -7,11 +7,8 @@ import {
   signOut,
 } from "firebase/auth"
 import { auth } from "../firebase/index.js"
-import { collection, doc, getDoc, setDoc } from "firebase/firestore"
-import { useLocalStorage } from "./useLocalStorage"
-
-import { addUser } from "./sql.js"
-import { fetchUser } from "../../subComponents/sql.js"
+//imports to add files to firestore may work for Images
+// import { collection, doc, getDoc, setDoc } from "firebase/firestore"
 
 const AuthContext = createContext()
 
@@ -24,6 +21,7 @@ function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
+        //everytime user signs in maybe fetch user info and then insert in user state
         setUserId(user.uid)
         setIsFetching(false)
         return
@@ -68,8 +66,6 @@ function AuthProvider({ children }) {
       await signOut(auth)
       //if we need to navigate on logout
       //setUser(null);
-      setUserInfo({ user: null, anotherValue: null })
-      navigate("/")
       console.log("User signed out successfully")
     } catch (error) {
       console.error(error, "logged out unsuccessfully")
@@ -86,23 +82,13 @@ function AuthProvider({ children }) {
     }
   }
 
-  // DB DATA FETCHER FOR CONSTANT UPDATE
-  // BUT CAN WORK FOR OTHER USER CASES
-  // async function fetchUserData(userId) {
-  //   try {
-  //     const usersRef = doc(collection(db, "users"), userId)
-  //     const docSnapshot = await getDoc(usersRef)
-
-  //     if (docSnapshot.exists) {
-  //       return docSnapshot.data()
-  //     } else {
-  //       return null
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching user data:", error)
-  //     throw error
-  //   }
-  // }
+  const useAuth = () => {
+    const context = useContext(AuthContext)
+    if (!context) {
+      throw new Error("useAuth must be used within an AuthProvider")
+    }
+    return context
+  }
 
   return (
     <AuthContext.Provider
@@ -113,7 +99,7 @@ function AuthProvider({ children }) {
         sendPasswordResetEmail,
         isFetching,
         userId,
-        userInfo,
+        useAuth,
       }}
     >
       {children}
@@ -121,12 +107,4 @@ function AuthProvider({ children }) {
   )
 }
 
-const useAuth = () => {
-  const context = useContext(AuthContext)
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider")
-  }
-  return context
-}
-
-export { AuthContext, AuthProvider, useAuth }
+export { AuthContext, AuthProvider }

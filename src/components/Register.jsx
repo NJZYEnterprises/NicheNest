@@ -3,11 +3,8 @@ import { AuthContext } from "../auth/authContext"
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
-    location: "",
   })
   const { fireSignUp } = useContext(AuthContext)
 
@@ -28,28 +25,6 @@ const Register = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="firstName">First Name:</label>
-        <input
-          type="text"
-          id="firstName"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="lastName">Last Name:</label>
-        <input
-          type="text"
-          id="lastName"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -67,17 +42,6 @@ const Register = () => {
           id="password"
           name="password"
           value={formData.password}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="location">Location:</label>
-        <input
-          type="text"
-          id="location"
-          name="location"
-          value={formData.location}
           onChange={handleChange}
           required
         />
