@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -7,7 +7,7 @@ const Login = () => {
     password: ''
   });
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,11 +23,11 @@ const Login = () => {
   };
 
   const handleForgotPassword = () => {
-    history.push('/reset-password');
+    navigate.push('/reset-password');
   };
 
   const handleRegister = () => {
-    history.push('/register');
+    navigate.push('/register');
   };
 
   return (
