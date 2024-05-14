@@ -12,3 +12,104 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Location {
+  id             Int     @id @default(autoincrement())
+  street_address String?
+  zip_code       Int?
+  city           String
+  state          String
+  users          User[]
+}
+
+model User {
+  id               Int           @id @default(autoincrement())
+  uid              Int           @unique
+  username         String        @unique
+  email            String        @unique
+  firstName        String?
+  lastName         String?
+  bio              String?
+  isAdmin          Boolean?
+  location_id      Int
+  location         Location      @relation(references: [id], fields: [location_id])
+  services         Service[]
+  reservations     Reservation[]
+  links            User_link[]
+  images           User_image[]
+  reviews_posted   Review[]      @relation("client_review")
+  reviews_received Review[]      @relation("freelancer_review")
+}
+
+model User_link {
+  id      Int    @id @default(autoincrement())
+  url     String
+  type_of String
+  user_id Int
+  user    User   @relation(references: [id], fields: [user_id])
+}
+
+model User_image {
+  id          Int      @id @default(autoincrement())
+  image_url   String
+  description String?
+  isProfile   Boolean?
+  when_added  DateTime
+  user_id     Int
+  user        User     @relation(references: [id], fields: [user_id])
+}
+
+model Review {
+  id            Int  @id @default(autoincrement())
+  star_review   Int
+  client_id     Int
+  client        User @relation("client_review", references: [id], fields: [client_id])
+  freelancer_id Int
+  freelancer    User @relation("freelancer_review", references: [id], fields: [freelancer_id])
+}
+
+model Service {
+  id             Int            @id @default(autoincrement())
+  name           String
+  tags           String?
+  rate           Float
+  rate_time      String
+  freelancer_id  Int
+  freelancer     User           @relation(references: [id], fields: [freelancer_id])
+  availabilities Availability[]
+  sessions       Session[]
+}
+
+model Availability {
+  id                   Int      @id @default(autoincrement())
+  when_start           DateTime
+  duration_min         Int
+  isRecurring          Boolean
+  service_id           Int
+  service              Service  @relation(references: [id], fields: [service_id])
+  scheduled_session_Id Int
+  scheduled_session    Session? @relation(references: [id], fields: [scheduled_session_Id])
+}
+
+model Session {
+  id                      Int            @id @default(autoincrement())
+  description             String?
+  when_start              DateTime
+  duration_min            Int
+  status                  String
+  capacity                Int
+  service_id              Int
+  service                 Service        @relation(references: [id], fields: [service_id])
+  reservations            Reservation[]
+  reserved_availabilities Availability[]
+}
+
+model Reservation {
+  id           Int      @id @default(autoincrement())
+  status       String
+  when_created DateTime
+  session_id   Int
+  session      Session  @relation(references: [id], fields: [session_id])
+  client_id    Int
+  client       User     @relation(references: [id], fields: [client_id])
+}
