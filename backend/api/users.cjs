@@ -23,6 +23,20 @@ userRouter.get('/freelancers/', async(req, res, next)=>{
   }
 })
 
+userRouter.get('/freelancers/:id', async(req, res, next)=>{
+  try{
+    const freelancers = await prisma.user.findMany ({
+      where:{
+        services: {some:{}},
+        id: parseFloat(req.params.id) 
+      }
+    })
+    res.send(freelancers)
+  }catch(error){
+    next(error)
+  }
+})
+
 
 
 
