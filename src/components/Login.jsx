@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
-import { AuthContext } from "../auth/AuthContext.jsx"
+import { AuthContext } from "../auth/AuthProvider.jsx"
 // import { signInWithGoogleRedirect } from "../auth/firebase"
 import GoogleButton from "react-google-button"
 
