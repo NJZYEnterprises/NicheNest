@@ -6,12 +6,34 @@ import Fetcher from "../fetcher.js"
 
 const Home = () => {
   const [freelancers, setFreelancers] = useState([])
+  const [topRatedFreelancers, setTopRatedFreelancers] = useState([])
   const { userId, isFetching, handleLogout } = useContext(AuthContext)
   const fetcher = new Fetcher("api")
 
   useEffect(() => {
     fetcher.route("/users/freelancers").get(setFreelancers)
   }, [])
+
+  useEffect(() => {
+    const ratedFreelancers = freelancers.map(freelancer => {
+      // Calculate total stars received
+      const totalStars = freelancer.reviews_received.reduce(
+        (acc, review) => acc + review.star_review,
+        0
+      )
+      // Calculate average rating
+      const averageRating =
+        freelancer.reviews_received.length > 0
+          ? totalStars / freelancer.reviews_received.length
+          : 0
+      return { ...freelancer, averageRating }
+    })
+
+    // Sort freelancers by average rating in descending order
+    ratedFreelancers.sort((a, b) => b.averageRating - a.averageRating)
+
+    setTopRatedFreelancers(ratedFreelancers)
+  }, [freelancers])
 
   if (!userId && isFetching) {
     return <div>Loading</div>
@@ -28,7 +50,7 @@ const Home = () => {
           <FreeLancerCarousel freelancers={freelancers} />
         </div>
         <div>
-          <FreeLancerCarousel freelancers={freelancers} />
+          <FreeLancerCarousel freelancers={topRatedFreelancers} />
         </div>
       </div>
     </div>

@@ -65,9 +65,10 @@ async function main() {
   for (let c = 1; c <= users.length; c++) {
     for (let f = 1; f <= users.length - 1; f++) {
       if (c === f) continue
+      const star_review = Math.floor(Math.random() * 3) + 3
       await prisma.review.create({
         data: {
-          star_review: 5,
+          star_review: star_review,
           client_id: c,
           freelancer_id: f,
         },
