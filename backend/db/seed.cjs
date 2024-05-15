@@ -1,3 +1,4 @@
+const { faker } = require("@faker-js/faker")
 const prisma = require("./connection.cjs")
 
 async function main() {
@@ -123,7 +124,10 @@ async function main() {
     await prisma.session.create({
       data: {
         description: `This is session ${i}`,
-        when_start: new Date(),
+        when_start: faker.date.between({
+          from: "2024-07-01T00:00:00.000Z",
+          to: "2025-01-01T00:00:00.000Z",
+        }),
         duration_min: 30,
         status: "active",
         capacity: i + 1,
@@ -143,6 +147,31 @@ async function main() {
         },
       })
     }
+  }
+
+  // Images
+  for (let i = 0; i < users.length; i++) {
+    await prisma.user_image.create({
+      data: {
+        image_url: faker.image.urlLoremFlickr(),
+        description: "this is a profile picture",
+        isProfile: true,
+        when_added: new Date(),
+        user_id: i + 1,
+      },
+    })
+  }
+
+  for (let i = 0; i < 3 * users.length; i++) {
+    await prisma.user_image.create({
+      data: {
+        image_url: faker.image.urlLoremFlickr(),
+        description: "this is a gallery picture",
+        isProfile: false,
+        when_added: new Date(),
+        user_id: Math.floor(Math.random() * users.length) + 1,
+      },
+    })
   }
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { AuthContext } from "../auth/AuthProvider.jsx"
 // import { signInWithGoogleRedirect } from "../auth/firebase"
 import GoogleButton from "react-google-button"
@@ -10,7 +10,7 @@ const Login = () => {
     password: "",
   })
   const [redirecting, setRedirecting] = useState(true)
-  const { fireSignIn, signInWithGoogleRedirect, userId, isFetching  } = useContext(AuthContext)
+  const { fireSignIn, signInWithGoogleRedirect, userId, isFetching } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -46,7 +46,7 @@ const Login = () => {
   }
 
   const handleRegister = () => {
-    navigate.push("/register")
+    navigate("/register");
   }
   if(!redirecting) {
     return <div>Loading</div>
@@ -83,9 +83,7 @@ const Login = () => {
       <button type="button" onClick={handleForgotPassword}>
         Forgot Password?
       </button>
-      <button type="button" onClick={handleRegister}>
-        New user? Register here
-      </button>
+      <div>Don't have an account? <Link to="/register" className="underline">Register</Link></div>
     </form>
   )
 }

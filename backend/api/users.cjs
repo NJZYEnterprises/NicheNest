@@ -1,8 +1,7 @@
-const { PrismaClient } = require("@prisma/client")
 const express = require("express")
 const userRouter = express.Router()
 
-const prisma = new PrismaClient()
+const prisma = require("../db/connection.cjs")
 
 userRouter.use("/users/", userRouter)
 
