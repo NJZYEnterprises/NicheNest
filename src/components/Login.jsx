@@ -1,15 +1,16 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../auth/authContext"
+// import { signInWithGoogleRedirect } from "../auth/firebase"
 import GoogleButton from "react-google-button"
-import { signInWithGoogleRedirect } from "../auth/firebase"
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
-  const { fireSignIn } = useContext(AuthContext)
+  const [redirecting, setRedirecting] = useState(true)
+  const { fireSignIn, signInWithGoogleRedirect, userId, isFetching  } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -22,13 +23,22 @@ const Login = () => {
   }
 
   const handleSignInWithGoogle = async () => {
-    signInWithGoogleRedirect()
-  }
-
-  const handleSubmit = e => {
+    try {
+      setRedirecting(true);
+      await signInWithGoogleRedirect();
+      // Wait for 2 seconds before navigating
+    } catch (error) {
+      console.error("Google sign-in redirect failed:", error);
+    } finally {
+      setRedirecting(false);
+    }
+  };
+  
+  
+  const handleSubmit = async e => {
     e.preventDefault()
     console.log(formData)
-    fireSignIn(formData)
+    await fireSignIn(formData)
   }
 
   const handleForgotPassword = () => {
@@ -38,7 +48,10 @@ const Login = () => {
   const handleRegister = () => {
     navigate.push("/register")
   }
-
+  if(!redirecting) {
+    return <div>Loading</div>
+  }
+  
   return (
     <form onSubmit={handleSubmit}>
       <div>

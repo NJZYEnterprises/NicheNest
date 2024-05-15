@@ -8,9 +8,8 @@ import "./App.css"
 function App() {
   return (
     <>
-      <h1 className="text-red-400">Welcome to Niche Nest!</h1>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route index="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

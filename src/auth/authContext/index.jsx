@@ -2,11 +2,12 @@ import { createContext, useState, useEffect, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import {
   signInWithEmailAndPassword,
+  signInWithRedirect,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
 } from "firebase/auth"
-import { auth } from "../firebase/index.js"
+import { auth, provider } from "../firebase/index.js"
 //imports to add files to firestore may work for Images
 // import { collection, doc, getDoc, setDoc } from "firebase/firestore"
 
@@ -21,7 +22,6 @@ function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
-        console.log(user)
         //everytime user signs in maybe fetch user info and then insert in user state
         setUserId(user.email, user.uid)
         setIsFetching(false)
@@ -45,6 +45,15 @@ function AuthProvider({ children }) {
     } catch (error) {
       setError(error)
       console.error("Error creating user:", error)
+    }
+  }
+
+  async function signInWithGoogleRedirect ()  {
+    try {
+      signInWithRedirect(auth, provider)  
+      navigate('/')
+    } catch (error) {
+      console.error("Error signing in with Google redirect:", error)
     }
   }
 
@@ -99,6 +108,7 @@ function AuthProvider({ children }) {
       value={{
         fireSignUp,
         fireSignIn,
+        signInWithGoogleRedirect,
         handleLogout,
         sendPasswordResetEmail,
         isFetching,

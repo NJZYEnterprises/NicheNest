@@ -6,7 +6,7 @@ const Register = () => {
     email: "",
     password: "",
   })
-  const { fireSignUp } = useContext(AuthContext)
+  const { fireSignUp, signInWithGoogleRedirect } = useContext(AuthContext)
 
   const handleChange = e => {
     const { name, value } = e.target
