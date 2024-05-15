@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react"
-import { AuthContext } from "../auth/authContext"
+import { AuthContext } from "../auth/AuthContext.jsx"
 
 const Register = () => {
   const [formData, setFormData] = useState({

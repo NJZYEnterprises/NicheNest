@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth"
-import { auth, provider } from "../firebase/index.js"
+import { auth, provider } from "./Firebase.js"
 //imports to add files to firestore may work for Images
 // import { collection, doc, getDoc, setDoc } from "firebase/firestore"
 
@@ -24,6 +24,7 @@ function AuthProvider({ children }) {
       if (user) {
         //everytime user signs in maybe fetch user info and then insert in user state
         setUserId(user.email, user.uid)
+        
         setIsFetching(false)
         return
       }

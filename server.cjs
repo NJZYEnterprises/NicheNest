@@ -26,8 +26,8 @@ server.get('/', (req, res, next) => {
   res.sendFile(__dirname + '/dist/index.html')
 })
 
-for (const path of ["", "offerings", "offerings/:id", "login", "register", "account", "cart"])
-  app.use("/" + path, express.static('dist'));
+// for (const path of ["login", "register"])
+//   app.use("/" + path, express.static('dist'));
 
 server.use(express.static(path.join(__dirname, './dist')))
 
