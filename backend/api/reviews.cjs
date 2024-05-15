@@ -2,22 +2,12 @@ const express = require('express');
 const prisma = require('../db/connection.cjs');
 const reviewsRouter = express.Router();
 
-// Middleware to verify client
-function verifyClient(req, res, next) {
-  next();
-}
-
-// Middleware to verify completed session
-function verifyCompletedSession(req, res, next) {
-  next();
-}
-
-// Creates review
-reviewsRouter.post("/", verifyCompletedSession, async (req, res) => {
-  const { freelancerId, clientId, star_review, comment } = req.body;
+//Create a review
+reviewsRouter.post("/", async (req, res) => {
+  const { freelancerId, clientId, star_review } = req.body;
   try {
     const newReview = await prisma.review.create({
-      data: { freelancer_id: freelancerId, client_id: clientId, star_review, comment }
+      data: { freelancer_id: freelancerId, client_id: clientId, star_review }
     });
     res.status(201).json(newReview);
   } catch (error) {
@@ -25,20 +15,20 @@ reviewsRouter.post("/", verifyCompletedSession, async (req, res) => {
   }
 });
 
-// Gets all reviews from our clients
+//Get all reviews
 reviewsRouter.get("/", async (req, res) => {
   const reviews = await prisma.review.findMany();
   res.json(reviews);
 });
 
-// Updates review
-reviewsRouter.put("/:id", verifyClient, async (req, res) => {
+// Updates reviews
+reviewsRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { star_review, comment } = req.body;
+  const { star_review } = req.body;
   try {
     const updatedReview = await prisma.review.update({
       where: { id: parseInt(id) },
-      data: { star_review, comment }
+      data: { star_review }
     });
     res.json(updatedReview);
   } catch (error) {
@@ -46,8 +36,8 @@ reviewsRouter.put("/:id", verifyClient, async (req, res) => {
   }
 });
 
-// Deletes review
-reviewsRouter.delete("/:id", verifyClient, async (req, res) => {
+// Deletes reviews
+reviewsRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.review.delete({ where: { id: parseInt(id) } });
@@ -58,3 +48,4 @@ reviewsRouter.delete("/:id", verifyClient, async (req, res) => {
 });
 
 module.exports = reviewsRouter;
+
