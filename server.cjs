@@ -36,4 +36,15 @@ server.listen(process.env.PORT, () => {
   console.log(`listening on ${process.env.PORT}`)
 })
 
+server.use((err, req ,res, next)=>{
+  console.error(err);
+  res.status(err.status || 500).send(err)
+});
+
+server.use((req, res,)=>{
+  res.status(404).send("sorry mate! That page does't exist")
+})
+
+
+
 module.exports= server
