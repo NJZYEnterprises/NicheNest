@@ -19,8 +19,7 @@ userRouter.get('/freelancers/', async(req, res, next)=>{
     })
     res.send(freelancers)
   }catch(error){
-    console.log(error);
-    res.sendStatus(501)
+    next(error)
   }
 })
 
