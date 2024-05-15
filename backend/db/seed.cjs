@@ -1,4 +1,4 @@
-const prisma = require("./connection.cjs");
+const prisma = require("./connection.cjs")
 
 async function main() {
   // Location
@@ -6,7 +6,7 @@ async function main() {
     data: {
       city: "Washington DC",
       state: "District of Columbia",
-    }
+    },
   })
 
   // User
@@ -17,7 +17,7 @@ async function main() {
       email: "zandervon24@gmail.com",
       firstName: "Alexander",
       lastName: "Linse",
-      bio: "I am not a lizard person."
+      bio: "I am not a lizard person.",
     },
     // Nick
     {
@@ -25,7 +25,7 @@ async function main() {
       email: "lopez4163@gmail.com",
       firstName: "Nicholas",
       lastName: "Lopez",
-      bio: "im a human"
+      bio: "im a human",
     },
     // Jim
     {
@@ -33,7 +33,7 @@ async function main() {
       email: "jim.reinert.ii@gmail.com",
       firstName: "Jim",
       lastName: "Reinert",
-      bio: "human enough"
+      bio: "human enough",
     },
     // Yash
     {
@@ -41,7 +41,7 @@ async function main() {
       email: "steadygaming01@gmail.com",
       firstName: "Yash",
       lastName: "Patel",
-      bio: "I drink water lol"
+      bio: "I drink water lol",
     },
     // Rando
     {
@@ -49,27 +49,27 @@ async function main() {
       email: "idkman@gmail.com",
       firstName: "Jon",
       lastName: "Doe",
-      bio: "nothing to see here"
+      bio: "nothing to see here",
     },
   ]
-  let uid = 0; // TODO: use firebase
+  let uid = 0 // TODO: use firebase
   for (const user of users) {
-    user.isAdmin = true;
-    user.uid = ++uid;
-    user.location_id = 1;
-    await prisma.user.create({ data: user });
+    user.isAdmin = true
+    user.uid = ++uid
+    user.location_id = 1
+    await prisma.user.create({ data: user })
   }
 
   // Review
   for (let c = 1; c <= users.length; c++) {
     for (let f = 1; f <= users.length - 1; f++) {
-      if (c === f) continue;
+      if (c === f) continue
       await prisma.review.create({
         data: {
           star_review: 5,
           client_id: c,
           freelancer_id: f,
-        }
+        },
       })
     }
   }
@@ -102,8 +102,8 @@ async function main() {
     },
   ]
   for (let i = 0; i < services.length; i++) {
-    services[i].freelancer_id = i + 1;
-    await prisma.service.create({ data: services[i] });
+    services[i].freelancer_id = i + 1
+    await prisma.service.create({ data: services[i] })
   }
 
   // Availability
@@ -114,8 +114,8 @@ async function main() {
         duration_min: 30,
         isRecurring: false,
         service_id: i + 1,
-      }
-    });
+      },
+    })
   }
 
   // Session
@@ -128,8 +128,8 @@ async function main() {
         status: "active",
         capacity: i + 1,
         service_id: i + 1,
-      }
-    });
+      },
+    })
   }
 
   // Reservation
@@ -140,8 +140,8 @@ async function main() {
           status: "joined",
           session_id: i + 1,
           client_id: j + 1,
-        }
-      });
+        },
+      })
     }
   }
 }
@@ -150,9 +150,9 @@ async function main() {
 if (require.main === module) {
   main()
     .then(async () => await prisma.$disconnect())
-    .catch(async (error) => {
-      console.error(error);
-      await prisma.$disconnect();
-      process.exit(1);
-    });
+    .catch(async error => {
+      console.error(error)
+      await prisma.$disconnect()
+      process.exit(1)
+    })
 }
