@@ -25,10 +25,10 @@ userRouter.get('/freelancers/', async(req, res, next)=>{
 
 userRouter.get('/freelancers/:id', async(req, res, next)=>{
   try{
-    const freelancers = await prisma.user.findMany ({
+    const freelancers = await prisma.user.findUnique ({
       where:{
         services: {some:{}},
-        id: parseFloat(req.params.id) 
+        id: parseInt(req.params.id) 
       }
     })
     res.send(freelancers)
