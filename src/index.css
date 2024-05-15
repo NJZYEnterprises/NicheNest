@@ -8,12 +8,20 @@
   background-color: #242424;
 }
 
+* {
+  padding: 0.2em;
+}
+
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  justify-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+a {
+  font-size: x-large;
 }
 
 @media (prefers-color-scheme: light) {

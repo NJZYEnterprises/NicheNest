@@ -1,51 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from "react"
+import { AuthContext } from "../auth/AuthProvider.jsx"
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    location: ''
-  });
+    email: "",
+    password: "",
+  })
+  const { fireSignUp, signInWithGoogleRedirect } = useContext(AuthContext)
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = e => {
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [name]: value
-    });
-  };
+      [name]: value,
+    })
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form data submitted:', formData);
-  };
+  const handleSubmit = e => {
+    e.preventDefault()
+    fireSignUp(formData)
+    console.log("Form data submitted:", formData)
+  }
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="firstName">First Name:</label>
-        <input
-          type="text"
-          id="firstName"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="lastName">Last Name:</label>
-        <input
-          type="text"
-          id="lastName"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-        />
-      </div>
       <div>
         <label htmlFor="email">Email:</label>
         <input
@@ -68,22 +46,9 @@ const Register = () => {
           required
         />
       </div>
-      <div>
-        <label htmlFor="location">Location:</label>
-        <input
-          type="text"
-          id="location"
-          name="location"
-          value={formData.location}
-          onChange={handleChange}
-          required
-        />
-      </div>
       <button type="submit">Register Now</button>
     </form>
-  );
-};
+  )
+}
 
-export default Register;
-
-
+export default Register
