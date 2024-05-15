@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return <div className="flex flex-row bg-gray-800 w-screen">
-    <div>Logo</div>
     <Link to={'/'}>
       <div>
         <img src="TODO" alt="Logo" width="30" height="24" />
