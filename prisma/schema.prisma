@@ -54,7 +54,7 @@ model User_image {
   image_url   String
   description String?
   isProfile   Boolean?
-  when_added  DateTime
+  when_added  DateTime @default(now())
   user_id     Int
   user        User     @relation(references: [id], fields: [user_id])
 }
@@ -87,7 +87,7 @@ model Availability {
   isRecurring          Boolean
   service_id           Int
   service              Service  @relation(references: [id], fields: [service_id])
-  scheduled_session_Id Int
+  scheduled_session_Id Int?
   scheduled_session    Session? @relation(references: [id], fields: [scheduled_session_Id])
 }
 
@@ -107,7 +107,7 @@ model Session {
 model Reservation {
   id           Int      @id @default(autoincrement())
   status       String
-  when_created DateTime
+  when_created DateTime @default(now())
   session_id   Int
   session      Session  @relation(references: [id], fields: [session_id])
   client_id    Int
