@@ -10,7 +10,6 @@ const Home = () => {
   const { userId, isFetching, handleLogout } = useContext(AuthContext)
   const fetcher = new Fetcher("api")
 
-<<<<<<< ticket-18
   useEffect(() => {
     fetcher.route("/users/freelancers").get(data => {
       const updatedFreelancers = data.map(freelancer => {
@@ -36,15 +35,12 @@ const Home = () => {
     setTopRatedFreelancers(topRatedFreelancers)
   }, [freelancers])
 
-=======
->>>>>>> main
   if (!userId && isFetching) {
     return <div>Loading</div>
   }
   console.log(topRatedFreelancers)
   return (
     <div>
-<<<<<<< ticket-18
       <div className="text-2xl m-10">
         <h2>Signed In As: {userId ? userId : "No One.."}</h2>
       </div>
@@ -52,11 +48,6 @@ const Home = () => {
         <div>
           <FreelancerCarousel freelancers={freelancers} />
         </div>
-=======
-      <h1 className="text-red-400">Welcome to Niche Nest!</h1>
-      <h2>Signed In As: {userId ? userId : "No One"}</h2>
-      {userId && (
->>>>>>> main
         <div>
           <FreelancerCarousel topRatedFreelancers={topRatedFreelancers} />
         </div>
