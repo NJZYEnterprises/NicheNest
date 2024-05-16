@@ -6,6 +6,7 @@ import Footer from "./components/Footer.jsx"
 import Login from "./components/Login"
 import Register from "./components/Register"
 import Home from "./pages/Home"
+import Profile from "./pages/Profile"
 import "./App.css"
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route index="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
         <Footer />
       </AuthProvider>
