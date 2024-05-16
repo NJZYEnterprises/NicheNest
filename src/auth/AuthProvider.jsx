@@ -24,7 +24,7 @@ function AuthProvider({ children }) {
       if (user) {
         //everytime user signs in maybe fetch user info and then insert in user state
         setUserId(user.email, user.uid)
-        
+
         setIsFetching(false)
         return
       }
@@ -49,10 +49,10 @@ function AuthProvider({ children }) {
     }
   }
 
-  async function signInWithGoogleRedirect ()  {
+  async function signInWithGoogleRedirect() {
     try {
-      signInWithRedirect(auth, provider)  
-      navigate('/')
+      signInWithRedirect(auth, provider)
+      navigate("/")
     } catch (error) {
       console.error("Error signing in with Google redirect:", error)
     }
