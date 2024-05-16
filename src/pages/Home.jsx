@@ -11,34 +11,34 @@ const Home = () => {
   const fetcher = new Fetcher("api")
 
   useEffect(() => {
-    fetcher.route("/users/freelancers").get(setFreelancers)
+    fetcher.route("/users/freelancers").get(data => {
+      const updatedFreelancers = data.map(freelancer => {
+        const totalStars = freelancer.reviews_received.reduce(
+          (acc, review) => acc + review.star_review,
+          0
+        )
+        const averageRating =
+          freelancer.reviews_received.length > 0
+            ? totalStars / freelancer.reviews_received.length
+            : 0
+        return { ...freelancer, averageRating }
+      })
+      setFreelancers(updatedFreelancers)
+    })
   }, [])
 
   useEffect(() => {
-    const ratedFreelancers = freelancers.map(freelancer => {
-      // Calculate total stars received
-      const totalStars = freelancer.reviews_received.reduce(
-        (acc, review) => acc + review.star_review,
-        0
-      )
-      // Calculate average rating
-      const averageRating =
-        freelancer.reviews_received.length > 0
-          ? totalStars / freelancer.reviews_received.length
-          : 0
-      return { ...freelancer, averageRating }
-    })
-
-    // Sort freelancers by average rating in descending order
-    ratedFreelancers.sort((a, b) => b.averageRating - a.averageRating)
-
-    setTopRatedFreelancers(ratedFreelancers)
+    const sortedFreelancers = [...freelancers].sort(
+      (a, b) => b.averageRating - a.averageRating
+    )
+    const topRatedFreelancers = sortedFreelancers.slice(0, 10)
+    setTopRatedFreelancers(topRatedFreelancers)
   }, [freelancers])
 
   if (!userId && isFetching) {
     return <div>Loading</div>
   }
-
+  console.log(topRatedFreelancers)
   return (
     <div>
       <div>
@@ -50,7 +50,7 @@ const Home = () => {
           <FreeLancerCarousel freelancers={freelancers} />
         </div>
         <div>
-          <FreeLancerCarousel freelancers={topRatedFreelancers} />
+          <FreeLancerCarousel topRatedFreelancers={topRatedFreelancers} />
         </div>
       </div>
     </div>

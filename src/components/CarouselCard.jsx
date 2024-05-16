@@ -13,6 +13,8 @@ const CarouselCard = ({ freelancer }) => {
         />
       )}
       <h2 className="text-lg font-bold">{freelancer.username}</h2>
+      <h2>{freelancer.averageRating}</h2>
+
       <p className="text-gray-600">{freelancer.email}</p>
     </div>
   )

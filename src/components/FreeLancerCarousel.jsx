@@ -3,7 +3,7 @@ import Carousel from "react-multi-carousel"
 import CarouselCard from "./CarouselCard.jsx"
 import "react-multi-carousel/lib/styles.css"
 
-const FreeLancerCarousel = ({ freelancers }) => {
+const FreeLancerCarousel = ({ freelancers, topRatedFreelancers }) => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -23,9 +23,15 @@ const FreeLancerCarousel = ({ freelancers }) => {
       items: 1,
     },
   }
+  const freelancersToDisplay = topRatedFreelancers
+    ? topRatedFreelancers
+    : freelancers
 
   return (
-    <div className="bg-slate-600 bg-opacity-20 p-10">
+    <div className="bg-slate-600 bg-opacity-20 mr-20 ml-20">
+      <h1 className="text-2xl pt-3">
+        {freelancers ? "Freelancers" : "Top Rated Freelancers"}
+      </h1>
       <Carousel
         responsive={responsive}
         additionalTransfrom={0}
@@ -33,7 +39,7 @@ const FreeLancerCarousel = ({ freelancers }) => {
         containerClass="carousel-container"
         itemClass="carousel-item"
       >
-        {freelancers.map(freelancer => (
+        {freelancersToDisplay.map(freelancer => (
           <CarouselCard key={freelancer.id} freelancer={freelancer} />
         ))}
       </Carousel>
