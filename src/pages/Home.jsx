@@ -41,9 +41,8 @@ const Home = () => {
   console.log(topRatedFreelancers)
   return (
     <div>
-      <div>
-        <h1>Homepage</h1>
-        <h2>Signed In As: {userId ? userId : "No One"}</h2>
+      <div className="text-2xl m-10">
+        <h2>Signed In As: {userId ? userId : "No One.."}</h2>
       </div>
       <div className="flex flex-col gap-10">
         <div>
