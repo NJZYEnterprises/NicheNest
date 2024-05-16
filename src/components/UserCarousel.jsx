@@ -4,7 +4,8 @@ import Carousel from "react-multi-carousel"
 import CarouselCard from "./CarouselCard.jsx"
 import "react-multi-carousel/lib/styles.css"
 
-const FreelancerCarousel = ({ freelancers, topRatedFreelancers }) => {
+
+const UserCarousel = ({ freelancers, topRatedFreelancers }) => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -54,4 +55,5 @@ const FreelancerCarousel = ({ freelancers, topRatedFreelancers }) => {
   )
 }
 
-export default FreelancerCarousel
+
+export default UserCarousel

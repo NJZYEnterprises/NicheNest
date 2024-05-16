@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../auth/AuthProvider"
 import loginIcon from "../assets/login.svg";
 import accountIcon from "../assets/account.svg";
+import logo from "../assets/logo.svg";
 
 const Navbar = () => {
   const { userId, handleLogout} = useContext(AuthContext)
@@ -12,7 +13,7 @@ const Navbar = () => {
     <div className="flex flex-row justify-around">
       <Link to={'/'}>
         <div>
-          <img src="TODO" alt="Logo" width="60" height="48" />
+          <img src={logo} alt="Logo" width="60" height="48" />
         </div>
       </Link>
       <div className="flex flex-col justify-center">
