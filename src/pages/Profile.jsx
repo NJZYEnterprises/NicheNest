@@ -3,7 +3,18 @@ import React from 'react'
 const Profile = () => {
   return (
     <div>
-        <h1>Profile</h1>
+        <div>
+          <div>
+            <img src='' alt='Profile Pic'/>
+          </div>
+          <div>
+            <h1>Name Here</h1>
+          </div>
+        </div>
+        <div>
+          <div></div>
+          <div></div>
+        </div>
     </div>
   )
 }

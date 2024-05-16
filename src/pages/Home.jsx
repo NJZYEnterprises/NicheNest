@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react"
-import FreelancerCarousel from "../components/FreelancerCarousel.jsx"
-import TopRevieweCarousel from "../components/TopRevieweCarousel.jsx"
+import UserCarousel from "../components/UserCarousel.jsx"
 import { AuthContext } from "../auth/AuthProvider.jsx"
 import Fetcher from "../fetcher.js"
 
@@ -46,10 +45,10 @@ const Home = () => {
       </div>
       <div className="flex flex-col gap-10">
         <div>
-          <FreelancerCarousel freelancers={freelancers} />
+          <UserCarousel freelancers={freelancers}/>
         </div>
         <div>
-          <FreelancerCarousel topRatedFreelancers={topRatedFreelancers} />
+          <UserCarousel topRatedFreelancers={topRatedFreelancers}/>
         </div>
       </div>
     </div>
