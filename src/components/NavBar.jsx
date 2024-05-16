@@ -37,7 +37,7 @@ const Navbar = () => {
       <Searchbar/>
       <h2>Filters go here</h2>
     </div>
-  </div>git 
+  </div> 
 };
 
 export default Navbar;
