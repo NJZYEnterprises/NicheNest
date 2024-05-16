@@ -2,6 +2,7 @@ import React from "react"
 import { Routes, Route } from "react-router-dom"
 import { AuthProvider } from "./auth/AuthProvider.jsx"
 import NavBar from "./components/NavBar.jsx"
+import Footer from "./components/Footer.jsx"
 import Login from "./components/Login"
 import Register from "./components/Register"
 import Home from "./pages/Home"
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
+        <Footer />
       </AuthProvider>
     </>
   )
