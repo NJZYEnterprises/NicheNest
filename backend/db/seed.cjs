@@ -14,6 +14,7 @@ async function main() {
   const users = [
     // Alexander
     {
+      uid: "h3NdGZvEXxUJfSNhXpWtEHiTljy2",
       username: "zander",
       email: "zandervon24@gmail.com",
       firstName: "Alexander",
@@ -56,7 +57,7 @@ async function main() {
   let uid = 0 // TODO: use firebase
   for (const user of users) {
     user.isAdmin = true
-    user.uid = ++uid
+    if (!user.uid) user.uid = String(++uid);
     user.location_id = 1
     await prisma.user.create({ data: user })
   }
