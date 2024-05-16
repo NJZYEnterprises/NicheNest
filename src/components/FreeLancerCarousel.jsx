@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import Carousel from "react-multi-carousel"
 import CarouselCard from "./CarouselCard.jsx"
 import "react-multi-carousel/lib/styles.css"
@@ -40,7 +41,13 @@ const FreelancerCarousel = ({ freelancers, topRatedFreelancers }) => {
         itemClass="carousel-item"
       >
         {freelancersToDisplay.map(freelancer => (
-          <CarouselCard key={freelancer.id} freelancer={freelancer} />
+          <Link
+            key={freelancer.id}
+            to={`/${freelancer.id}`}
+            className="block m-5"
+          >
+            <CarouselCard freelancer={freelancer} />
+          </Link>
         ))}
       </Carousel>
     </div>
