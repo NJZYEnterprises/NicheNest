@@ -1,41 +1,41 @@
 import React, { useState, useContext, useEffect } from "react"
-import FreelancerCarousel from "../components/FreelancerCarousel.jsx"
-import TopRevieweCarousel from "../components/TopRevieweCarousel.jsx"
+import UserCarousel from "../components/UserCarousel.jsx"
 import { AuthContext } from "../auth/AuthProvider.jsx"
+import { UserContext } from "../components/UserProvider.jsx"
 import Fetcher from "../fetcher.js"
 
 const Home = () => {
-  const [freelancers, setFreelancers] = useState([])
-  const [topRatedFreelancers, setTopRatedFreelancers] = useState([])
-  const { userId, isFetching, handleLogout } = useContext(AuthContext)
-  const fetcher = new Fetcher("api")
 
-  useEffect(() => {
-    fetcher.route("/users/freelancers").get(data => {
-      const updatedFreelancers = data.map(freelancer => {
-        const totalStars = freelancer.reviews_received.reduce(
-          (acc, review) => acc + review.star_review,
-          0
-        )
-        const averageRating =
-          freelancer.reviews_received.length > 0
-            ? totalStars / freelancer.reviews_received.length
-            : 0
-        return { ...freelancer, averageRating }
-      })
-      setFreelancers(updatedFreelancers)
-    })
-  }, [])
+  const { userId, isFetching } = useContext(AuthContext)
+  const { freelancers, topRatedFreelancers } = useContext(UserContext)
 
-  useEffect(() => {
-    const sortedFreelancers = [...freelancers].sort(
-      (a, b) => b.averageRating - a.averageRating
-    )
-    const topRatedFreelancers = sortedFreelancers.slice(0, 10)
-    setTopRatedFreelancers(topRatedFreelancers)
-  }, [freelancers])
 
-  if (!userId && isFetching) {
+  // useEffect(() => {
+  //   fetcher.route("/users/freelancers").get(data => {
+  //     const updatedFreelancers = data.map(freelancer => {
+  //       const totalStars = freelancer.reviews_received.reduce(
+  //         (acc, review) => acc + review.star_review,
+  //         0
+  //       )
+  //       const averageRating =
+  //         freelancer.reviews_received.length > 0
+  //           ? totalStars / freelancer.reviews_received.length
+  //           : 0
+  //       return { ...freelancer, averageRating }
+  //     })
+  //     setFreelancers(updatedFreelancers)
+  //   })
+  // }, [])
+
+  // useEffect(() => {
+  //   const sortedFreelancers = [...freelancers].sort(
+  //     (a, b) => b.averageRating - a.averageRating
+  //   )
+  //   const topRatedFreelancers = sortedFreelancers.slice(0, 10)
+  //   setTopRatedFreelancers(topRatedFreelancers)
+  // }, [freelancers])
+
+  if (!userId && isFetching)  {
     return <div>Loading</div>
   }
   console.log(topRatedFreelancers)
@@ -46,10 +46,10 @@ const Home = () => {
       </div>
       <div className="flex flex-col gap-10">
         <div>
-          <FreelancerCarousel freelancers={freelancers} />
+          <UserCarousel freelancers={freelancers}/>
         </div>
         <div>
-          <FreelancerCarousel topRatedFreelancers={topRatedFreelancers} />
+          <UserCarousel topRatedFreelancers={topRatedFreelancers}/>
         </div>
       </div>
     </div>
