@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../auth/AuthProvider"
 import loginIcon from "../assets/login.svg";
 import accountIcon from "../assets/account.svg";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const { userId, handleLogout} = useContext(AuthContext)
@@ -37,7 +37,7 @@ const Navbar = () => {
       <Searchbar/>
       <h2>Filters go here</h2>
     </div>
-  </div>
+  </div> 
 };
 
 export default Navbar;
