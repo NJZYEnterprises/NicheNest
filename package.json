@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "start": "node ./server.cjs",
     "start:dev": "node --watch ./server.cjs",
-    "seed": "npx prisma migrate reset --froce && node ./backend/db/seed.cjs"
+    "seed": "npx prisma migrate reset --force && node ./backend/db/seed.cjs"
   },
   "dependencies": {
     "@prisma/client": "^5.13.0",
