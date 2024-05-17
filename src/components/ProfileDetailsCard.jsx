@@ -7,15 +7,16 @@ const ProfileDetailsCard = () => {
   const [profile, setProfile] = useState({
     firstName: 'John',
     lastName: 'Doe',
-    //TODO: phone number
+    phoneNumber: '1234567890123',
     email: 'johndoe@example.com',
+    username: 'dj23',
     street_address: '123 Main St',
     zip_code: '123456',
     city: 'Anytown',
-    state: 'CA'
+    state: 'CA',
   });
   const fetcher = new Fetcher("api");
-
+console.log(profile)
   const handleEdit = async () => {
     if (editing) {
       try {
@@ -36,11 +37,14 @@ const ProfileDetailsCard = () => {
 
   const handleSubmit = async () => {
     try {
-      //TODO: these ids will be grabbed by the user state
+      //TODO: replace with user state that contains these id's 
+      const userId = '2'
       const locationId = false
       if(locationId) {
+        await fetcher.route(`/users/${userId}`).patch(profile)
         await fetcher.route(`/location/${locationId}`).patch(profile)
       } else {
+        await fetcher.route(`/users/${userId}`).patch(profile)
         await fetcher.route(`/location/${userId}`).post(profile)
       }
     } catch (error) {
@@ -74,10 +78,11 @@ const ProfileDetailsCard = () => {
         <div className="w-1/2 pr-4 bg-">
           {renderField('firstName', 'First Name')}
           {renderField('lastName', 'Last Name')}
+          {renderField('username', 'Username',)}
           {renderField('email', 'Email', 'email')}
         </div>
         <div className="w-1/2 pl-4">
-          {renderField('phone', 'Phone', 'tel')}
+          {renderField('phoneNumber', 'Phone', 'tel')}
           {renderField('street_address', 'Street Address')}
           {renderField('zip_code', 'Zip Code')}
           {renderField('city', 'City')}
