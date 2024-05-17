@@ -18,7 +18,7 @@ const Footer = () => {
         </div>
         <div>
           <h2 className="flex flex-col pb-2">Help</h2>
-          <Link path="">Contact</Link>
+          <Link to ="/contact">Contact</Link>
         </div>
         <div className="flex flex-col pb-2">
           <h2 className="pb-2">Follow Us</h2>

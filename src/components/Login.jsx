@@ -9,8 +9,8 @@ const Login = () => {
     email: "",
     password: "",
   })
-  const [redirecting, setRedirecting] = useState(true)
-  const { fireSignIn, signInWithGoogleRedirect, userId, isFetching } = useContext(AuthContext)
+  // const [redirecting, setRedirecting] = useState(true) // TODO: move this state into Auth Context
+  const { signIn, userId, isFetching } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -22,15 +22,17 @@ const Login = () => {
     })
   }
 
-  const handleSignInWithGoogle = async () => {
+  const handleSignInWithGoogle = async (e) => {
+    e.preventDefault();
     try {
-      setRedirecting(true);
-      await signInWithGoogleRedirect();
+      // setRedirecting(true);
+      await signIn("popup");
+      // await signInWithGoogleRedirect();
       // Wait for 2 seconds before navigating
     } catch (error) {
       console.error("Google sign-in redirect failed:", error);
     } finally {
-      setRedirecting(false);
+      // setRedirecting(false);
     }
   };
   
@@ -38,7 +40,8 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault()
     console.log(formData)
-    await fireSignIn(formData)
+    await signIn("form", formData);
+    // await fireSignIn(formData)
   }
 
   const handleForgotPassword = () => {
@@ -48,9 +51,9 @@ const Login = () => {
   const handleRegister = () => {
     navigate("/register");
   }
-  if(!redirecting) {
-    return <div>Loading</div>
-  }
+  // if(!redirecting) {
+  //   return <div>Loading</div>
+  // }
   
   return (
     <form onSubmit={handleSubmit}>

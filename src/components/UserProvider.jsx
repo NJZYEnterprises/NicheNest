@@ -1,13 +1,21 @@
 import { createContext, useState, useEffect, useContext } from "react"
 import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../auth/AuthProvider.jsx"
 import Fetcher from "../fetcher.js"
 
 const UserContext = createContext()
 
 function UserProvider({ children }) {
+<<<<<<< HEAD
   //
   const [user, setUser] = useState([])
   const [freelancers, setFreelancers] = useState([])
+=======
+  const { userId } = useContext(AuthContext);
+
+  const[user, setUser] = useState(null)
+  const[freelancers, setFreelancers] = useState([])
+>>>>>>> main
   const [topRatedFreelancers, setTopRatedFreelancers] = useState([])
   const navigate = useNavigate()
   const fetcher = new Fetcher("api")
@@ -40,9 +48,19 @@ function UserProvider({ children }) {
     setTopRatedFreelancers(topRatedFreelancers)
   }, [freelancers])
 
+  useEffect(() => {
+    console.log("Entered useEffect in UserProvider on userID change");
+    if (userId) {
+      console.log("userID is not null");
+      const authFetcher = new Fetcher("auth");
+      authFetcher.setToken(userId.accessToken).route("me").get(setUser);
+    } else setUser(null)
+  }, [userId])
+
   return (
     <UserContext.Provider
       value={{
+        user,
         freelancers,
         setFreelancers,
         topRatedFreelancers,

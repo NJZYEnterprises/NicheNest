@@ -12,6 +12,7 @@ async function main() {
 
   // User
   const users = [
+    
     // Alexander
     {
       uid: "h3NdGZvEXxUJfSNhXpWtEHiTljy2",
@@ -58,7 +59,25 @@ async function main() {
       bio: "nothing to see here",
       phoneNumber: "7777777777"
     },
+    //many randos
+
   ]
+
+  
+  let randomUser = {}
+  for (let i = 0; i < 50; i++) {
+    randomUser = {
+      username: faker.internet.userName(),
+      email: faker.internet.email(),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      bio: faker.person.bio()
+    }
+    users.push(randomUser)
+  }
+  console.log(users)
+
+
   let uid = 0 // TODO: use firebase
   for (const user of users) {
     user.isAdmin = true

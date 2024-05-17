@@ -8,6 +8,8 @@ const locationRouter = require('./locations.cjs');
 const sessionRouter = require('./sessions.cjs');
 
 
+const sessionRouter = require('./sessions.cjs');
+
 
 apiRouter.use('/users', usersRouter);
 apiRouter.use('/services', serviceRouter);
