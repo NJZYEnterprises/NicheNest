@@ -4,10 +4,14 @@ const apiRouter = express.Router();
 const usersRouter = require('./users.cjs');
 const serviceRouter = require('./services.cjs');
 const reviewRouter = require('./reviews.cjs');
+const sessionRouter = require('./sessions.cjs');
+
 
 apiRouter.use('/users', usersRouter);
 apiRouter.use('/services', serviceRouter);
 apiRouter.use('/reviews', reviewRouter);
+apiRouter.use('/sessions', sessionRouter);
+
 
 apiRouter.get("/", (req, res, next)=>{
   res.send ( `This is the API Route`)
