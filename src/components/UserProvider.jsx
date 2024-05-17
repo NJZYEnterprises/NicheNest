@@ -5,7 +5,9 @@ import Fetcher from "../fetcher.js"
 const UserContext = createContext()
 
 function UserProvider({ children }) {
-  const[freelancers, setFreelancers] = useState([])
+  //
+  const [user, setUser] = useState([])
+  const [freelancers, setFreelancers] = useState([])
   const [topRatedFreelancers, setTopRatedFreelancers] = useState([])
   const navigate = useNavigate()
   const fetcher = new Fetcher("api")

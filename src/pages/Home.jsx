@@ -10,31 +10,6 @@ const Home = () => {
   const { freelancers, topRatedFreelancers } = useContext(UserContext)
 
 
-  // useEffect(() => {
-  //   fetcher.route("/users/freelancers").get(data => {
-  //     const updatedFreelancers = data.map(freelancer => {
-  //       const totalStars = freelancer.reviews_received.reduce(
-  //         (acc, review) => acc + review.star_review,
-  //         0
-  //       )
-  //       const averageRating =
-  //         freelancer.reviews_received.length > 0
-  //           ? totalStars / freelancer.reviews_received.length
-  //           : 0
-  //       return { ...freelancer, averageRating }
-  //     })
-  //     setFreelancers(updatedFreelancers)
-  //   })
-  // }, [])
-
-  // useEffect(() => {
-  //   const sortedFreelancers = [...freelancers].sort(
-  //     (a, b) => b.averageRating - a.averageRating
-  //   )
-  //   const topRatedFreelancers = sortedFreelancers.slice(0, 10)
-  //   setTopRatedFreelancers(topRatedFreelancers)
-  // }, [freelancers])
-
   if (!userId && isFetching)  {
     return <div>Loading</div>
   }
