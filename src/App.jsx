@@ -8,6 +8,7 @@ import Login from "./components/Login"
 import Register from "./components/Register"
 import Home from "./pages/Home"
 import Profile from "./pages/Profile"
+import AllFreelancers from "./pages/AllFreelancers.jsx"
 import "./App.css"
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/freelancers" element={<AllFreelancers />} />
         </Routes>
         <Footer />
       </UserProvider>
