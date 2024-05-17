@@ -55,7 +55,6 @@ const Profile = () => {
           {activeCard === 'mySessions' && <MySessionsCard />}
           {activeCard === 'createService' && <CreateServiceCard />}
           {activeCard === 'createSession' && <CreateSessionCard />}
-
       </div>
     </div>
   )

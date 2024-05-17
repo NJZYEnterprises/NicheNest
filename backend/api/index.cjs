@@ -5,12 +5,15 @@ const usersRouter = require('./users.cjs');
 const serviceRouter = require('./services.cjs');
 const reviewRouter = require('./reviews.cjs');
 const locationRouter = require('./locations.cjs');
+const sessionRouter = require('./sessions.cjs');
+
 
 
 apiRouter.use('/users', usersRouter);
 apiRouter.use('/services', serviceRouter);
 apiRouter.use('/reviews', reviewRouter);
 apiRouter.use('/locations', locationRouter);
+apiRouter.use('/sessions', sessionRouter);
 
 
 apiRouter.get("/", (req, res, next)=>{
