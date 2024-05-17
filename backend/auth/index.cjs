@@ -19,7 +19,7 @@ authRouter.get("/me", verifyToken, async (req, res, next) => {
     });
 
     if (!user) {
-      return res.status(404).send('User not found.');
+      return res.status(500).send('User not found.');
     }
 
     res.send(user);
