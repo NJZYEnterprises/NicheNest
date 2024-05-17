@@ -2,7 +2,10 @@ import { createContext, useState, useEffect, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import {
   signInWithEmailAndPassword,
+  signInWithPopup,
   signInWithRedirect,
+  getRedirectResult,
+  getAdditionalUserInfo,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
@@ -10,6 +13,7 @@ import {
 import { auth, provider } from "./Firebase.js"
 //imports to add files to firestore may work for Images
 // import { collection, doc, getDoc, setDoc } from "firebase/firestore"
+import myObj from "../utils/myObj.cjs"
 
 const AuthContext = createContext()
 
@@ -20,10 +24,28 @@ function AuthProvider({ children }) {
   const navigate = useNavigate()
 
   useEffect(() => {
+    const debugRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth)
+        if (result) {
+          const details = getAdditionalUserInfo(result)
+          console.log(details) // details.isNewUser to determine if a new or returning user
+        } else {
+          // Everything is fine
+        }
+        console.log("redirectResult:", result);
+      } catch (error) {
+        console.log(error) // Debug errors from redirect response
+      }
+    }
+    debugRedirectResult();
+
+    console.log("onAuthStateChanged about to be called")
     const unsubscribe = onAuthStateChanged(auth, user => {
+      console.log("Auth State Changed")
       if (user) {
         //everytime user signs in maybe fetch user info and then insert in user state
-        setUserId(user.email, user.uid)
+        setUserId(myObj.unwrap(user, ["email", "uid", "accessToken"]));
 
         setIsFetching(false)
         return
@@ -31,8 +53,13 @@ function AuthProvider({ children }) {
       setUserId(null)
       setIsFetching(false)
     })
+
     return () => unsubscribe()
   }, [])
+
+  // useEffect(() => {
+  //   console.log("userId:", userId);
+  // }, [userId]);
 
   const fireSignUp = async ({ email, password }) => {
     try {
@@ -49,28 +76,26 @@ function AuthProvider({ children }) {
     }
   }
 
-  async function signInWithGoogleRedirect() {
+  /**
+   * Sign in w/ various methods
+   * @param {String} method to choose
+   * @param {Object} form data required by some methods
+   */
+  async function signIn(method, form) {
     try {
-      signInWithRedirect(auth, provider)
-      navigate("/")
+      const methodFn = async () => {
+        switch (method) {
+          case "popup": return signInWithPopup(auth, provider);
+          case "redirect": return signInWithRedirect(auth, provider);
+          case "form":
+          default: return signInWithEmailAndPassword(auth, form?.email, form?.password);
+        }
+      }
+      const userCredential = await methodFn();
+      navigate("/");
+      console.log("User Signed in successfully", userCredential);
     } catch (error) {
-      console.error("Error signing in with Google redirect:", error)
-    }
-  }
-
-  async function fireSignIn({ email, password }) {
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      )
-      navigate("/")
-      console.log("User Signed in successfully", userCredential)
-    } catch (error) {
-      setError(error)
-      console.log("User Signed in failed", error)
-    } finally {
+      console.error(`Error signing in with ${method}:`, error)
     }
   }
 
@@ -108,8 +133,7 @@ function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         fireSignUp,
-        fireSignIn,
-        signInWithGoogleRedirect,
+        signIn,
         handleLogout,
         sendPasswordResetEmail,
         isFetching,
