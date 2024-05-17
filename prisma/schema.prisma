@@ -24,7 +24,7 @@ model Location {
 
 model User {
   id               Int           @id @default(autoincrement())
-  uid              Int           @unique
+  uid              String        @unique
   username         String        @unique
   email            String        @unique
   firstName        String?
