@@ -2,7 +2,6 @@ const express = require('express')
 const sessionRouter = express.Router();
 const myPrisma = require('../db/myPrisma.cjs');
 const prisma = require('../db/connection.cjs')
-sessionRouter.use("/sessions", sessionRouter)
 
 //get all the sessions
 sessionRouter.get("/", async (req, res, next) => {
@@ -33,7 +32,7 @@ sessionRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-//create by session id
+//create by service id
 sessionRouter.post('/:serviceId', async (req, res, next) => {
   try {
     const { serviceId } = req.params;
