@@ -1,22 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Fetcher from "../fetcher.js"
+import { AuthContext } from "../auth/authProvider"
+import { UserContext } from "./UserProvider.jsx"
 
 const ProfileDetailsCard = () => {
+  const { userId } = useContext(AuthContext)
+  const { user } = useContext(UserContext)
+  const [freelancers, setFreelancers] = useState([])
   const [editing, setEditing] = useState(false);
-  //TODO: replace state with user state that holds the current logged in users data
   const [profile, setProfile] = useState({
     firstName: 'John',
     lastName: 'Doe',
     phoneNumber: '1234567890123',
     email: 'johndoe@example.com',
-    username: 'dj23',
+    username: ``,
     street_address: '123 Main St',
     zip_code: '123456',
     city: 'Anytown',
     state: 'CA',
   });
   const fetcher = new Fetcher("api");
-console.log(profile)
+  console.log("ProfileDetailsCard", userId )
+
+  // useEffect(() => {
+  //   if(user)
+  //   const userData = fetcher.route(`/me`).get(userId.uid);
+  //   console.log('userData',Data)
+  //     }, [])  
+
+
   const handleEdit = async () => {
     if (editing) {
       try {

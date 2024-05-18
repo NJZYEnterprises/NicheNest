@@ -5,16 +5,9 @@ import { UserContext } from "../components/UserProvider.jsx"
 
 const Home = () => {
   const { userId, isFetching } = useContext(AuthContext)
-<<<<<<< HEAD
-  const { freelancers, topRatedFreelancers } = useContext(UserContext)
-
-
-  if (!userId && isFetching)  {
-=======
   const { user, freelancers, topRatedFreelancers } = useContext(UserContext)
-
+  console.log('home', userId?.uid)
   if (!userId && isFetching) {
->>>>>>> main
     return <div>Loading</div>
   }
   return (

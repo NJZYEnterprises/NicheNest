@@ -6,22 +6,27 @@ const MySessionsCard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSession, setSelectedSession] = useState(null);
+  const fetcher = new Fetcher("api");
 
-  useEffect(() => {
-         fetcher.route("freelancers").get(setFreelancers);
-      }, [])  
+  
+  // useEffect(() => {
+  //   //TODO: this must be changed to state variable holding userId OR fetch /me rotue
+  //   const userId = 1
+  //        const reservationData = fetcher.route(`/reservations${userId}`).get(setFreelancers);
+  //        console.log(reservationData)
+  //     }, [])  
 
-  const handleSessionClick = async (sessionId) => {
-    setLoading(true);
-    try {
-      const response = await Fetcher.route(`/sessions/${sessionId}`).get();
-      setSelectedSession(response.data);
-      setLoading(false);
-    } catch (error) {
-      setError("Failed to fetch session details.");
-      setLoading(false);
-    }
-  };
+  // const handleSessionClick = async (sessionId) => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await Fetcher.route(`/sessions/${sessionId}`).get();
+  //     setSelectedSession(response.data);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setError("Failed to fetch session details.");
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleBackClick = () => {
     setSelectedSession(null);

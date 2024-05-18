@@ -6,16 +6,9 @@ import Fetcher from "../fetcher.js"
 const UserContext = createContext()
 
 function UserProvider({ children }) {
-<<<<<<< HEAD
-  //
-  const [user, setUser] = useState([])
-  const [freelancers, setFreelancers] = useState([])
-=======
-  const { userId } = useContext(AuthContext);
-
+  const { userId } = useContext(AuthContext); 
   const[user, setUser] = useState(null)
   const[freelancers, setFreelancers] = useState([])
->>>>>>> main
   const [topRatedFreelancers, setTopRatedFreelancers] = useState([])
   const navigate = useNavigate()
   const fetcher = new Fetcher("api")
@@ -61,6 +54,7 @@ function UserProvider({ children }) {
     <UserContext.Provider
       value={{
         user,
+        setUser,
         freelancers,
         setFreelancers,
         topRatedFreelancers,
