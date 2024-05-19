@@ -30,21 +30,60 @@ locationRouter.post('/:userId', async (req, res, next) => {
 })
 
 
-
 //update locoation by location id
-locationRouter.patch('/:id', async (req, res, next) => {
+locationRouter.patch('/:userId/location', async (req, res, next) => {
   try {
-    const data = myPrisma.validate("Location", req.body);
-    const editLocation = await prisma.location.update({ 
-      where:{
-        id: parseInt(req.params.id)
-      }, 
-      data });
-    res.send(editLocation)
+    const { userId } = req.params;
+    const { street_address, zip_code, city, state } = req.body;
+
+    // Find the user by uid instead of id
+    const user = await prisma.user.findUnique({
+      where: { uid: userId }, // Use uid instead of id
+      include: { location: true }
+    });
+
+    if (!user) {
+      return res.status(404).send({ error: 'User not found' });
+    }
+
+    let updatedUser;
+    if (user.location) {
+      updatedUser = await prisma.user.update({
+        where: { uid: userId }, // Use uid instead of id
+        data: {
+          location: {
+            update: {
+              street_address,
+              zip_code,
+              city,
+              state
+            }
+          }
+        },
+        include: { location: true }
+      });
+    } else {
+      updatedUser = await prisma.user.update({
+        where: { uid: userId }, // Use uid instead of id
+        data: {
+          location: {
+            create: {
+              street_address,
+              zip_code,
+              city,
+              state
+            }
+          }
+        },
+        include: { location: true }
+      });
+    }
+
+    res.send(updatedUser);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 
 module.exports = locationRouter;

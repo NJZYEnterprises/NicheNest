@@ -16,7 +16,7 @@ datasource db {
 model Location {
   id             Int     @id @default(autoincrement())
   street_address String?
-  zip_code       Int?
+  zip_code       String?
   city           String
   state          String
   users          User[]

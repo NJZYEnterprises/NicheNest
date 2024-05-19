@@ -147,6 +147,15 @@ class Fetcher {
   async put(body, useResult) {
     return this.do({ method: "PUT", body, useResult });
   }
+  /**
+   * Edits an individual entry at the route recorded in this fetcher using the PATCH method, and applies a callback to the result.
+   * @param {Object} body passed to the fetch request
+   * @param {Function | undefined} useResult to use fetch result without having to await
+   * @returns {Promise} which will resolve to an object or undefined
+   */
+  async patch(body, useResult) {
+    return this.do({ method: "PATCH", body, useResult });
+  }
 }
 
 export default Fetcher;
