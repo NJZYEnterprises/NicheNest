@@ -8,6 +8,7 @@ import Login from "./components/Login"
 import Register from "./components/Register"
 import Home from "./pages/Home"
 import Profile from "./pages/Profile"
+import AccountEntryForm from "./components/SignInForm.jsx"
 import "./App.css"
 
 function App() {
@@ -18,8 +19,10 @@ function App() {
         <NavBar />
         <Routes>
           <Route index="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          {/* <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} /> */}
+          <Route path="/login" element={<AccountEntryForm/>} />
+          <Route path="/register" element={<AccountEntryForm/>} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
         <Footer />

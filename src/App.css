@@ -7,3 +7,21 @@
 body {
   min-width: 100vw;
 }
+
+.containerColumn {
+  display: flex;
+  flex-direction: column
+}
+
+.containerForm {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: .4em .2em;
+  padding: .2em;
+}
+
+.inputLine {
+  display: flex;
+  justify-content: space-between
+}

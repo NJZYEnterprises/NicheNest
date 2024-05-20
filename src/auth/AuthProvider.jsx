@@ -69,7 +69,8 @@ function AuthProvider({ children }) {
         password
       )
       navigate("/")
-      console.log("User Successfully Created", userCredential)
+      console.log("User Successfully Created", userCredential);
+      return userCredential;
     } catch (error) {
       setError(error)
       console.error("Error creating user:", error)
@@ -94,6 +95,7 @@ function AuthProvider({ children }) {
       const userCredential = await methodFn();
       navigate("/");
       console.log("User Signed in successfully", userCredential);
+      return userCredential;
     } catch (error) {
       console.error(`Error signing in with ${method}:`, error)
     }
