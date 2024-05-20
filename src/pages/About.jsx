@@ -5,7 +5,6 @@ import Footer from "../components/Footer";
 const About = () => {
   return (
     <div className="flex flex-col min-h-screen">
-      <NavBar />
       <div className="flex-grow container mx-auto p-6">
         <div className="bg-white shadow-lg rounded-lg p-8">
           <h1 className="text-4xl font-bold mb-6 text-center">About Niche Nest</h1>
@@ -27,7 +26,6 @@ const About = () => {
           </p>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
