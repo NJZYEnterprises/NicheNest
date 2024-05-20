@@ -21,6 +21,7 @@ async function main() {
       firstName: "Alexander",
       lastName: "Linse",
       bio: "I am not a lizard person.",
+      phoneNumber: "7777777777"
     },
     // Nick
     {
@@ -29,6 +30,7 @@ async function main() {
       firstName: "Nicholas",
       lastName: "Lopez",
       bio: "im a human",
+      phoneNumber: "7777777777"
     },
     // Jim
     {
@@ -37,6 +39,7 @@ async function main() {
       firstName: "Jim",
       lastName: "Reinert",
       bio: "human enough",
+      phoneNumber: "7777777777"
     },
     // Yash
     {
@@ -45,6 +48,7 @@ async function main() {
       firstName: "Yash",
       lastName: "Patel",
       bio: "I drink water lol",
+      phoneNumber: "7777777777"
     },
     // Rando
     {
@@ -53,6 +57,7 @@ async function main() {
       firstName: "Jon",
       lastName: "Doe",
       bio: "nothing to see here",
+      phoneNumber: "7777777777"
     },
     //many randos
 

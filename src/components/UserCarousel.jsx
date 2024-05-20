@@ -5,7 +5,7 @@ import CarouselCard from "./CarouselCard.jsx"
 import "react-multi-carousel/lib/styles.css"
 
 
-const UserCarousel = ({ freelancers, topRatedFreelancers }) => {
+const UserCarousel = ({ freelancers, topRatedFreelancers, userImages }) => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -25,9 +25,28 @@ const UserCarousel = ({ freelancers, topRatedFreelancers }) => {
       items: 1,
     },
   }
-  const freelancersToDisplay = topRatedFreelancers
-    ? topRatedFreelancers
-    : freelancers
+
+  if (userImages && userImages.length > 0) {
+    return (
+      <div className="bg-slate-600 bg-opacity-20 mr-20 ml-20">
+        <Carousel
+          responsive={responsive}
+          additionalTransfrom={0}
+          arrows
+          containerClass="carousel-container"
+          itemClass="carousel-item"
+        >
+          {userImages.map((image, index) => (
+            <div key={index} className="block m-5">
+              <img src={image.image_url} alt={`User Image ${index}`} />
+            </div>
+          ))}
+        </Carousel>
+      </div>
+    );
+  }
+  
+  const freelancersToDisplay = topRatedFreelancers || freelancers ;
 
   return (
     <div className="bg-slate-600 bg-opacity-20 mr-20 ml-20">

@@ -2,7 +2,6 @@ const express = require('express')
 const sessionRouter = express.Router();
 const myPrisma = require('../db/myPrisma.cjs');
 const prisma = require('../db/connection.cjs')
-sessionRouter.use("/sessions", sessionRouter)
 
 //get all the sessions
 sessionRouter.get("/", async (req, res, next) => {
@@ -33,7 +32,7 @@ sessionRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-//create by session id
+//create by service id
 sessionRouter.post('/:serviceId', async (req, res, next) => {
   try {
     const { serviceId } = req.params;
@@ -54,28 +53,6 @@ sessionRouter.post('/:serviceId', async (req, res, next) => {
   }
 });
 
-
-// Delete session by ID
-sessionRouter.delete("/:id", async (req, res, next) => {
-  const { id } = req.params;
-
-  try {
-    // Delete associated reservations first
-    await prisma.reservation.deleteMany({
-      where: { session_id: Number(id) },
-    });
-
-    // Then delete the session
-    const deletedSession = await prisma.session.delete({
-      where: { id: Number(id) },
-    });
-
-    res.send(deletedSession);
-  } catch (error) {
-    next(error);
-  }
-});
-
 // Update session by ID
 sessionRouter.patch('/:id', async (req, res, next) => {
   try {
@@ -90,6 +67,26 @@ sessionRouter.patch('/:id', async (req, res, next) => {
     next(error)
   }
 })
+
+
+// Delete session by ID
+sessionRouter.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    await prisma.reservation.deleteMany({
+      where: { session_id: Number(id) },
+    });
+
+    const deletedSession = await prisma.session.delete({
+      where: { id: Number(id) },
+    });
+    res.send(deletedSession);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 
 
