@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Fetcher from "../fetcher.js";
 import UserCarousel from "./UserCarousel";
-import { AuthContext } from "../auth/authProvider";
+import { AuthContext } from "../auth/AuthProvider";
 import { UserContext } from "./UserProvider.jsx";
 
 const ProfileDetailsCard = ({userDetails, setUserDetails, userImages}) => {
