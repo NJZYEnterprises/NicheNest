@@ -16,7 +16,7 @@ datasource db {
 model Location {
   id             Int     @id @default(autoincrement())
   street_address String?
-  zip_code       Int?
+  zip_code       String?
   city           String
   state          String
   users          User[]
@@ -29,10 +29,12 @@ model User {
   email            String        @unique
   firstName        String?
   lastName         String?
+  phoneNumber      String?       
+
   bio              String?
   isAdmin          Boolean?
-  location_id      Int
-  location         Location      @relation(references: [id], fields: [location_id])
+  location_id      Int?
+  location         Location?      @relation(references: [id], fields: [location_id])
   services         Service[]
   reservations     Reservation[]
   links            User_link[]

@@ -12,6 +12,7 @@ async function main() {
 
   // User
   const users = [
+    
     // Alexander
     {
       uid: "h3NdGZvEXxUJfSNhXpWtEHiTljy2",
@@ -20,6 +21,7 @@ async function main() {
       firstName: "Alexander",
       lastName: "Linse",
       bio: "I am not a lizard person.",
+      phoneNumber: "7777777777"
     },
     // Nick
     {
@@ -28,6 +30,7 @@ async function main() {
       firstName: "Nicholas",
       lastName: "Lopez",
       bio: "im a human",
+      phoneNumber: "7777777777"
     },
     // Jim
     {
@@ -36,6 +39,7 @@ async function main() {
       firstName: "Jim",
       lastName: "Reinert",
       bio: "human enough",
+      phoneNumber: "7777777777"
     },
     // Yash
     {
@@ -44,6 +48,7 @@ async function main() {
       firstName: "Yash",
       lastName: "Patel",
       bio: "I drink water lol",
+      phoneNumber: "7777777777"
     },
     // Rando
     {
@@ -52,8 +57,27 @@ async function main() {
       firstName: "Jon",
       lastName: "Doe",
       bio: "nothing to see here",
+      phoneNumber: "7777777777"
     },
+    //many randos
+
   ]
+
+  
+  let randomUser = {}
+  for (let i = 0; i < 50; i++) {
+    randomUser = {
+      username: faker.internet.userName(),
+      email: faker.internet.email(),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      bio: faker.person.bio()
+    }
+    users.push(randomUser)
+  }
+  console.log(users)
+
+
   let uid = 0 // TODO: use firebase
   for (const user of users) {
     user.isAdmin = true

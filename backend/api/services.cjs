@@ -27,6 +27,7 @@ serviceRouter.get("/:id", async (req, res, next) => {
     next(error)
   }
 })
+
 //create new service
 //TODO: connect freelancer_id to uid token
 serviceRouter.post("/", async (req, res, next) => {

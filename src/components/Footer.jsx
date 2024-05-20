@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="flex justify-center gap-20 pb-10 pt-10">
         <div>
           <h2 className="flex flex-col pb-2">About</h2>
-          <Link>Learn About Us</Link>
+          <Link to ="/about">Learn About Us</Link>
         </div>
         <div className="flex flex-col">
           <h2 className="pb-2">All Services</h2>
@@ -18,7 +18,7 @@ const Footer = () => {
         </div>
         <div>
           <h2 className="flex flex-col pb-2">Help</h2>
-          <Link path="">Contact</Link>
+          <Link to ="/contact">Contact</Link>
         </div>
         <div className="flex flex-col pb-2">
           <h2 className="pb-2">Follow Us</h2>

@@ -6,8 +6,7 @@ import Fetcher from "../fetcher.js"
 const UserContext = createContext()
 
 function UserProvider({ children }) {
-  const { userId } = useContext(AuthContext);
-
+  const { userId } = useContext(AuthContext); 
   const[user, setUser] = useState(null)
   const[freelancers, setFreelancers] = useState([])
   const [topRatedFreelancers, setTopRatedFreelancers] = useState([])
@@ -55,6 +54,7 @@ function UserProvider({ children }) {
     <UserContext.Provider
       value={{
         user,
+        setUser,
         freelancers,
         setFreelancers,
         topRatedFreelancers,

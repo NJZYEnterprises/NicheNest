@@ -9,6 +9,9 @@ import Register from "./components/Register"
 import Home from "./pages/Home"
 import Profile from "./pages/Profile"
 import AccountEntryForm from "./components/SignInForm.jsx"
+import AllFreelancers from "./pages/AllFreelancers.jsx"
+import Contact from "./pages/Contact.jsx"
+import About from "./pages/About.jsx"
 import "./App.css"
 
 function App() {
@@ -24,6 +27,9 @@ function App() {
           <Route path="/login" element={<AccountEntryForm/>} />
           <Route path="/register" element={<AccountEntryForm/>} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/freelancers" element={<AllFreelancers />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
         </Routes>
         <Footer />
       </UserProvider>

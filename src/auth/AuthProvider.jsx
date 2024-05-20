@@ -46,7 +46,7 @@ function AuthProvider({ children }) {
       if (user) {
         //everytime user signs in maybe fetch user info and then insert in user state
         setUserId(myObj.unwrap(user, ["email", "uid", "accessToken"]));
-
+        
         setIsFetching(false)
         return
       }
