@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Fetcher from "../fetcher.js";
+import UserCarousel from "./UserCarousel";
 import { AuthContext } from "../auth/authProvider";
 import { UserContext } from "./UserProvider.jsx";
 
-const ProfileDetailsCard = ({userDetails, setUserDetails}) => {
+const ProfileDetailsCard = ({userDetails, setUserDetails, userImages}) => {
   const { userId } = useContext(AuthContext);
   const fetcher = new Fetcher("api");
   const [editMode, setEditMode] = useState(false); // Global edit mode
@@ -140,7 +141,16 @@ const ProfileDetailsCard = ({userDetails, setUserDetails}) => {
 
   return (
     <div className="m-5 bg-gray-700 p-6 rounded-lg shadow-lg">
+    <div className="">
       <h2 className="text-xl font-bold mb-4">Profile Details</h2>
+    </div>
+      <div className="m-5">
+        {userImages?.length > 0 ? (
+           <UserCarousel userImages={userImages} />
+            ) : (
+        <div className="text-gray-500">Loading...</div>
+        )}
+      </div>
       <div className="flex justify-end mb-4">
       </div>
       <div className="flex">

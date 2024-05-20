@@ -25,7 +25,6 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages }) => {
       items: 1,
     },
   }
-  console.log('carousel iamges', userImages)
 
   if (userImages && userImages.length > 0) {
     return (

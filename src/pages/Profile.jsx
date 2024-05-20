@@ -14,13 +14,16 @@ const Profile = () => {
   const { userId } = useContext(AuthContext)
   const fetcher = new Fetcher("api");
 
-//get images and put it into a state and then pass them threough the carousel 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userData = await fetcher.route(`/users/user/${userId?.uid}`).get();
-        setUserDetails(userData);
-        setUserImages(userData?.images)
+        if (userId) {
+          const userData = await fetcher.route(`/users/user/${userId.uid}`).get();
+          setUserDetails(userData);
+          setUserImages(userData.images)
+        } else {
+          console.log('Error, userId is not truthy')
+        }
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -28,11 +31,10 @@ const Profile = () => {
   
     fetchUserData();
   }, [userId]);
-
-  console.log('details',userDetails)
-  console.log('images',userImages)
-
-
+//*****************************************************************************/
+//TODO: Add ability that one refresh it displays currently clicked card       *
+//Options to store activeCard state in local storage to refer too on refresh  *
+//****************************************************************************/
   const handleButtonClick = (cardName) => {
     setActiveCard(cardName);
   };
@@ -42,14 +44,9 @@ const Profile = () => {
     {/* *****************************************
     TODO: allow user to select profile image,
     and perform crud. may need to make custom 
-    carousel.
+    carousel. 
     ***************************************** */}
       <div className="m-5">
-        {userImages?.length > 0 ? (
-           <UserCarousel userImages={userImages} />
-            ) : (
-       <div className="text-gray-500">Loading...</div>
-        )}
       </div>
       <div className="bg-gray-900 flex justify-center items-center p-10 gap-10 m-5 rounded-md">
         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-2 rounded"
@@ -75,7 +72,12 @@ const Profile = () => {
         }
       </div>
       <div>
-          {activeCard === 'profileDetails' && <ProfileDetailsCard userDetails={userDetails} setUserDetails={setUserDetails} />}
+          {activeCard === 'profileDetails' && 
+          <ProfileDetailsCard 
+            userDetails={userDetails} 
+            setUserDetails={setUserDetails} 
+            userImages={userImages}
+          />}
           {activeCard === 'mySessions' && <MySessionsCard />}
           {activeCard === 'createService' && <CreateServiceCard />}
           {activeCard === 'createSession' && <CreateSessionCard />}
