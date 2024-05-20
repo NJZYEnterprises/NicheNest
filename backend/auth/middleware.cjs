@@ -1,4 +1,3 @@
-// const {auth} = require("../../src/auth/Firebase.js");
 const { initializeApp } = require('firebase-admin/app');
 const { getAuth } = require('firebase-admin/auth');
 const { firebaseConfig } = require("../../src/envPackager.cjs");

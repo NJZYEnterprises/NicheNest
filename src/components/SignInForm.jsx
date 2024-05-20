@@ -63,7 +63,8 @@ const SignInForm = () => {
       newUserData.email = fbUser.email;
       if (!newUserData.username)
         newUserData.username = fbUser.displayName;
-      fetcher.route("users").post(newUserData);
+      
+      fetcher.setToken(fbUser.accessToken).route("users").post(newUserData);
     } else setErrorMsg(`Could not ${formType}!`);
   }
 

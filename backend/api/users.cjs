@@ -3,6 +3,7 @@ const userRouter = express.Router()
 const prisma = require("../db/connection.cjs")
 userRouter.use("/users/", userRouter)
 const myPrisma = require('../db/myPrisma.cjs');
+const { verifyToken } = require("../auth/middleware.cjs");
 
 //get all freelancers
 userRouter.get("/freelancers/", async (req, res, next) => {
@@ -38,14 +39,14 @@ userRouter.get('/freelancers/:id', async (req, res, next) => {
 })
 
 //get all users
-userRouter.get('/', async (req, res, next)=> {
+userRouter.get('/', async (req, res, next) => {
   try {
     const allUsers = await prisma.user.findMany();
     res.send(allUsers);
-   } catch (error) {
+  } catch (error) {
     next(error)
   }
-}) 
+})
 
 //get all user info by Uid
 userRouter.get("/user/:uid", async (req, res, next) => {
@@ -86,9 +87,12 @@ userRouter.get("/user/:uid", async (req, res, next) => {
 
 
 //create single user by id
-userRouter.post('/', async (req, res, next) => {
+userRouter.post('/', verifyToken, async (req, res, next) => {
   try {
     const data = myPrisma.validate("User", req.body);
+    if (data.uid !== req.user?.uid)
+      return res.status(401).json({ message: 'Body uid does not match verified uid' });
+    
     const newUser = await prisma.user.create({ data });
     res.send(newUser)
   } catch (error) {
@@ -111,11 +115,11 @@ userRouter.patch('/:userId', async (req, res, next) => {
 //delete single user by id
 userRouter.delete('/:userId', async (req, res, next) => {
   try {
-    const deletedUser = await prisma.user.delete({ 
-      where:{
+    const deletedUser = await prisma.user.delete({
+      where: {
         id: parseInt(req.params.userId)
       },
-    }) 
+    })
     res.send(deletedUser)
   } catch (error) {
     next(error)
