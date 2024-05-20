@@ -7,10 +7,10 @@ import { UserContext } from "./UserProvider.jsx";
 const ProfileDetailsCard = ({userDetails, setUserDetails, userImages}) => {
   const { userId } = useContext(AuthContext);
   const fetcher = new Fetcher("api");
-  const [editMode, setEditMode] = useState(false); // Global edit mode
-  const [editModeField, setEditModeField] = useState(null); // Track field in edit mode
+  const [editMode, setEditMode] = useState(false); 
+  const [editModeField, setEditModeField] = useState(null);
   const [originalField, setOriginalField] = useState(editModeField)
-  const [profile, setProfile] = useState({
+  const [profileDetails, setProfileDetails] = useState({
     firstName: "",
     lastName: "",
     phoneNumber: "",
@@ -22,12 +22,10 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages}) => {
     city: "",
     state: ""
   });
-  const [originalProfile, setOriginalProfile] = useState(profile)
-
-
+  const [originalProfileDetails, setOriginalProfileDetails] = useState(profileDetails)
   useEffect(() => {
     if (userDetails) {
-      setProfile({
+      setProfileDetails({
         firstName: userDetails.firstName || "",
         lastName: userDetails.lastName || "",
         phoneNumber: userDetails.phoneNumber || "",
@@ -39,25 +37,23 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages}) => {
         city: userDetails.location?.city || "",
         state: userDetails.location?.state || ""
       });
-      setOriginalProfile({ ...profile });
+      setOriginalProfileDetails({ ...profileDetails });
     }
   }, [userDetails]);
   
   const toggleEditMode = () => {
     if (editMode) {
-      // Exit edit mode, reset to original profile
-      setProfile(originalProfile);
+      setProfileDetails(originalProfileDetails);
     } else {
-      // Enter edit mode, save the current profile as the original
-      setOriginalProfile(profile);
+      setOriginalProfileDetails(profileDetails);
     }
     setEditMode(!editMode);
-    setEditModeField(null); // Exit any individual field edit mode
+    setEditModeField(null); 
   };
 
   const enterFieldEditMode = (field) => {
     if(editModeField) {
-      setEditModeField(originalField);
+      setEditModeField(originalFieldDetails);
     } else {
       setOriginalField(editModeField)
     }
@@ -66,40 +62,39 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages}) => {
 
   const exitFieldEditMode = () => {
     if (editModeField) {
-      setProfile({ ...profile, [editModeField]: originalProfile[editModeField] });
+      setEditModeField(null);
     }
-    setEditModeField(null);
+    setProfileDetails({ ...profileDetails }); 
   };
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setProfile({ ...profile, [id]: value });
+    setProfileDetails({ ...profileDetails, [id]: value });
   };
 
   const handleSave = async (field) => {
     try {
-      const updatedField = { [field]: profile[field] };
+      const uid = userId.uid
+      const updatedField = { [field]: profileDetails[field] };
       if (['firstName', 'lastName', 'phoneNumber', 'email', 'username', 'bio'].includes(field)) {
-        await fetcher.route(`/users/${userId.uid}`).patch(updatedField);
+        await fetcher.route(`/users/${uid}`).patch(updatedField);
       } else {
-        await fetcher.route(`/locations/${userId.uid}/location`).patch(updatedField);
+        await fetcher.route(`/locations/${uid}/location`).patch(updatedField);
       }
-      setOriginalProfile({ ...originalProfile, [field]: profile[field] });
-      setProfile({ ...profile, [field]: profile[field] }); // Update profile state
-      console.log('Updated profile:', profile); // Add this line
-
+      setOriginalProfileDetails({ ...originalProfileDetails, [field]: profileDetails[field] });
       exitFieldEditMode();
+      console.log('Updated profile:', profileDetails); 
     } catch (error) {
       console.error('Error updating user:', error);
     }
   };
-
+  //input fields UI for later rendering
   const renderField = (id, label, type = 'text') => {
     const inputElement = type === 'textarea' ? (
       <textarea
         className="p-2 text-sm text-white text-center bg-gray-900 border border-gray-700 rounded w-full"
         id={id}
         rows="4"
-        value={profile[id]}
+        value={profileDetails[id]}
         onChange={handleChange}
       />
     ) : (
@@ -107,44 +102,51 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages}) => {
         className="p-2 text-sm text-white text-center bg-gray-900 border border-gray-700 rounded w-full"
         id={id}
         type={type}
-        value={profile[id]}
+        value={profileDetails[id]}
         onChange={handleChange}
       />
     );
-
     return (
       <div className="mb-3">
-        <label className="block text-gray-400" htmlFor={id}>{label}</label>
-        {editMode && editModeField !== id && (
-          <button className="edit-icon" onClick={() => enterFieldEditMode(id)}>
-            🖍️
-          </button>
-        )}
-        {editModeField === id ? (
+      <label className="block text-gray-400" htmlFor={id}>{label}</label>
+      {editModeField === id ? (
+        <div>
           <div>
             {inputElement}
-            <div className="flex justify-end mt-2">
-              <button className="save-icon mr-2" onClick={() => handleSave(id)}>
-                👍
-              </button>
-              <button className="cancel-icon" onClick={exitFieldEditMode}>
-                ❌
-              </button>
-            </div>
           </div>
-        ) : (
-          <p className="text-white">{profile[id]}</p>
-        )}
-      </div>
+          <div className="flex justify-end mt-2">
+            <button className="save-icon mr-2" onClick={() => handleSave(id)}>
+              👍
+            </button>
+            <button className="cancel-icon" onClick={exitFieldEditMode}>
+              ❌
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-center">
+          <p className="text-white flex-grow">{profileDetails[id]}</p>
+          {editMode && editModeField === null && (
+            <button className="edit-icon ml-2" onClick={() => enterFieldEditMode(id)}>
+              🖍️
+            </button>
+          )}
+        </div>
+      )}
+    </div>
     );
   };
-
+  //UI elements
   return (
     <div className="m-5 bg-gray-700 p-6 rounded-lg shadow-lg">
     <div className="">
       <h2 className="text-xl font-bold mb-4">Profile Details</h2>
     </div>
       <div className="m-5">
+      {/*******************************************************************
+          TODO:  If user doesnt have images have a button to add images*
+          to make the carousel for the user                          
+        *******************************************************************/}
         {userImages?.length > 0 ? (
            <UserCarousel userImages={userImages} />
             ) : (

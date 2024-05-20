@@ -31,14 +31,13 @@ locationRouter.post('/:userId', async (req, res, next) => {
 
 
 //update locoation by location id
-locationRouter.patch('/:userId/location', async (req, res, next) => {
+locationRouter.patch('/:uid/location', async (req, res, next) => {
   try {
-    const { userId } = req.params;
+    const { uid } = req.params;
     const { street_address, zip_code, city, state } = req.body;
 
-    // Find the user by uid instead of id
     const user = await prisma.user.findUnique({
-      where: { uid: userId }, // Use uid instead of id
+      where: { uid: uid }, 
       include: { location: true }
     });
 
@@ -49,7 +48,7 @@ locationRouter.patch('/:userId/location', async (req, res, next) => {
     let updatedUser;
     if (user.location) {
       updatedUser = await prisma.user.update({
-        where: { uid: userId }, // Use uid instead of id
+        where: { uid: uid }, 
         data: {
           location: {
             update: {
@@ -64,7 +63,7 @@ locationRouter.patch('/:userId/location', async (req, res, next) => {
       });
     } else {
       updatedUser = await prisma.user.update({
-        where: { uid: userId }, // Use uid instead of id
+        where: { uid: uid }, 
         data: {
           location: {
             create: {

@@ -20,6 +20,7 @@ const MySessionsCard = () => {
         const reservationData = await fetcher.route(`/reservations/my-reservations/${userId.uid}`).get();
         const flattenedReservations = reservationData.map(reservation => ({
           when_created: reservation.when_created,
+          reservationId: reservation.id,
           session_description: reservation.session.description,
           session_when_start: reservation.session.when_start,
           session_duration_min: reservation.session.duration_min,
@@ -41,25 +42,44 @@ const MySessionsCard = () => {
     fetchReservations();
   }, [userId]);
 
+  
 
-  const toggleExpand = (index) => {
-    setMoreDetails((prevMoreDetails) => {
-      if (prevMoreDetails.includes(index)) {
-        // If the clicked reservation ID is already in the expanded list, remove it
-        return prevMoreDetails.filter((moreDetail) => moreDetail !== index);
-      } else {
-        // If the clicked reservation ID is not in the expanded list, add it
-        return [...prevMoreDetails, index];
-      }
-    });
+  const toggleExpand = (id) => {
+    setMoreDetails(prevMoreDetails => 
+      prevMoreDetails.includes(id) 
+        ? prevMoreDetails.filter(detailId => detailId !== id) 
+        : [...prevMoreDetails, id]
+    );
+  };
+  
+  const handleDelete = async (reservationId) => {
+    try {
+      const uid = userId.uid;
+      console.log('uid',uid)
+
+      await fetcher
+      .route(`/reservations/${reservationId}`)
+      .setToken(uid)
+      .delete();
+
+      setUserReservations(prevReservations => 
+        prevReservations.filter(reservation => reservation.reservationId !== reservationId)
+      );
+      
+    } catch (error) {
+      setError(error.message);
+    }
   };
   
 
   return (
     <div className="p-5 bg-gray-800 rounded-md m-5">
+    <div>
+      <h1 className='text-3xl font-bold'>My Booked Sessions</h1>
+    </div>
     <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {userReservations && userReservations.map((reservation, index) => (
-        <div key={index} className="bg-gray-700 rounded-md p-4 m-10">
+        <div key={reservation.reservationId} className="bg-gray-700 rounded-md p-4 m-10">
           <div className="flex flex-col">
             <div className="flex flex-row justify-between mb-2">
               <h2 className="text-lg font-bold text-white">Service Name:</h2>
@@ -77,7 +97,7 @@ const MySessionsCard = () => {
               <p className="text-white">Session Instructor:</p>
               <span className="text-lg font-bold text-orange-500">{reservation.service_freelancer_name}</span>
             </div>
-            {moreDetails.includes(index) && (
+            {moreDetails.includes(reservation.reservationId) && (
               <>
                 <div className="flex flex-row justify-between mb-2">
                   <p className="text-white">Session Status:</p>
@@ -104,12 +124,13 @@ const MySessionsCard = () => {
             <div className="flex justify-center gap-2">
               <button
                 className="mt-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded"
-                onClick={() => toggleExpand(index)}
+                onClick={() => toggleExpand(reservation.reservationId)}
               >
-                {moreDetails.includes(index) ? 'Show Less' : 'Show More'}
+                {moreDetails.includes(reservation.reservationId) ? 'Show Less' : 'Show More'}
               </button>
               <button
                 className="mt-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded"
+                onClick={() => handleDelete(reservation.reservationId)}
               >
                 Cancel RSVP
               </button>
