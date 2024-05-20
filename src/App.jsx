@@ -10,6 +10,7 @@ import Home from "./pages/Home"
 import Profile from "./pages/Profile"
 import AllFreelancers from "./pages/AllFreelancers.jsx"
 import Contact from "./pages/Contact.jsx"
+import About from "./pages/About.jsx"
 import "./App.css"
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/freelancers" element={<AllFreelancers />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
         </Routes>
         <Footer />
       </UserProvider>
