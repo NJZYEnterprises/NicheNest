@@ -30,7 +30,11 @@ userRouter.get('/freelancers/:id', async (req, res, next) => {
       where: {
         services: { some: {} },
         id: parseInt(req.params.id)
-      }
+      },
+      include: {
+        images: true,
+        reviews_received: true,
+      },
     })
     res.send(freelancers)
   } catch (error) {
