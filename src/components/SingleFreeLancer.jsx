@@ -10,16 +10,15 @@ const SingleFreeLancer = () => {
 
   useEffect(() => {
     const fetcher = new Fetcher("api");
-    fetcher.route(["freelancers", id]).get(setFreelancer);
+    fetcher.route(["users/freelancers", id]).get(setFreelancer);
   }, [id]);
 
   if (!freelancer) return <div> Loading...</div>;
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <div className="flex-grow container mx-auto p-4">
-        <div className="bg-white shadow-md rounded p-6">
+        <div className="bg-slate-800 shadow-md rounded p-6">
           <h2 className="text-2xl font-bold mb-4">Instructor</h2>
           <div className="flex">
             <img src={freelancer.image_url} alt="Profile" className="w-32 h-32 rounded-full" />
@@ -31,7 +30,7 @@ const SingleFreeLancer = () => {
           </div>
           <div className="mt-4">
             <h4 className="text-lg font-semibold">Services</h4>
-            {freelancer.services.map(service => (
+            {freelancer.services && freelancer.services.map(service => (
               <div key={service.id} className="mt-2">
                 <p>Name: {service.name}</p>
                 <p>Rate: ${service.rate} per {service.rate_time}</p>
@@ -46,7 +45,6 @@ const SingleFreeLancer = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
