@@ -34,6 +34,7 @@ async function main() {
     },
     // Jim
     {
+      uid: "c1hY9HA290U51LVSaSjoTAJJbDH3",
       username: "jimr",
       email: "jim.reinert.ii@gmail.com",
       firstName: "Jim",

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Navbar from "./NavBar";
 import Footer from "./Footer";
 import Fetcher from "../fetcher";
+import CreateServicForm from "./CreateServiceForm";
 
 const SingleFreeLancer = () => {
   const { id } = useParams();
@@ -40,6 +41,7 @@ const SingleFreeLancer = () => {
               </div>
             ))}
           </div>
+          <CreateServiceForm/>
           <div className="mt-4">
             <button className="bg-blue-500 text-white px-4 py-2 rounded">Book Now</button>
             <button className="bg-gray-500 text-white px-4 py-2 rounded ml-2">Contact</button>
