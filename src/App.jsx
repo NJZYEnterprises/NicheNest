@@ -8,6 +8,7 @@ import Home from "./pages/Home"
 import Profile from "./pages/Profile"
 import SignInForm from "./components/SignInForm.jsx"
 import AllFreelancers from "./pages/AllFreelancers.jsx"
+import SingleFreeLancer from "./components/SingleFreeLancer.jsx"
 import Contact from "./pages/Contact.jsx"
 import About from "./pages/About.jsx"
 import "./App.css"
@@ -24,6 +25,7 @@ function App() {
           <Route path="/register" element={<SignInForm/>} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/freelancers" element={<AllFreelancers />} />
+          <Route path="/freelancers/:id" element={<SingleFreeLancer />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
         </Routes>

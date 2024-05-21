@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "./NavBar";
-import Footer from "./Footer";
 import Fetcher from "../fetcher";
+import { calculateAverageRating } from "../../utils/profileUtils";
 
 const SingleFreeLancer = () => {
   const { id } = useParams();
@@ -10,28 +9,37 @@ const SingleFreeLancer = () => {
 
   useEffect(() => {
     const fetcher = new Fetcher("api");
-    fetcher.route(["freelancers", id]).get(setFreelancer);
+    const setModifiedFreelancer = (f) => {
+      calculateAverageRating(f);
+      setFreelancer(f);
+    }
+    fetcher.route(["users/freelancers", id]).get(setModifiedFreelancer);
   }, [id]);
 
   if (!freelancer) return <div> Loading...</div>;
+  calculateAverageRating(freelancer);
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <div className="flex-grow container mx-auto p-4">
-        <div className="bg-white shadow-md rounded p-6">
+        <div className="bg-slate-800 shadow-md rounded p-6">
           <h2 className="text-2xl font-bold mb-4">Instructor</h2>
           <div className="flex">
             <img src={freelancer.image_url} alt="Profile" className="w-32 h-32 rounded-full" />
             <div className="ml-4">
               <h3 className="text-xl font-semibold">{freelancer.firstName} {freelancer.lastName}</h3>
               <p>{freelancer.bio}</p>
-              <p>Rating: {freelancer.rating}</p>
+              <p>
+                <span aria-label="a rocket blasting off" role="img">
+                  ⭐
+                </span>
+                {freelancer.averageRating}
+              </p>
             </div>
           </div>
           <div className="mt-4">
             <h4 className="text-lg font-semibold">Services</h4>
-            {freelancer.services.map(service => (
+            {freelancer.services && freelancer.services.map(service => (
               <div key={service.id} className="mt-2">
                 <p>Name: {service.name}</p>
                 <p>Rate: ${service.rate} per {service.rate_time}</p>
@@ -46,7 +54,6 @@ const SingleFreeLancer = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

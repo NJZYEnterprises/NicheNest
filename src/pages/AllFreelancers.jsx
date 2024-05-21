@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react"
 import { UserContext } from "../components/UserProvider.jsx"
-import DisplayAllFreelancers from "../components/AllFreelancers.jsx"
+import DisplayAllFreelancers from "../components/DisplayAllFreelancers.jsx"
 
 
 

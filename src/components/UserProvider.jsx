@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../auth/AuthProvider.jsx"
+import { calculateAverageRating } from "../../utils/profileUtils";
 import Fetcher from "../fetcher.js"
 
 const UserContext = createContext()
@@ -15,20 +16,9 @@ function UserProvider({ children }) {
 
 //fetch freelancers
   useEffect(() => {
-    fetcher.route("/users/freelancers").get(data => {
-      const updatedFreelancers = data.map(freelancer => {
-        const totalStars = freelancer.reviews_received.reduce(
-          (acc, review) => acc + review.star_review,
-          0
-        )
-        //Creates average rating for each freelacer
-        const averageRating =
-          freelancer.reviews_received.length > 0
-            ? totalStars / freelancer.reviews_received.length
-            : 0
-        return { ...freelancer, averageRating }
-      })
-      setFreelancers(updatedFreelancers)
+    fetcher.route("/users/freelancers").get(newFreelancers => {
+      newFreelancers.forEach(freelancer => calculateAverageRating(freelancer));
+      setFreelancers(newFreelancers);
     })
   }, [])
 

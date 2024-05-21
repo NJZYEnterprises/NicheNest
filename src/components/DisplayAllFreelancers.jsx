@@ -11,7 +11,7 @@ const DisplayAllFreelancers = ({ freelancers }) => {
         {freelancersToDisplay.map(freelancer => (
           <Link
             key={freelancer.id}
-            to={`/${freelancer.id}`}
+            to={`/freelancers/${freelancer.id}`}
             className="block m-5"
           >
             <CarouselCard freelancer={freelancer} />
