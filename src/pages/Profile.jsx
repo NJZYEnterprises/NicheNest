@@ -31,6 +31,7 @@ const Profile = () => {
   
     fetchUserData();
   }, [userId]);
+  console.log('user services offered',userDetails.services)
 //*****************************************************************************/
 //TODO: Add ability that one refresh it displays currently clicked card       *
 //Options to store activeCard state in local storage to refer too on refresh  *
@@ -64,7 +65,7 @@ const Profile = () => {
         {
 
         }
-        {userDetails &&
+        {userDetails.services && userDetails.services.length > 0 &&
           <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-2 rounded"
             onClick={() => handleButtonClick('createSessions')}>
             Create Session

@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from "../auth/AuthProvider"
 import Fetcher from "../fetcher.js";
+import MyBookedServices from "./MyBookedServices"
 
 const MySessionsCard = () => {
   const [userReservations, setUserReservations] = useState();
+  const [userServices, setUserServices] = useState();
   const [freelancers, setFreelancers] = useState([])
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,7 +19,8 @@ const MySessionsCard = () => {
     const fetchReservations = async () => {
       setLoading(true);
       try {
-        const reservationData = await fetcher.route(`/reservations/my-reservations/${userId.uid}`).get();
+        const reservationData = await fetcher.setToken(userId.accessToken).route(`reservations/my`).get();
+        const servicesData = await fetcher.setToken(userId.accessToken).route(`services/booked`).get();
         const flattenedReservations = reservationData.map(reservation => ({
           when_created: reservation.when_created,
           reservationId: reservation.id,
@@ -32,7 +35,11 @@ const MySessionsCard = () => {
           service_rate_time: reservation.session.service.rate_time,
           service_freelancer_name: reservation.session.service.freelancer.username
         }));
+       
         setUserReservations(flattenedReservations);
+        setUserServices(servicesData);
+
+
       } catch (error) {
         setError(error.message);
       } finally {
@@ -42,7 +49,7 @@ const MySessionsCard = () => {
     fetchReservations();
   }, [userId]);
 
-  
+
 
   const toggleExpand = (id) => {
     setMoreDetails(prevMoreDetails => 
@@ -73,13 +80,13 @@ const MySessionsCard = () => {
   
 
   return (
-    <div className="p-5 bg-gray-800 rounded-md m-5">
-    <div>
+  <div className="p-5 bg-gray-800 rounded-md m-5">
+    {/* <div>
       <h1 className='text-3xl font-bold'>My Booked Sessions</h1>
-    </div>
-    <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {userReservations && userReservations.map((reservation, index) => (
-        <div key={reservation.reservationId} className="bg-gray-700 rounded-md p-4 m-10">
+    </div> */}
+    <div className="flex p-10 m-5 rounded-md">
+    {userReservations && userReservations.map((reservation, index) => (
+        <div key={reservation.reservationId} className="bg-gray-700 flex flex-col rounded-md p-4 m-10">
           <div className="flex flex-col">
             <div className="flex flex-row justify-between mb-2">
               <h2 className="text-lg font-bold text-white">Service Name:</h2>
@@ -139,8 +146,12 @@ const MySessionsCard = () => {
         </div>
       ))}
     </div>
+    <div>
+      <MyBookedServices userServices={userServices} />
+    </div>
   </div>
   );
 };
 
 export default MySessionsCard;
+
