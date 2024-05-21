@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "./NavBar";
-import Footer from "./Footer";
 import Fetcher from "../fetcher";
+import { calculateAverageRating } from "../../utils/profileUtils";
 
 const SingleFreeLancer = () => {
   const { id } = useParams();
@@ -10,10 +9,15 @@ const SingleFreeLancer = () => {
 
   useEffect(() => {
     const fetcher = new Fetcher("api");
-    fetcher.route(["users/freelancers", id]).get(setFreelancer);
+    const setModifiedFreelancer = (f) => {
+      calculateAverageRating(f);
+      setFreelancer(f);
+    }
+    fetcher.route(["users/freelancers", id]).get(setModifiedFreelancer);
   }, [id]);
 
   if (!freelancer) return <div> Loading...</div>;
+  calculateAverageRating(freelancer);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -25,7 +29,12 @@ const SingleFreeLancer = () => {
             <div className="ml-4">
               <h3 className="text-xl font-semibold">{freelancer.firstName} {freelancer.lastName}</h3>
               <p>{freelancer.bio}</p>
-              <p>Rating: {freelancer.rating}</p>
+              <p>
+                <span aria-label="a rocket blasting off" role="img">
+                  ⭐
+                </span>
+                {freelancer.averageRating}
+              </p>
             </div>
           </div>
           <div className="mt-4">
