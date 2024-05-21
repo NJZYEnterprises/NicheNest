@@ -1,5 +1,5 @@
-import { useEffect, useState, useContext } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { capitalize } from "../utils/myString.cjs"
 import { AuthContext } from "../auth/AuthProvider.jsx"
 import GoogleButton from "react-google-button"
@@ -9,7 +9,6 @@ const fetcher = new Fetcher("api");
 
 const SignInForm = () => {
   // <-- Hooks -->
-  // const navigate = useNavigate();
   const location = useLocation();
   const { signIn, fireSignUp } = useContext(AuthContext);
   const [formData, setFormData] = useState({});
@@ -56,6 +55,19 @@ const SignInForm = () => {
     })
   }
 
+  const createUser = (firebaseResponse, isGoogleSignIn = false) => {
+    const fbUser = firebaseResponse?.user;
+    if (fbUser) {
+      const newUserData =  isGoogleSignIn ? {} : {...formData};
+      newUserData.uid = fbUser.uid;
+      newUserData.email = fbUser.email;
+      if (!newUserData.username)
+        newUserData.username = fbUser.displayName;
+      
+      fetcher.setToken(fbUser.accessToken).route("users").post(newUserData);
+    } else setErrorMsg(`Could not ${formType}!`);
+  }
+
   const onSubmit = async (event) => {
     event.preventDefault();
 
@@ -68,16 +80,8 @@ const SignInForm = () => {
 
     switch (formType) {
       case "login": signIn("form", formData); break;
-      case "register":
-        const fbUser = (await fireSignUp(formData))?.user;
-        if (fbUser) {
-          const newUserData = {...formData};
-          newUserData.uid = fbUser.uid;
-          fetcher.route("users").post(newUserData);
-        } else setErrorMsg(`Could not ${formType}!`);
-        break;
+      case "register": createUser(await fireSignUp(formData)); break;
     }
-    // api.postUser(formType === "register", formData, setToken, setUser);
 
     event.target.reset();
   }
@@ -85,7 +89,7 @@ const SignInForm = () => {
   const handleSignInWithGoogle = async (e) => {
     e.preventDefault();
     try {
-      await signIn("popup");
+      createUser(await signIn("popup"), true);
     } catch (error) {
       console.error("Sign-in failed:", error);
     }
