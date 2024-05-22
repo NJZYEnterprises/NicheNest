@@ -20,14 +20,14 @@ server.use((req, res, next) => {
   console.log(req.body)
   console.log("<----- Body Logger END ----->")
   next()
-}) 
+})
 
 server.get('/', (req, res, next) => {
   res.sendFile(__dirname + '/dist/index.html')
 })
 
 
-for (const path of ["login","register","profile", "freelancers"])
+for (const path of ["login", "register", "profile", "freelancers", "freelancers/:id"])
   server.use("/" + path, express.static('dist'));
 
 server.use(express.static(path.join(__dirname, './dist')))
@@ -40,15 +40,15 @@ server.listen(process.env.PORT, () => {
   console.log(`listening on ${process.env.PORT}`)
 })
 
-server.use((err, req ,res, next)=>{
+server.use((err, req, res, next) => {
   console.error(err);
   res.status(err.status || 500).send(err)
 });
 
-server.use((req, res,)=>{
+server.use((req, res,) => {
   res.status(404).send("sorry mate! That page does't exist")
 })
 
 
 
-module.exports= server
+module.exports = server
