@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Fetcher from "../fetcher";
-<<<<<<< HEAD
 import CreateServicForm from "./CreateServiceForm";
-=======
 import { calculateAverageRating } from "../../utils/profileUtils";
->>>>>>> main
 
 const SingleFreeLancer = () => {
   const { id } = useParams();
