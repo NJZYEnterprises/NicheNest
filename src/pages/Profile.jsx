@@ -3,9 +3,9 @@ import { AuthContext } from "../auth/AuthProvider"
 import ProfileDetailsCard from '../components/ProfileDetailsCard'
 import MySessionsCard from '../components/MySessionsCard'
 import CreateServiceCard from '../components/CreateServiceCard'
-import CreateSessionCard from '../components/CreateSessionCard'
 import UserCarousel from '../components/UserCarousel'
 import Fetcher from "../fetcher.js"
+import CreateServiceForm from '../components/CreateServiceForm.jsx';
 
 const Profile = () => {
   const [activeCard, setActiveCard] = useState('profileDetails');
@@ -79,7 +79,7 @@ const Profile = () => {
             userImages={userImages}
           />}
           {activeCard === 'mySessions' && <MySessionsCard />}
-          {activeCard === 'createService' && <CreateServiceCard />}
+          {activeCard === 'createService' && <CreateServiceForm />}
           {activeCard === 'createSession' && <CreateSessionCard />}
       </div>
     </div>

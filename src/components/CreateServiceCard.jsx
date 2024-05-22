@@ -1,8 +1,12 @@
 import React from 'react'
+import CreateServiceForm from './CreateServiceForm'
 
 const CreateServiceCard = () => {
   return (
-    <div>CreateServiceCard</div>
+    <>
+    <CreateServiceForm/>
+    </>
+    
   )
 }
 

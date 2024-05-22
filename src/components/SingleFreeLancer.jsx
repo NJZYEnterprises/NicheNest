@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Fetcher from "../fetcher";
+import CreateServicForm from "./CreateServiceForm";
 import { calculateAverageRating } from "../../utils/profileUtils";
 
 const SingleFreeLancer = () => {
@@ -48,6 +49,7 @@ const SingleFreeLancer = () => {
               </div>
             ))}
           </div>
+          <CreateServiceForm/>
           <div className="mt-4">
             <button className="bg-blue-500 text-white px-4 py-2 rounded">Book Now</button>
             <button className="bg-gray-500 text-white px-4 py-2 rounded ml-2">Contact</button>
