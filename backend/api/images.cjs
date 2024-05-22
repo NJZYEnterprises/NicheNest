@@ -49,14 +49,13 @@ imageRouter.post("/add", verifyToken, async (req, res, next) => {
   }
 });
 
-// Route to update isProfile pic
-imageRouter.put("/:imageId/edit/description", verifyToken, async (req, res, next) => {
+// Route to update description
+imageRouter.put("/:imageId", verifyToken, async (req, res, next) => {
   const { uid } = req.user;
   const { imageId } = req.params;
   const { description } = req.body;
 
   try {
-      // Find the user by uid
       const user = await prisma.user.findUnique({
           where: { uid }
       });
@@ -67,10 +66,7 @@ imageRouter.put("/:imageId/edit/description", verifyToken, async (req, res, next
       const image = await prisma.user_image.findUnique({
           where: {
               id: parseInt(imageId),
-          },
-          include: {
-              user: true,
-          },
+          }
       });
 
       if (!image || image.user_id !== user.id) {
@@ -92,45 +88,89 @@ imageRouter.put("/:imageId/edit/description", verifyToken, async (req, res, next
   }
 });
 
+// Route to set an image as profile picture
+imageRouter.put("/:imageId/setProfile", verifyToken, async (req, res, next) => {
+  const { uid } = req.user;
+  const { imageId } = req.params;
+  const { isProfile } = req.body;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { uid },
+    });
+
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
+    const image = await prisma.user_image.findUnique({
+      where: {
+        id: parseInt(imageId),
+      },
+    });
+
+    if (!image) {
+      return res.status(404).json({ error: "Image not found" });
+    }
+
+    if (image.user_id !== user.id) {
+      return res.status(403).json({ error: "You are not authorized to set this image as profile picture" });
+    }
+
+    const updatedImage = await prisma.user_image.update({
+      where: {
+        id: parseInt(imageId),
+      },
+      data: {
+        isProfile: isProfile,
+      },
+    });
+
+    res.json(updatedImage);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Route to delete an image
-imageRouter.delete("/:imageId", verifyToken, async (req, res, next) => {
+imageRouter.delete("/:imageId/delete", verifyToken, async (req, res, next) => {
   const { uid } = req.user;
   const { imageId } = req.params;
 
   try {
-      const user = await prisma.user.findUnique({
-          where: { uid }
-      });
+    const user = await prisma.user.findUnique({
+      where: { uid }
+    });
 
-      if (!user) {
-          return res.status(404).send({ error: "User not found" });
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
+    const image = await prisma.user_image.findUnique({
+      where: {
+        id: parseInt(imageId),
       }
+    });
 
-      const image = await prisma.user_image.findUnique({
-          where: {
-              id: parseInt(imageId),
-          },
-          include: {
-              user: true,
-          },
-      });
+    if (!image) {
+      return res.status(404).json({ error: "Image not found" });
+    }
 
-      if (!image || image.user_id !== user.id) {
-          return res.status(403).json({ error: "You are not authorized to delete this image" });
-      }
+    if (image.user_id !== user.id) {
+      return res.status(403).json({ error: "You are not authorized to delete this image" });
+    }
 
-      await prisma.user_image.delete({
-          where: {
-              id: parseInt(imageId),
-          },
-      });
+    await prisma.user_image.delete({
+      where: {
+        id: parseInt(imageId),
+      },
+    });
 
-      res.json({ message: "Image deleted successfully" });
+    res.json({ message: "Image deleted successfully" });
   } catch (error) {
-      next(error);
+    next(error);
   }
 });
-
 
 
 module.exports = imageRouter
