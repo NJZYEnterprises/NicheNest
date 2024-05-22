@@ -98,10 +98,6 @@ reservationRouter.delete("/:reservationId", async (req, res, next) => {
   const header = req.headers.authorization;
   const token = header.replace("Bearer ", "");
 
-  if (!uid) {
-    return res.status(400).send({ error: "Missing uid in request headers" });
-  }
-
   try {
     const user = await prisma.user.findUnique({
       where: {
