@@ -9,7 +9,6 @@ const CreateServiceForm = () => {
   const { userId } = useContext(AuthContext)
   const fetcher = new Fetcher("api");
 
-  console.log('USER', user)
   const [serviceData, setServiceData] = useState({
     name: "",
     rate: "",
