@@ -9,7 +9,7 @@ import logo from "../assets/logo.png";
 const Navbar = () => {
   const { userId, handleLogout} = useContext(AuthContext)
 
-  return <div className="flex flex-col bg-gray-800 sticky top-0 p-3">
+  return <div className="flex flex-col bg-gray-800 sticky top-0 p-3" style={{zIndex: 2000}}>
     <div className="flex flex-row justify-around">
       <Link to={'/'}>
         <div>
