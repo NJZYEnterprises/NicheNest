@@ -93,7 +93,7 @@ imageRouter.put("/:imageId/edit/description", verifyToken, async (req, res, next
 });
 
 // Route to delete an image
-imageRouter.delete("/:imageId/delete", verifyToken, async (req, res, next) => {
+imageRouter.delete("/:imageId", verifyToken, async (req, res, next) => {
   const { uid } = req.user;
   const { imageId } = req.params;
 
