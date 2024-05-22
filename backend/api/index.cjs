@@ -7,6 +7,7 @@ const reviewRouter = require('./reviews.cjs');
 const locationRouter = require('./locations.cjs');
 const sessionRouter = require('./sessions.cjs');
 const reservationRouter = require('./reservations.cjs');
+const imageRouter = require('./images.cjs');
 
 
 
@@ -17,6 +18,7 @@ apiRouter.use('/reviews', reviewRouter);
 apiRouter.use('/locations', locationRouter);
 apiRouter.use('/sessions', sessionRouter);
 apiRouter.use('/reservations', reservationRouter);
+apiRouter.use('/images', imageRouter )
 
 
 apiRouter.get("/", (req, res, next)=>{
