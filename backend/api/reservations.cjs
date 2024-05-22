@@ -2,55 +2,13 @@ const express = require('express')
 const reservationRouter = express.Router();
 const myPrisma = require('../db/myPrisma.cjs');
 const prisma = require('../db/connection.cjs')
+const { verifyToken } = require('../auth/middleware.cjs');
+reservationRouter.use("/reservations", reservationRouter)
 
-// Get reservation count by user ID
-reservationRouter.get("/count/:userId", async (req, res, next) => {
-  const { userId } = req.params;
-
-  try {
-    const reservationCount = await prisma.reservation.count({
-      where: {
-        client_id: Number(userId),
-      },
-    });
-
-    res.send({ count: reservationCount });
-  } catch (error) {
-    next(error);
-  }
-});
-
-// Get reservations by user ID
-reservationRouter.get("/:userId", async (req, res, next) => {
-  const { userId } = req.params;
-
-  try {
-    const reservations = await prisma.reservation.findMany({
-      where: {
-        client_id: Number(userId),
-      },
-      include: {
-        session: {
-          include: {
-            service: true,
-          },
-        },
-      },
-    });
-
-    if (reservations.length > 0) {
-      res.send(reservations);
-    } else {
-      res.status(404).send({ error: "No reservations found for this user" });
-    }
-  } catch (error) {
-    next(error);
-  }
-});
-
-//Get reservation by uid
-reservationRouter.get("/my-reservations/:uid", async (req, res, next) => {
-  const { uid } = req.params;
+//get reservation by uid
+reservationRouter.get("/my", verifyToken, async (req, res, next) => {
+  const { uid } = req.user;
+  console.log('uid', uid)
 
   try {
     const user = await prisma.user.findUnique({
@@ -88,15 +46,57 @@ reservationRouter.get("/my-reservations/:uid", async (req, res, next) => {
   }
 });
 
+// Get reservations by user ID
+reservationRouter.get("/:userId", async (req, res, next) => {
+  const { userId } = req.params;
+
+  try {
+    const reservations = await prisma.reservation.findMany({
+      where: {
+        client_id: Number(userId),
+      },
+      include: {
+        session: {
+          include: {
+            service: true,
+          },
+        },
+      },
+    });
+
+    if (reservations.length > 0) {
+      res.send(reservations);
+    } else {
+      res.status(404).send({ error: "No reservations found for this user" });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Get reservation count by user ID
+reservationRouter.get("/count/:userId", async (req, res, next) => {
+  const { userId } = req.params;
+
+  try {
+    const reservationCount = await prisma.reservation.count({
+      where: {
+        client_id: Number(userId),
+      },
+    });
+
+    res.send({ count: reservationCount });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 // delete reservation by uid auth
 reservationRouter.delete("/:reservationId", async (req, res, next) => {
   const { reservationId } = req.params;
   const header = req.headers.authorization;
   const token = header.replace("Bearer ", "");
-
-  if (!token) {
-    return res.status(400).send({ error: "Missing uid in request headers" });
-  }
 
   try {
     const user = await prisma.user.findUnique({

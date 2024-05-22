@@ -2,6 +2,8 @@ const express = require('express')
 const sessionRouter = express.Router();
 const myPrisma = require('../db/myPrisma.cjs');
 const prisma = require('../db/connection.cjs')
+const { verifyToken } = require('../auth/middleware.cjs');
+
 
 //get all the sessions
 sessionRouter.get("/", async (req, res, next) => {
@@ -70,10 +72,21 @@ sessionRouter.patch('/:id', async (req, res, next) => {
 
 
 // Delete session by ID
-sessionRouter.delete("/:id", async (req, res, next) => {
+sessionRouter.delete("/:id", verifyToken, async (req, res, next) => {
   const { id } = req.params;
+  const { uid } = req.user;
 
   try {
+    const user = await prisma.user.findUnique({
+      where: {
+        uid: uid,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
     await prisma.reservation.deleteMany({
       where: { session_id: Number(id) },
     });
@@ -81,19 +94,22 @@ sessionRouter.delete("/:id", async (req, res, next) => {
     const deletedSession = await prisma.session.delete({
       where: { id: Number(id) },
     });
+
     res.send(deletedSession);
   } catch (error) {
+    console.error("Error deleting session:", error);
     next(error);
   }
 });
 
+module.exports = sessionRouter;
 
 
 
 
 
 
-module.exports = sessionRouter
+
 
 
 

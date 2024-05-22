@@ -1,8 +1,10 @@
 const express = require('express')
 const serviceRouter = express.Router();
+const { verifyToken } = require('../auth/middleware.cjs');
+
 
 const prisma = require('../db/connection.cjs')
-serviceRouter.use("/service", serviceRouter)
+serviceRouter.use("/services", serviceRouter)
 
 //get all services
 serviceRouter.get("/", async (req, res, next) => {
@@ -14,19 +16,48 @@ serviceRouter.get("/", async (req, res, next) => {
   }
 })
 
-//get service by name
-serviceRouter.get("/:id", async (req, res, next) => {
+//get service by uid
+serviceRouter.get("/booked", verifyToken, async (req, res, next) => {
+  const { uid } = req.user;
   try {
-    const singleService = await prisma.service.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
-        id: parseInt(req.params.id)
-      }
-    })
-    res.send(singleService)
+        uid: uid,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
+    const bookedServices = await prisma.service.findMany({
+      where: {
+        freelancer_id: user.id,
+      },
+      include: {
+        sessions: {
+          include: {
+            reservations: {
+              include: {
+                client: {
+                  select: {
+                    firstName: true,
+                    lastName: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    res.status(200).send(bookedServices);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
+
 
 //create new service
 //TODO: connect freelancer_id to uid token
