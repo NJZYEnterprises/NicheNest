@@ -34,6 +34,8 @@ userRouter.get('/freelancers/:id', async (req, res, next) => {
       include: {
         images: true,
         reviews_received: true,
+        services: true,
+        location: true,
       },
     })
     res.send(freelancers)
