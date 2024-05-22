@@ -38,7 +38,6 @@ const Profile = () => {
   const handleButtonClick = (cardName) => {
     setActiveCard(cardName);
   };
-  console.log("token",userId.accessToken)
 
   return (
     <div>
