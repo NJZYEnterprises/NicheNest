@@ -87,13 +87,9 @@ sessionRouter.delete("/:id", verifyToken, async (req, res, next) => {
       return res.status(404).send({ error: "User not found" });
     }
 
-    // await prisma.reservation.deleteMany({
-    //   where: { session_id: Number(id) },
-    // });
-
-    // await prisma.availability.deleteMany({
-    //   where: { session_id: Number(id) },
-    // });
+    await prisma.reservation.deleteMany({
+      where: { session_id: Number(id) },
+    });
 
     const deletedSession = await prisma.session.delete({
       where: { id: Number(id) },
@@ -106,13 +102,14 @@ sessionRouter.delete("/:id", verifyToken, async (req, res, next) => {
   }
 });
 
+module.exports = sessionRouter;
 
 
 
 
 
 
-module.exports = sessionRouter
+
 
 
 

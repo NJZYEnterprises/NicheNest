@@ -60,27 +60,31 @@ const MySessionsCard = () => {
   };
 
 
-  const handleDelete = async (reservationId) => {
+
+  const handleDelete = async (sessionId) => {
     try {
       await fetcher
-      .route(`/reservations/${reservationId}`)
-      .setToken(userId.uid)
-      .delete();
-      setUserReservations(prevReservations => 
-        prevReservations.filter(reservation => reservation.reservationId !== reservationId)
+        .route(`/sessions/${sessionId}`)
+        .setToken(userId.accessToken)
+        .delete();
+
+      setUserServices((prevServices) => 
+        prevServices.map(service => ({
+          ...service,
+          sessions: service.sessions.filter(session => session.id !== sessionId)
+        }))
       );
-      
     } catch (error) {
-      setError(error.message);
+      console.error("Error deleting session:", error);
     }
   };
-  
 
   return (
     <div className="p-5 rounded-md m-5 flex flex-col">
       <div className="">
       <MyReservations
           userReservations={userReservations}
+          setUserReservations={setUserReservations}
           moreDetails={moreDetails}
           toggleExpand={toggleExpand}
           handleDelete={handleDelete}

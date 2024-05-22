@@ -9,7 +9,7 @@ export function MyReservations({
 
   return <div className="flex flex-col bg-slate-950 p-10 m-5 rounded-md">
         <div className="flex flex-col mb-4">
-          <h1 className='text-3xl font-bold'>My Booked Sessions</h1>
+          <h1 className='text-3xl font-bold'>My Reservations</h1>
         </div>
         <div className="flex flex-row overflow-x-auto max-h-96 m-5">
           {userReservations && userReservations.map(reservation => <div key={reservation.reservationId} className="bg-gray-700 flex flex-col rounded-md p-4 m-10 overflow-y-auto">

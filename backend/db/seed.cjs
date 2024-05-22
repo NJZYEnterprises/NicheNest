@@ -25,6 +25,7 @@ async function main() {
     },
     // Nick
     {
+      uid: "Qdwp8MT9cHXprHxoPJWs6Pa47mc2",
       username: "nico",
       email: "lopez4163@gmail.com",
       firstName: "Nicholas",
