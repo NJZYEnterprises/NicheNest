@@ -31,6 +31,7 @@ const Profile = () => {
   
     fetchUserData();
   }, [userId]);
+  console.log('user services offered',userDetails.services)
 //*****************************************************************************/
 //TODO: Add ability that one refresh it displays currently clicked card       *
 //Options to store activeCard state in local storage to refer too on refresh  *
@@ -46,9 +47,9 @@ const Profile = () => {
     and perform crud. may need to make custom 
     carousel. 
     ***************************************** */}
-      <div className="m-5">
+      <div>
       </div>
-      <div className="bg-gray-900 flex justify-center items-center p-10 gap-10 m-5 rounded-md">
+      <div className="bg-gray-900 flex justify-center items-center p-10 gap-10 rounded-md">
         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-2 rounded"
             onClick={() => handleButtonClick('profileDetails')}>
           Profile Details
@@ -64,7 +65,7 @@ const Profile = () => {
         {
 
         }
-        {userDetails &&
+        {userDetails.services && userDetails.services.length > 0 &&
           <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-2 rounded"
             onClick={() => handleButtonClick('createSessions')}>
             Create Session
