@@ -1,15 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Fetcher from "../fetcher.js";
 import UserCarousel from "./UserCarousel";
+import AddImageButton from "./AddImageButton";
 import { AuthContext } from "../auth/AuthProvider";
 import { UserContext } from "./UserProvider.jsx";
 
-const ProfileDetailsCard = ({userDetails, setUserDetails, userImages}) => {
+const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserImages}) => {
   const { userId } = useContext(AuthContext);
   const fetcher = new Fetcher("api");
   const [editMode, setEditMode] = useState(false); 
   const [editModeField, setEditModeField] = useState(null);
   const [originalField, setOriginalField] = useState(editModeField)
+  const [showInput, setShowInput] = useState(false); 
+  const [imageUrl, setImageUrl] = useState('');
   const [profileDetails, setProfileDetails] = useState({
     firstName: "",
     lastName: "",
@@ -66,6 +69,11 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages}) => {
     }
     setProfileDetails({ ...profileDetails }); 
   };
+
+  const toggleInputField = () => {
+    setShowInput(prevShowInput => !prevShowInput);
+  };
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setProfileDetails({ ...profileDetails, [id]: value });
@@ -87,7 +95,7 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages}) => {
       console.error('Error updating user:', error);
     }
   };
-  //input fields UI for later rendering
+
   const renderField = (id, label, type = 'text') => {
     const inputElement = type === 'textarea' ? (
       <textarea
@@ -147,11 +155,29 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages}) => {
           TODO:  If user doesnt have images have a button to add images*
           to make the carousel for the user                          
         *******************************************************************/}
-        {userImages?.length > 0 ? (
-           <UserCarousel userImages={userImages} />
-            ) : (
-        <div className="text-gray-500">Loading...</div>
-        )}
+        {userImages && userImages.length > 0 ? (
+        <div className="flex flex-col">
+          {showInput ? (
+              <div className="">
+                <AddImageButton userImages={userImages} setUserImages={setUserImages} />
+                <button className="p-2 mb-5 text-white rounded" onClick={toggleInputField}>
+                  Cancel
+                </button>
+              </div>
+          ) : (
+            <div className="flex flex-row-reverse">
+              <button className="p-5 bg-slate-900 text-white rounded" onClick={toggleInputField}>
+                Add Image
+              </button>
+            </div>
+          )}
+          <UserCarousel
+           userImages={userImages}
+           setUserImages={setUserImages} />
+        </div>
+      ) : (
+        <div>No images available</div>
+      )}
       </div>
       <div className="flex justify-end mb-4">
       </div>
