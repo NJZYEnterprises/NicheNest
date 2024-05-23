@@ -1,8 +1,15 @@
 import React, { useState } from "react";
+import myString from "../utils/myString.cjs";
 
 export class InputData {
   constructor({ id, name, label, type, required }) {
     Object.entries(arguments[0]).forEach(([key, value]) => this[key] = value);
+    if (!this.label) this.label = myString.capitalize(this.name);
+    if (!this.id) this.id = this.name;
+  }
+
+  isValid() {
+    return this.name;
   }
 }
 
@@ -13,7 +20,7 @@ const Form = (props) => {
   const [errorMsg, setErrorMsg] = useState("");
 
   const onChange = event => {
-    const { name, value } = event.target
+    const { name, value } = event.target;
     setFormData((prevData) => {
       return {
         ...prevData,
@@ -41,9 +48,10 @@ const Form = (props) => {
       {title && <h2 className="text-2xl font-bold mb-2 p-1">{title}</h2>}
       <form onSubmit={onSubmit} className="flex flex-col">
         {Array.isArray(inputs) && inputs.map(input => {
-          if (!(input instanceof InputData)) return null;
+          if (!(input instanceof InputData && input.isValid())) return null;
+          // const InputTag = input.type === "textarea" ? "textarea" : "input"; // TODO: figure out how to sync textarea min dimensions with input,
           return <div key={input.id} className="flex justify-end">
-            <label className="mr-2" htmlFor={input.id}>{input.label ?? input.name}:</label>
+            <label className="mr-2" htmlFor={input.id}>{input.label}:</label>
             <input {...input} onChange={onChange}></input>
           </div>
         })}
