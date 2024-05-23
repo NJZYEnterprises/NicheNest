@@ -4,6 +4,7 @@ import { capitalize } from "../utils/myString.cjs"
 import { AuthContext } from "../auth/AuthProvider.jsx"
 import GoogleButton from "react-google-button"
 import Fetcher from "../fetcher.js";
+import Form, { InputData } from "./Form.jsx";
 
 const fetcher = new Fetcher("api");
 
@@ -11,8 +12,6 @@ const SignInForm = () => {
   // <-- Hooks -->
   const location = useLocation();
   const { signIn, fireSignUp } = useContext(AuthContext);
-  const [formData, setFormData] = useState({});
-  const [errorMsg, setErrorMsg] = useState("");
 
   // <-- Dynamic display -->
   const formType = location.pathname.replaceAll('/', '');
@@ -44,46 +43,42 @@ const SignInForm = () => {
     }
   }
 
-  // <-- Event Handlers -->
-  const handleChange = e => {
-    const { name, value } = e.target
-    setFormData((prevData) => {
-      return {
-        ...prevData,
-        [name]: value,
-      }
-    })
+  const inputs = [];
+  for (const key of inputKeys) {
+    inputs.push(new InputData({ id: key, label: key, name: inputName(key), type: getType(key), required: true }));
   }
 
   const createUser = (firebaseResponse, isGoogleSignIn = false) => {
     const fbUser = firebaseResponse?.user;
     if (fbUser) {
-      const newUserData =  isGoogleSignIn ? {} : {...formData};
+      const newUserData = isGoogleSignIn ? {} : { ...formData };
       newUserData.uid = fbUser.uid;
       newUserData.email = fbUser.email;
       if (!newUserData.username)
         newUserData.username = fbUser.displayName;
-      
+
       fetcher.setToken(fbUser.accessToken).route("users").post(newUserData);
     } else setErrorMsg(`Could not ${formType}!`);
   }
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-
-    if (formData.confirmpassword) {
-      if (formData.password !== formData.confirmpassword) {
-        setErrorMsg("Passwords do not match");
-        return; // break out of submit
-      } else setErrorMsg('');
+  // <-- Event handlers -->
+  const submitForm = async (data) => {
+    if (data.confirmPassword && data.password !== data.confirmPassword) {
+      return "Passwords do not match";
     }
 
+    let result;
     switch (formType) {
-      case "login": signIn("form", formData); break;
-      case "register": createUser(await fireSignUp(formData)); break;
+      case "login":
+        result = await signIn("form", data);
+        if (!result) return "Invalid credentials";
+        break;
+      case "register":
+        result = await fireSignUp(data);
+        if (!result) return "Failed to register new user";
+        createUser(result);
+        break;
     }
-
-    event.target.reset();
   }
 
   const handleSignInWithGoogle = async (e) => {
@@ -96,26 +91,14 @@ const SignInForm = () => {
   };
 
   // <-- Render -->
-  return <div className="flex justify-center items-center">
-    <section className="containerForm">
-      <h2>Sign In</h2>
-      <section>
-        <form onSubmit={onSubmit} className="columnContainer">
-          {inputKeys.map(key => {
-            return <div key={key} className="inputLine">
-              <label htmlFor={key}>{key}:</label>
-              <input type={getType(key)} name={inputName(key)} required id={key} onChange={handleChange}></input>
-            </div>
-          })}
-          {errorMsg && <div style={{ color: "red" }}>{errorMsg}</div>}
-          <input type="submit" value={capitalize(formType)}></input>
-        </form>
-        <div>{(formType === "login" ? "Don't" : "Already") + " have an account? "}
-          <Link to={"/" + otherFormType}>{capitalize(otherFormType)}</Link>
-        </div>
-        <div><GoogleButton onClick={handleSignInWithGoogle} /></div>
-      </section>
-    </section>
+  return <div className="flex flex-col justify-center items-center m-4">
+    <Form title={"Sign In"} submitFn={submitForm} inputs={inputs} />
+    <div className="m-1 p-1">{(formType === "login" ? "Don't" : "Already") + " have an account? "}
+      <Link to={"/" + otherFormType}>{capitalize(otherFormType)}</Link>
+    </div>
+    <div className="flex justify-center m-1 p-1">
+      <GoogleButton onClick={handleSignInWithGoogle} />
+    </div>
   </div>
 }
 
