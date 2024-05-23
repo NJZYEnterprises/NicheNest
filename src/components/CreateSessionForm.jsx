@@ -4,15 +4,10 @@ import Fetcher from "../fetcher";
 import { UserContext } from "./UserProvider";
 
 
-
-
-
-const CreateSession = ( service ) => {
+const CreateSession = ( {service} ) => {
   const fetcher = new Fetcher("api");
-  const { user } = useContext(UserContext);
   const { userId } = useContext(AuthContext)
 
-  console.log(`user`, user)
   
   
   const [sessionData, setSessionData] = useState({
@@ -21,10 +16,8 @@ const CreateSession = ( service ) => {
     duration_min: "",
     status: "active",
     capacity: "",
-    service_id: 3//pass this down from the service
+    // service_id: ""
   })
-
-  const dt = `${sessionData.date}`+ `T` + `${sessionData.when_start}` + `:00.000Z`
 
 
   const handleChange = event => {
@@ -38,8 +31,8 @@ const CreateSession = ( service ) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     sessionData.when_start= `${sessionData.date}`+ `T` + `${sessionData.when_start}` + `:00.000Z`
-    fetcher.setToken(userId.accessToken).route("sessions").post(sessionData)
-    console.log(sessionData, dt)
+    console.log(`THIS IS THE SERVICE PARAM`,service)
+    fetcher.setToken(userId.accessToken).route(`sessions/${service?.id}`).post(sessionData)
   }
 
 

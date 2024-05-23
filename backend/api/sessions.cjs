@@ -36,16 +36,17 @@ sessionRouter.get("/:id", async (req, res, next) => {
 });
 
 //create by session id
-sessionRouter.post('/', async (req, res, next) => {
+sessionRouter.post('/:id', async (req, res, next) => {
   try {
-    const { serviceId } = req.params;
+    const { id } = req.params;
+    console.log(`Service ID`, id)
     const sessionData = myPrisma.validate("Session", req.body);
     
     const newSession = await prisma.session.create({
       data: {
         ...sessionData,
         service: {
-          connect: { id: parseInt(serviceId) }
+          connect: { id: parseInt(id) }
         }
       }
     });
@@ -94,8 +95,6 @@ sessionRouter.patch('/:id', async (req, res, next) => {
 })
 
 
-<<<<<<< HEAD
-=======
 // Delete session by ID
 sessionRouter.delete("/:id", verifyToken, async (req, res, next) => {
   const { id } = req.params;
@@ -131,7 +130,6 @@ module.exports = sessionRouter;
 
 
 
->>>>>>> main
 
 
 
