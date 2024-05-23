@@ -31,6 +31,8 @@ const Profile = () => {
   
     fetchUserData();
   }, [userId]);
+  
+
   console.log('user services offered',userDetails.services)
 //*****************************************************************************/
 //TODO: Add ability that one refresh it displays currently clicked card       *
@@ -78,6 +80,7 @@ const Profile = () => {
             userDetails={userDetails} 
             setUserDetails={setUserDetails} 
             userImages={userImages}
+            setUserImages={setUserImages}
           />}
           {activeCard === 'mySessions' && <MySessionsCard />}
           {activeCard === 'createService' && <CreateServiceForm />}

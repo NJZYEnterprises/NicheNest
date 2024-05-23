@@ -5,7 +5,7 @@ import CarouselCard from "./CarouselCard.jsx"
 import "react-multi-carousel/lib/styles.css"
 
 
-const UserCarousel = ({ freelancers, topRatedFreelancers, userImages }) => {
+const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, setUserImages }) => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
