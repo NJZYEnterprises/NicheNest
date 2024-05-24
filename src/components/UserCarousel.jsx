@@ -28,13 +28,14 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, setUserIma
 
   if (userImages && userImages.length > 0) {
     return (
-      <div className="bg-slate-600 bg-opacity-20 mr-20 ml-20">
+      <div className="mr-20 ml-20">
         <Carousel
           responsive={responsive}
           additionalTransfrom={0}
           arrows
           containerClass="carousel-container"
           itemClass="carousel-item"
+          className="surface-color"
         >
           {userImages.map((image, index) => (
             <div key={index} className="block m-5">

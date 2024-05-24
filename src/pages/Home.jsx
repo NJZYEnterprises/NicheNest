@@ -20,7 +20,7 @@ const Home = () => {
         } */}
       </div>
       <div className="flex flex-col gap-10">
-        <div>
+        <div className="surface-color m-20">
           <UserCarousel freelancers={freelancers}/>
         </div>
         <div>
