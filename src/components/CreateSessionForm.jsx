@@ -8,8 +8,6 @@ const CreateSession = ({ service }) => {
   const fetcher = new Fetcher("api");
   const { userId } = useContext(AuthContext)
   
-
-
   const handleSubmit = (sessionData) => {
     sessionData.when_start = `${sessionData.date}` + `T` + `${sessionData.time}` + `:00.000Z`
     fetcher.setToken(userId.accessToken).route(`sessions/${service?.id}`).post(sessionData)
@@ -18,9 +16,9 @@ const CreateSession = ({ service }) => {
   const inputs = [
     { name: "date", type: "date" },
     { name: "time", type: "time" },
-    { name: "duration_min", label: "How Many Minutes", type: "Int", },
+    { name: "duration_min", label: "How Many Minutes", type: "Number", },
     { name: "status", label: "Active/Inactive", type: "select", },
-    { name: "capacity", type: "Int", lable: "capacity"},
+    { name: "capacity", type: "Number", lable: "capacity"},
     { name: "description", type: "textarea", lable: "description"},
   ];
   for (let i = 0; i < inputs.length; i++) {
