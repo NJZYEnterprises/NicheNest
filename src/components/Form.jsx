@@ -20,6 +20,10 @@ const Form = (props) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [textareaHeightMap, setTextareaHeightMap] = useState({});
 
+  let inputWidth = "10em";
+  if (inputs.some(i => i.type === "textarea"))
+    inputWidth = "15em";
+
   const onChange = event => {
     const { name, value } = event.target;
 
@@ -57,14 +61,13 @@ const Form = (props) => {
   return <div className="flex justify-center items-center m-2 bg-gray-700 px-3 py-2 rounded-md shadow-md w-max">
     <section className="containerForm">
       {title && <h2 className="text-2xl font-bold mb-2 p-1">{title}</h2>}
-      <form onSubmit={onSubmit} className="flex flex-col">
+      <form onSubmit={onSubmit} className="flex flex-col" >
         {Array.isArray(inputs) && inputs.map(input => {
           if (!(input instanceof InputData && input.isValid())) return null;
 
-          const InputTag = input.type === "textarea" ? "textarea" : "input"; // TODO: figure out how to sync textarea min dimensions with input,
-          const styling = {};
+          const InputTag = input.type === "textarea" ? "textarea" : "input";
+          const styling = { width: inputWidth };
           if (input.type === "textarea") {
-            styling.width = 'inherit';
             styling.minHeight = "1.5em";
             styling.height = textareaHeightMap[input.name] ?? styling.minHeight;
           }
