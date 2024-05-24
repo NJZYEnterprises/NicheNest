@@ -18,9 +18,20 @@ const Form = (props) => {
 
   const [formData, setFormData] = useState({});
   const [errorMsg, setErrorMsg] = useState("");
+  const [textareaHeightMap, setTextareaHeightMap] = useState({});
 
   const onChange = event => {
     const { name, value } = event.target;
+
+    if (event.target.tagName === "TEXTAREA") {
+      setTextareaHeightMap((prevData) => {
+        return {
+          ...prevData,
+          [name]: `${event.target.scrollHeight}px`,
+        }
+      })
+    }
+
     setFormData((prevData) => {
       return {
         ...prevData,
@@ -49,10 +60,18 @@ const Form = (props) => {
       <form onSubmit={onSubmit} className="flex flex-col">
         {Array.isArray(inputs) && inputs.map(input => {
           if (!(input instanceof InputData && input.isValid())) return null;
-          // const InputTag = input.type === "textarea" ? "textarea" : "input"; // TODO: figure out how to sync textarea min dimensions with input,
+
+          const InputTag = input.type === "textarea" ? "textarea" : "input"; // TODO: figure out how to sync textarea min dimensions with input,
+          const styling = {};
+          if (input.type === "textarea") {
+            styling.width = 'inherit';
+            styling.minHeight = "1.5em";
+            styling.height = textareaHeightMap[input.name] ?? styling.minHeight;
+          }
+
           return <div key={input.id} className="flex justify-end">
             <label className="mr-2" htmlFor={input.id}>{input.label}:</label>
-            <input {...input} onChange={onChange}></input>
+            <InputTag style={styling} {...input} onChange={onChange}></InputTag>
           </div>
         })}
         <div>
