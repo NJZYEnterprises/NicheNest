@@ -39,7 +39,6 @@ sessionRouter.get("/:id", async (req, res, next) => {
 sessionRouter.post('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    console.log(`Service ID`, id)
     const sessionData = myPrisma.validate("Session", req.body);
     
     const newSession = await prisma.session.create({
