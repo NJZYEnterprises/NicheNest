@@ -5,7 +5,7 @@ import CarouselCard from "./CarouselCard.jsx"
 import "react-multi-carousel/lib/styles.css"
 
 
-const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, setUserImages }) => {
+const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode, setSelectedImage, selectedImage }) => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -26,6 +26,12 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, setUserIma
     },
   }
 
+  const handleImageClick = (image) => {
+    if (deleteMode) {
+      setSelectedImage(image);
+    }
+  };
+
   if (userImages && userImages.length > 0) {
     return (
       <div className="bg-slate-600 bg-opacity-20 mr-20 ml-20">
@@ -37,7 +43,10 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, setUserIma
           itemClass="carousel-item"
         >
           {userImages.map((image, index) => (
-            <div key={index} className="block m-5">
+            <div key={index} 
+                className={`p-2 ${deleteMode && selectedImage && selectedImage.id === image.id ? 'border-2 border-red-500' : ''}`}
+                onClick={() => handleImageClick(image)}
+            >
               <img src={image.image_url} alt={`User Image ${index}`} />
             </div>
           ))}

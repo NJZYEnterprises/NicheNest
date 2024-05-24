@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Fetcher from "../fetcher.js";
 import UserCarousel from "./UserCarousel";
-import AddImageButton from "./AddImageButton";
+import AddImageForm from "./AddImageForm";
 import { AuthContext } from "../auth/AuthProvider";
 import { UserContext } from "./UserProvider.jsx";
 
@@ -11,7 +11,9 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserIma
   const [editMode, setEditMode] = useState(false); 
   const [editModeField, setEditModeField] = useState(null);
   const [originalField, setOriginalField] = useState(editModeField)
+  const [deleteMode, setDeleteMode] = useState(false); // New state for delete mode
   const [showInput, setShowInput] = useState(false); 
+  const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [profileDetails, setProfileDetails] = useState({
     firstName: "",
@@ -53,7 +55,6 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserIma
     setEditMode(!editMode);
     setEditModeField(null); 
   };
-
   const enterFieldEditMode = (field) => {
     if(editModeField) {
       setEditModeField(originalFieldDetails);
@@ -68,10 +69,6 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserIma
       setEditModeField(null);
     }
     setProfileDetails({ ...profileDetails }); 
-  };
-
-  const toggleInputField = () => {
-    setShowInput(prevShowInput => !prevShowInput);
   };
 
   const handleChange = (e) => {
@@ -144,39 +141,35 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserIma
     </div>
     );
   };
-  //UI elements
   return (
     <div className="m-5 bg-gray-700 p-6 rounded-lg shadow-lg">
     <div className="">
       <h2 className="text-xl font-bold mb-4">Profile Details</h2>
     </div>
       <div className="m-5">
-      {/*******************************************************************
-          TODO:  If user doesnt have images have a button to add images*
-          to make the carousel for the user                          
-        *******************************************************************/}
         {userImages && userImages.length > 0 ? (
         <div className="flex flex-col">
-          {showInput ? (
-              <div className="">
-                <AddImageButton userImages={userImages} setUserImages={setUserImages} />
-                <button className="p-2 mb-5 text-white rounded" onClick={toggleInputField}>
-                  Cancel
-                </button>
-              </div>
-          ) : (
-            <div className="flex flex-row-reverse">
-              <button className="p-5 bg-slate-900 text-white rounded" onClick={toggleInputField}>
-                Add Image
-              </button>
-            </div>
-          )}
+          {editMode && (
+              <AddImageForm 
+              setUserImages={setUserImages} 
+              deleteMode={deleteMode} 
+              setDeleteMode={setDeleteMode}
+              selectedImage={selectedImage}
+              setSelectedImage={setSelectedImage}
+              />
+            )
+          }
           <UserCarousel
            userImages={userImages}
-           setUserImages={setUserImages} />
+           setUserImages={setUserImages}
+           deleteMode={deleteMode}
+           setDeleteMode={setDeleteMode} 
+           selectedImage={selectedImage}
+           setSelectedImage={setSelectedImage}
+           />
         </div>
       ) : (
-        <div>No images available</div>
+        <div>Loading...</div>
       )}
       </div>
       <div className="flex justify-end mb-4">
