@@ -34,7 +34,6 @@ const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage,
   };
 
   const handleDeleteImage = async () => {
-    console.log('delete image hit', selectedImage)
     if (!selectedImage) {
       setError('Please select an image to delete');
       return;
