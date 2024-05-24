@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from "../auth/AuthProvider"
 import ProfileDetailsCard from '../components/ProfileDetailsCard'
 import MySessionsCard from '../components/MySessionsCard'
-import CreateServiceCard from '../components/CreateServiceCard'
 import UserCarousel from '../components/UserCarousel'
 import Fetcher from "../fetcher.js"
 import CreateServiceForm from '../components/CreateServiceForm.jsx';
+import CreateSession from '../components/CreateSessionForm.jsx';
 
 const Profile = () => {
   const [activeCard, setActiveCard] = useState('profileDetails');
@@ -69,7 +69,7 @@ const Profile = () => {
         }
         {userDetails.services && userDetails.services.length > 0 &&
           <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-2 rounded"
-            onClick={() => handleButtonClick('createSessions')}>
+            onClick={() => handleButtonClick('createSession')}>
             Create Session
           </button>
         }
@@ -84,7 +84,7 @@ const Profile = () => {
           />}
           {activeCard === 'mySessions' && <MySessionsCard />}
           {activeCard === 'createService' && <CreateServiceForm />}
-          {activeCard === 'createSession' && <CreateSessionCard />}
+          {activeCard === 'createSession' && <CreateSession service={userDetails?.services[0]}/>}
       </div>
     </div>
   )

@@ -2,6 +2,7 @@ const express = require('express')
 const sessionRouter = express.Router();
 const myPrisma = require('../db/myPrisma.cjs');
 const prisma = require('../db/connection.cjs')
+sessionRouter.use("/sessions", sessionRouter)
 const { verifyToken } = require('../auth/middleware.cjs');
 
 
@@ -34,22 +35,44 @@ sessionRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-//create by service id
-sessionRouter.post('/:serviceId', async (req, res, next) => {
+//create by session id
+sessionRouter.post('/:id', async (req, res, next) => {
   try {
-    const { serviceId } = req.params;
+    const { id } = req.params;
     const sessionData = myPrisma.validate("Session", req.body);
     
     const newSession = await prisma.session.create({
       data: {
         ...sessionData,
         service: {
-          connect: { id: parseInt(serviceId) }
+          connect: { id: parseInt(id) }
         }
       }
     });
 
     res.send(newSession);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+// Delete session by ID
+sessionRouter.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    // Delete associated reservations first
+    await prisma.reservation.deleteMany({
+      where: { session_id: Number(id) },
+    });
+
+    // Then delete the session
+    const deletedSession = await prisma.session.delete({
+      where: { id: Number(id) },
+    });
+
+    res.send(deletedSession);
   } catch (error) {
     next(error);
   }
