@@ -3,10 +3,46 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --calPolyGreen: #2A4A1c;
+  --cafeNoir: #3C2F16;
+  --fireEngineRed: #c41D1D;
+  --resedaGreen : #717F4A;
+  --darkMossGreen: #4F5A20;
+  --sage: #C4BB97;
+  --alabaster: #F0ECE2;
+  --skyBirdBlue: #99C0DD;
 }
+
+
+.primary-color {
+  background-color: var(--calPolyGreen);
+  color: black;
+}
+.background-color, :root{
+  background-color: var(--sage);
+  color: black;
+}
+.surface-color {
+  background-color: var(--resedaGreen) ;
+  color: black;
+}
+.view-button {
+  color: var(--darkMossGreen);
+}
+.submit-button {
+  color: var(--skyBirdBlue)
+}
+.error-button {
+  background-color: #C41D1D;
+  color: var(--alabaster);
+}
+.error-text {
+  color: #C41D1D;
+}
+
+
+
+
 
 body {
   margin: 0;
@@ -14,9 +50,12 @@ body {
   min-height: 100vh;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
+/* .app-background-color {
+  background-color: #3c2f16;
 }
+.navbar-bg {
+  background-color: #C4BB97;
+} */
+
+
+
