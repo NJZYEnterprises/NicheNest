@@ -44,11 +44,6 @@ const Profile = () => {
 
   return (
     <div>
-    {/* *****************************************
-    TODO: allow user to select profile image,
-    and perform crud. may need to make custom 
-    carousel. 
-    ***************************************** */}
       <div>
       </div>
       <div className="bg-gray-900 flex justify-center items-center p-10 gap-10 rounded-md">
