@@ -19,7 +19,6 @@ const Profile = () => {
       try {
         if (userId) {
           const userData = await fetcher.route(`/users/user/${userId.uid}`).get();
-          console.log(`THIS IS USER DATA`,userData)
           setUserDetails(userData);
           setUserImages(userData.images)
         } else {
