@@ -18,8 +18,8 @@ const CreateSession = ({ service }) => {
     { name: "time", type: "time" },
     { name: "duration_min", label: "How Many Minutes", type: "Number", },
     { name: "status", label: "Active/Inactive", type: "select", },
-    { name: "capacity", type: "Number", lable: "Capacity"},
-    { name: "description", type: "textarea", lable: "Description"},
+    { name: "capacity", type: "Number", label: "Capacity"},
+    { name: "description", type: "textarea", label: "Description"},
   ];
   for (let i = 0; i < inputs.length; i++) {
     if (!inputs[i].hasOwnProperty("requiered"))
