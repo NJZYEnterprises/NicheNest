@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from "../auth/AuthProvider";
-import { UserContext } from "../components/UserProvider";
 import Fetcher from "../fetcher.js";
 import Form, { InputData } from './Form';
 
@@ -8,7 +7,6 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
   const [serviceIsOpen, setServiceIsOpen] = useState({});
   const [sessionIsOpen, setSessionIsOpen] = useState({});
   const { userId } = useContext(AuthContext);
-  const { user } = useContext(UserContext);
   const fetcher = new Fetcher("api");
 
   const toggleService = (serviceId) => {
@@ -28,8 +26,8 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
 
   const updateService = (formData, serviceId) => {
     fetcher.setToken(userId.accessToken).route(`/services/${serviceId}`).patch(formData);
+    window.location.reload();
   }
-
 
   const inputs = [
     { name: "name" },
@@ -38,8 +36,8 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
     { name: "rate_time", label: "Billing Unit" },
   ];
   for (let i = 0; i < inputs.length; i++) {
-    // if (!inputs[i].hasOwnProperty("required"))
-    //   inputs[i].required = true;
+    if (!inputs[i].hasOwnProperty("required"))
+      inputs[i].required = true;
 
     inputs[i] = new InputData(inputs[i]);
   }
@@ -53,6 +51,7 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
     );
   };
 
+
   return (
     <div className="flex flex-col bg-slate-950 p-10 m-5 rounded-md h-screen max-h-screen overflow-y-auto">
       <div className="mb-4">
@@ -63,11 +62,6 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
           <div key={service.id} className="bg-gray-700 rounded-md p-4 mb-4">
             <div className="flex justify-between items-center mb-2">
               <span className="text-lg font-bold text-orange-500">{service.name}
-                <button
-                ></button>
-                <Form title={"Update Service:"} submitFn={(formData) => {
-                  updateService(formData, service.id)
-                  }} inputs={inputs} />
                 <div className='flex justify-center m-4'>
                 </div>
               </span>
@@ -80,6 +74,9 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
             </div>
             {serviceIsOpen[service.id] && (
               <div className="overflow-y-auto max-h-96">
+                <Form title={"Update Service:"} submitFn={(formData) => {
+                  updateService(formData, service.id)
+                }} inputs={inputs} />
                 {service.sessions.length === 0 ? (
                   <div className="text-white">No sessions</div>
                 ) : (
