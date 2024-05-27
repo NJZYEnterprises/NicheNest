@@ -1,11 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from "../auth/AuthProvider";
+import { UserContext } from "../components/UserProvider";
 import Fetcher from "../fetcher.js";
+import Form, { InputData } from './Form';
 
 const MyBookedServices = ({ userServices, setUserServices }) => {
   const [serviceIsOpen, setServiceIsOpen] = useState({});
   const [sessionIsOpen, setSessionIsOpen] = useState({});
   const { userId } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
   const fetcher = new Fetcher("api");
 
   const toggleService = (serviceId) => {
@@ -22,14 +25,32 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
     }));
   };
 
-  const handleDelete =  (sessionId) => {
+
+  const updateService = (formData, serviceId) => {
+    fetcher.setToken(userId.accessToken).route(`/services/${serviceId}`).patch(formData);
+  }
+
+
+  const inputs = [
+    { name: "name" },
+    { name: "tags", type: "textarea", required: false },
+    { name: "rate", label: "Price per Unit", type: "number" },
+    { name: "rate_time", label: "Billing Unit" },
+  ];
+  for (let i = 0; i < inputs.length; i++) {
+    // if (!inputs[i].hasOwnProperty("required"))
+    //   inputs[i].required = true;
+
+    inputs[i] = new InputData(inputs[i]);
+  }
+  const handleDelete = (sessionId) => {
     fetcher.route(`/sessions/${sessionId}`).setToken(userId.accessToken).delete();
-      setUserServices((prevServices) =>
-        prevServices.map(service => ({
-          ...service,
-          sessions: service.sessions.filter(session => session.id !== sessionId)
-        }))
-      );
+    setUserServices((prevServices) =>
+      prevServices.map(service => ({
+        ...service,
+        sessions: service.sessions.filter(session => session.id !== sessionId)
+      }))
+    );
   };
 
   return (
@@ -41,7 +62,15 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
         {userServices && userServices.map((service) => (
           <div key={service.id} className="bg-gray-700 rounded-md p-4 mb-4">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-lg font-bold text-orange-500">{service.name}</span>
+              <span className="text-lg font-bold text-orange-500">{service.name}
+                <button
+                ></button>
+                <Form title={"Update Service:"} submitFn={(formData) => {
+                  updateService(formData, service.id)
+                  }} inputs={inputs} />
+                <div className='flex justify-center m-4'>
+                </div>
+              </span>
               <button
                 className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded"
                 onClick={() => toggleService(service.id)}
@@ -99,5 +128,6 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
     </div>
   );
 };
+
 
 export default MyBookedServices;
