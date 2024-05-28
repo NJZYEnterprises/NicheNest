@@ -8,41 +8,114 @@
   --fireEngineRed: #c41D1D;
   --resedaGreen : #717F4A;
   --darkMossGreen: #4F5A20;
+  --leafGreen: #5ca904;
   --sage: #C4BB97;
   --alabaster: #F0ECE2;
   --skyBirdBlue: #99C0DD;
+  --littleBoyBlue: #6b9fdb;
+  --sunYellow: #FAFD0F;
+
+  --primaryColor: var(--calPolyGreen);
+  --secondaryColor: var(--darkMossGreen);
+  --surfaceColor: var(--resedaGreen);
 }
 
 
 .primary-color {
-  background-color: var(--calPolyGreen);
+  background-color: var(--primaryColor);
+  color: var(--alabaster);
+}
+.primary-color-t {
+  background-color: #2a4a1cd0;
+  color: var(--alabaster);
+}
+.secondary-color {
+  background-color: var(--secondaryColor);
+  color: var(--alabaster);
+}
+.background-color{
+  background-image: radial-gradient(var(--resedaGreen), var(--sage) 90%);
+  /* background-color: var(--sage); */
   color: black;
 }
-.background-color, :root{
-  background-color: var(--sage);
-  color: black;
-}
+/* , .react-multi-carousel-list */
 .surface-color {
-  background-color: var(--resedaGreen) ;
+  /* background-image: linear-gradient(var(--resedaGreen), var(--sage)); */
+  background-image: linear-gradient(#717f4ae5, #c4bb97e5);
+  /* background-color: var(--surfaceColor); */
   color: black;
 }
+.surface-text {
+  background-color: #c4bb9744;
+  border-radius: 12px;
+}
+
+.birds-nest {
+  background: radial-gradient(var(--sage), var(--cafeNoir) 20% 40%, var(--resedaGreen), var(--calPolyGreen) 80%);
+}
+
+.tree-background, :root {
+  /* background: url("./assets/Watercolor-Tree-Branch-Seamless-Pattern-81721942-1.png"); */
+  background: url("./assets/Watercolor-Painting-Tree-Branches-Seamless-Pattern-Green-And-Brown-81721873-1.png");
+  /* background-size: 20%; */
+  background-repeat: repeat;
+  color: black;
+}
+
+.forest-scene {
+  /* background: conic-gradient(from 0deg at 0% 85%, var(--sunYellow), var(--resedaGreen) 90deg, var(--cafeNoir) 120deg); */
+  /* background: linear-gradient(to bottom right, var(--sunYellow) 0%, var(--skyBirdBlue) 30%, var(--resedaGreen) 80%); */
+  background: 
+    /* linear-gradient(to bottom right, var(--sunYellow), var(--skyBirdBlue)), */
+    conic-gradient(from 0deg at 0% 85%, var(--sunYellow), var(--skyBirdBlue) 90deg),
+    linear-gradient(var(--skyBirdBlue), var(--resedaGreen), var(--calPolyGreen), var(--cafeNoir));
+    background-size: 100% 30%, 100% 70%;
+    background-position: left top, left bottom; /* Position for each gradient */
+    background-repeat: no-repeat; /* Prevent repeating */
+}
+
+.sky-scene {
+  background: 
+  /* linear-gradient(to bottom right, var(--sunYellow), var(--skyBirdBlue)), */
+  conic-gradient(from 0deg at 0% 85%, var(--sunYellow), var(--skyBirdBlue) 90deg),
+  linear-gradient(var(--skyBirdBlue), var(--resedaGreen));
+  background-size: 100% 70%, 100% 30%;
+  background-position: left top, left bottom; /* Position for each gradient */
+  background-repeat: no-repeat; /* Prevent repeating */
+}
+.ground-scene {
+  background: linear-gradient(var(--sage), var(--resedaGreen), var(--calPolyGreen), var(--cafeNoir));
+}
+
 .view-button {
-  color: var(--darkMossGreen);
+  background-color: var(--leafGreen);
+  color: white;
+}
+.view-button:hover {
+  background-color: #85df1f;
 }
 .submit-button {
-  color: var(--skyBirdBlue)
+  background-color: var(--littleBoyBlue);
+  color: white;
+}
+.submit-button:hover {
+  background-color: var(--skyBirdBlue);
 }
 .error-button {
-  background-color: #C41D1D;
+  background-color: var(--fireEngineRed);
   color: var(--alabaster);
+}
+.error-button:hover {
+  background-color: #ff6767;
 }
 .error-text {
   color: #C41D1D;
 }
 
-
-
-
+.card {
+  border-radius: 12px;
+  box-shadow: 2px 4px 6px 2px rgba(0, 0, 0, 0.4);
+}
 
 body {
   margin: 0;

@@ -41,7 +41,7 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
           arrows
           containerClass="carousel-container"
           itemClass="carousel-item"
-          className="surface-color"
+          // className="surface-color"
         >
           {userImages.map((image, index) => (
             <div key={index} 
@@ -59,7 +59,7 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
   const freelancersToDisplay = topRatedFreelancers || freelancers ;
 
   return (
-    <div className="bg-slate-600 bg-opacity-20 mr-20 ml-20">
+    <div className="surface-color card mr-20 ml-20">
       <h1 className="text-2xl pt-3">
         {freelancers ? "Freelancers" : "Top Rated Freelancers"}
       </h1>

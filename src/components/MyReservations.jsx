@@ -7,12 +7,12 @@ export function MyReservations({
   moreDetails
 }) {
 
-  return <div className="flex flex-col bg-slate-950 p-10 m-5 rounded-md">
+  return <div className="flex flex-col p-10 m-5 surface-color card">
         <div className="flex flex-col mb-4">
           <h1 className='text-3xl font-bold'>My Reservations</h1>
         </div>
         <div className="flex flex-row overflow-x-auto max-h-96 m-5">
-          {userReservations && userReservations.map(reservation => <div key={reservation.reservationId} className="bg-gray-700 flex flex-col rounded-md p-4 m-10 overflow-y-auto">
+          {userReservations && userReservations.map(reservation => <div key={reservation.reservationId} className="birds-nest card flex flex-col px-4 py-8 m-10 overflow-y-auto">
               <div className="flex flex-col">
                 <div className="flex flex-row gap-5 mb-2">
                   <h2 className="text-lg font-bold text-white">Service Name:</h2>
@@ -53,10 +53,10 @@ export function MyReservations({
                     </div>
                   </div>}
                 <div className="flex justify-center gap-2 mt-2">
-                  <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded" onClick={() => toggleExpand(reservation.reservationId)}>
+                  <button className="view-button text-white font-bold py-1 px-2 rounded" onClick={() => toggleExpand(reservation.reservationId)}>
                     {moreDetails.includes(reservation.reservationId) ? 'Show Less' : 'Show More'}
                   </button>
-                  <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded" onClick={() => handleDelete(reservation.reservationId)}>
+                  <button className="error-button text-white font-bold py-1 px-2 rounded" onClick={() => handleDelete(reservation.reservationId)}>
                     Cancel RSVP
                   </button>
                 </div>
