@@ -161,7 +161,6 @@ const ProfileDetailsCard = ({ userDetails, setUserDetails, userImages, setUserIm
               />
             )
             }
-            <div className="p-10">
               <UserCarousel
                 userImages={userImages}
                 setUserImages={setUserImages}
@@ -170,7 +169,6 @@ const ProfileDetailsCard = ({ userDetails, setUserDetails, userImages, setUserIm
                 selectedImage={selectedImage}
                 setSelectedImage={setSelectedImage}
               />
-            </div>
           </div>
         ) : (
           <div>Loading...</div>
