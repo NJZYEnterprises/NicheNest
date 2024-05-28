@@ -13,17 +13,17 @@ const Home = () => {
   }
   return (
     <div>
-      <div className="text-2xl m-10">
-        <h2>Signed In As: {userId?.email ?? "No One.."}</h2>
+      <div className="flex justify-center text-2xl m-10">
+        <h2 className="surface-color card w-max p-2 m-2">Signed In As: {userId?.email ?? "No One.."}</h2>
         {/* { user && // TODO: for testing, remove
           Object.entries(user).map(([key, value]) => <div>{key}: {typeof(value) === "object" ? "object" : value}</div>)
         } */}
       </div>
       <div className="flex flex-col gap-10">
-        <div className="surface-color m-20">
+        <div className="m-10">
           <UserCarousel freelancers={freelancers}/>
         </div>
-        <div>
+        <div className="m-10" >
           <UserCarousel topRatedFreelancers={topRatedFreelancers}/>
         </div>
       </div>

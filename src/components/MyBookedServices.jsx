@@ -53,18 +53,18 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
 
 
   return (
-    <div className="flex flex-col bg-slate-950 p-10 m-5 rounded-md h-screen max-h-screen overflow-y-auto">
+    <div className="surface-color card flex flex-col p-10 m-5 h-screen max-h-screen overflow-y-auto">
       <div className="mb-4">
         <h1 className="text-3xl font-bold">My Services</h1>
       </div>
       <div className="m-10">
         {userServices && userServices.map((service) => (
-          <div key={service.id} className="bg-gray-700 rounded-md p-4 mb-4">
+          <div key={service.id} className="primary-color-t card p-4 mb-4">
             <div className="flex justify-between items-center mb-2">
               <span className="text-lg font-bold text-orange-500">{service.name}
               </span>
               <button
-                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded"
+                className="view-button text-white font-bold py-1 px-2 rounded"
                 onClick={() => toggleService(service.id)}
               >
                 {serviceIsOpen[service.id] ? 'Hide Sessions' : 'Show Sessions'}
@@ -87,13 +87,13 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
                         </div>
                         <div className="flex gap-2">
                           <button
-                            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded"
+                            className="view-button text-white font-bold py-1 px-2 rounded"
                             onClick={() => toggleSession(session.id)}
                           >
                             {sessionIsOpen[session.id] ? 'Hide Session Info' : 'Show Session Info'}
                           </button>
                           <button
-                            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded"
+                            className="error-button text-white font-bold py-1 px-2 rounded"
                             onClick={() => handleDelete(session.id)}
                           >
                             Delete
