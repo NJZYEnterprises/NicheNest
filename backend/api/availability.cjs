@@ -5,16 +5,11 @@ const availabilityRouter = express.Router();
 
 //create 
 availabilityRouter.post('/', verifyToken, async (req, res, next) => {
-  const { freelancerId, serviceId } = req.body;
+  const data = myPrisma.validate("Availability", req.body);
 
   try {
     const newAvailability = await prisma.availability.create({
-      data: {
-
-        freelancerId: parseInt(freelancerId),
-        serviceId: parseInt(serviceId)
-
-      }
+      data,
     });
 
     res.status(201).json(newAvailability);
@@ -46,21 +41,15 @@ availabilityRouter.get('/:freelancerId/:serviceId', verifyToken, async (req, res
 //update 
 availabilityRouter.put('/:id', verifyToken, async (req, res, next) => {
   const { id } = req.params;
-  const { freelancerId, serviceId } = req.body;
 
   try {
+    const data = myPrisma.validate("Availability", req.body);
+
     const updatedAvailability = await prisma.availability.update({
       where: {
-
         id: parseInt(id)
       },
-
-      data: {
-
-        freelancerId: parseInt(freelancerId),
-        serviceId: parseInt(serviceId)
-
-      }
+      data,
     });
 
     res.json(updatedAvailability);
