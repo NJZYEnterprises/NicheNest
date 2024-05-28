@@ -41,9 +41,9 @@ availabilityRouter.get('/:freelancerId/:serviceId', verifyToken, async (req, res
 //update 
 availabilityRouter.put('/:id', verifyToken, async (req, res, next) => {
   const { id } = req.params;
-
+  const data = myPrisma.validate("Availability", req.body);
+  
   try {
-    const data = myPrisma.validate("Availability", req.body);
 
     const updatedAvailability = await prisma.availability.update({
       where: {
