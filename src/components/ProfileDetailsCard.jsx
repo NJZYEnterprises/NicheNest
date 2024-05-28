@@ -150,7 +150,7 @@ const ProfileDetailsCard = ({ userDetails, setUserDetails, userImages, setUserIm
       </div>
       <div className="m-5">
         {userImages && userImages.length > 0 ? (
-          <div className="flex flex-col mr-21 ml-21 ">
+          <div className="flex flex-col">
             {editMode && (
               <AddImageForm
                 setUserImages={setUserImages}
