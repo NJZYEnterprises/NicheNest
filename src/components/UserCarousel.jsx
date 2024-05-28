@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import Carousel from "react-multi-carousel"
 import CarouselCard from "./CarouselCard.jsx"
+import CustomButtonGroup from "./CustomButtonGroup.jsx"
 import "react-multi-carousel/lib/styles.css"
 
 
@@ -37,8 +38,9 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
       <div className="mr-20 ml-20">
         <Carousel
           responsive={responsive}
+          customButtonGroup={<CustomButtonGroup/>}
           additionalTransfrom={0}
-          arrows
+          arrows={false}
           containerClass="carousel-container"
           itemClass="carousel-item"
           className="surface-color"
@@ -66,7 +68,8 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
       <Carousel
         responsive={responsive}
         additionalTransfrom={0}
-        arrows
+        arrows={false}
+        customButtonGroup={<CustomButtonGroup />} // Add custom button group
         containerClass="carousel-container"
         itemClass="carousel-item"
       >

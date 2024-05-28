@@ -15,16 +15,19 @@
 
 
 .primary-color {
-  background-color: var(--calPolyGreen);
-  color: black;
-}
-.background-color, :root{
   background-color: var(--sage);
   color: black;
 }
-.surface-color {
-  background-color: var(--resedaGreen) ;
+.secondary-color {
+
+}
+.background-color, :root{
+  background-color: var(--resedaGreen);
   color: black;
+}
+.surface-color {
+  background-color: var(--darkMossGreen) ;
+  color: var(--alabaster);
 }
 .view-button {
   color: var(--darkMossGreen);
@@ -38,6 +41,29 @@
 }
 .error-text {
   color: #C41D1D;
+}
+.react-multi-carousel-list {
+  background-color: var(--da); 
+}
+/* carouselOverrides.css */
+.react-multi-carousel-arrow {
+  background-color: #333; /* Change background color */
+  border-radius: 50%; /* Make arrows round */
+  padding: 10px; /* Add padding */
+  width: 40px; /* Set width */
+  height: 40px; /* Set height */
+}
+
+.react-multi-carousel-arrow--left {
+  left: -20px; /* Move the left arrow */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust centering */
+}
+
+.react-multi-carousel-arrow--right {
+  right: -20px; /* Move the right arrow */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust centering */
 }
 
 
