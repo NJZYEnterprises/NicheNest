@@ -62,8 +62,6 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
           <div key={service.id} className="bg-gray-700 rounded-md p-4 mb-4">
             <div className="flex justify-between items-center mb-2">
               <span className="text-lg font-bold text-orange-500">{service.name}
-                <div className='flex justify-center m-4'>
-                </div>
               </span>
               <button
                 className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded"
