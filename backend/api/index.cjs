@@ -8,6 +8,7 @@ const locationRouter = require('./locations.cjs');
 const sessionRouter = require('./sessions.cjs');
 const reservationRouter = require('./reservations.cjs');
 const imageRouter = require('./images.cjs');
+const availabilityRouter = require(`./availability.cjs`);
 
 
 
@@ -19,6 +20,7 @@ apiRouter.use('/locations', locationRouter);
 apiRouter.use('/sessions', sessionRouter);
 apiRouter.use('/reservations', reservationRouter);
 apiRouter.use('/images', imageRouter )
+apiRouter.use(`./availability`, availabilityRouter);
 
 
 apiRouter.get("/", (req, res, next)=>{
