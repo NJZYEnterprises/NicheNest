@@ -1,10 +1,10 @@
-const ServiceField = ({title, content}) => {
-  if (typeof(content) !== "string" || content.length < 1) 
+const ServiceField = ({ title, content }) => {
+  if (typeof (content) !== "string" || content.length < 1)
     return null;
 
   return <div className="mt-2">
-    <div className="block text-gray-400">{title}</div>
-    <div className="text-white">{content}</div>
+    <div className="font-semibold">{title}</div>
+    <div>{content}</div>
   </div>
 }
 
@@ -13,21 +13,30 @@ const ServiceCard = ({ service, freelancer }) => {
     // TODO
   }
 
+  const location = service.location ?? freelancer.location;
+
   return <section className="flex justify-center">
-    <div className="m-5 bg-gray-700 p-6 rounded-md shadow-md w-max">
-      <h2 className="text-2xl font-bold">{service.name}</h2>
-      <div>{service.tags}</div>
-      {[
-        ["Rate", `$${service.rate} per ${service.rate_time}`],
-        ["Address", freelancer.location?.street_address],
-        ["City", freelancer.location?.city],
-        ["State", freelancer.location?.state],
-        ["Zip Code", freelancer.location?.zip_code],
-      ].map(([title, content]) => <ServiceField {...{title, content}} />)}
-      <button
-        className="bg-blue-500 text-white px-4 py-2 mt-4 rounded"
-        onClick={seeAvailability}
-      >See Availability</button>
+    <div className="flex birds-nest card m-4 px-16 py-8">
+      <div div className="flex flex-col">
+        <h2 className="text-2xl font-bold">{service.name}</h2>
+        <div className="surface-text m-2 p-2">
+          <div>{service.tags}</div>
+          {[
+            ["Description", service.description],
+            ["Rate", `$${service.rate} per ${service.rate_time}`],
+            ["Address", location?.street_address],
+            ["City", location?.city],
+            ["State", location?.state],
+            ["Zip Code", location?.zip_code],
+          ].map(([title, content]) => <ServiceField {...{ title, content }} />)}
+        </div>
+        <div>
+          <button
+            className="view-button text-white px-4 py-2 mt-4 rounded"
+            onClick={seeAvailability}
+          >See Availability</button>
+        </div>
+      </div>
     </div>
   </section>
 }

@@ -17,8 +17,9 @@ const CreateServiceForm = () => {
   const inputs = [
     { name: "name" },
     { name: "tags", type: "textarea", required: false },
-    { name: "rate", label: "Price per Unit", type: "number"},
-    { name: "rate_time", label: "Billing Unit"},
+    { name: "description", type: "textarea", required: false },
+    { name: "rate", label: "Price per Unit", type: "number" },
+    { name: "rate_time", label: "Billing Unit" },
   ];
   for (let i = 0; i < inputs.length; i++) {
     if (!inputs[i].hasOwnProperty("required"))

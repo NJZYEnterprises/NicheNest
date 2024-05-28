@@ -9,8 +9,8 @@ import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const { userId, handleLogout} = useContext(AuthContext)
-
-  return <div className="flex flex-col primary-color sticky top-0 p-3" style={{zIndex: 2000}}>
+  
+  return <div className="flex flex-col sticky top-0 p-3 sky-scene" style={{zIndex: 2000/*, backgroundImage: "linear-gradient(var(--primaryColor) 60%, var(--surfaceColor))"*/ }}>
     <div className="flex flex-row justify-around">
       <Link to={'/'}>
         <div>

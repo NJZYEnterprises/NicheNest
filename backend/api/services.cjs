@@ -1,5 +1,6 @@
 const express = require('express')
 const serviceRouter = express.Router();
+const myPrisma = require('../db/myPrisma.cjs');
 const { verifyToken } = require('../auth/middleware.cjs');
 
 
@@ -62,17 +63,9 @@ serviceRouter.get("/booked", verifyToken, async (req, res, next) => {
 //create new service
 //TODO: connect freelancer_id to uid token
 serviceRouter.post("/", async (req, res, next) => {
-  const { name, tags, rate_time, freelancer_id } = req.body
+  const data = myPrisma.validate("Service", req.body);
   try {
-    const newService = await prisma.service.create({
-      data: {
-        name,
-        tags,
-        rate: parseFloat(req.body.rate),
-        rate_time,
-        freelancer_id
-      }
-    })
+    const newService = await prisma.service.create({ data })
     res.send(newService)
   } catch (error) {
     next(error)
@@ -81,19 +74,13 @@ serviceRouter.post("/", async (req, res, next) => {
 
 //update service
 serviceRouter.patch("/:serviceid", async (req, res, next) => {
-  const { name, tags, rate_time, freelancer_id } = req.body
+  const data = myPrisma.validate("Service", req.body);
   try {
     const newService = await prisma.service.update({
       where: {
         id: parseInt(req.params.serviceid)
       },
-      data: {
-        name,
-        tags,
-        rate: parseFloat(req.body.rate),
-        rate_time,
-        freelancer_id
-      }
+      data,
     })
     res.send(newService)
   } catch (error) {
@@ -103,14 +90,14 @@ serviceRouter.patch("/:serviceid", async (req, res, next) => {
 
 //delete service
 serviceRouter.delete('/:serviceid', async (req, res, next) => {
-  try{
+  try {
     const deleteService = await prisma.service.delete({
       where: {
         id: parseInt(req.params.serviceid)
       }
     })
     res.send(deleteService)
-  }catch(error){
+  } catch (error) {
     next(error)
   }
 })

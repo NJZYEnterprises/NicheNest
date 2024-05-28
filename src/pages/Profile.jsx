@@ -46,16 +46,16 @@ const Profile = () => {
     <div>
       <div>
       </div>
-      <div className="bg-gray-900 flex justify-center items-center p-10 gap-10 rounded-md">
-        <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-2 rounded"
+      <div className="flex justify-center items-center p-10 gap-10 rounded-md" style={{backgroundImage: "linear-gradient(var(--surfaceColor), var(--cafeNoir) 30% 70%, var(--surfaceColor))" }}>
+        <button className="view-button text-white font-bold py-2 px-2 rounded"
             onClick={() => handleButtonClick('profileDetails')}>
           Profile Details
         </button>
-        <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-2 rounded"
+        <button className="view-button text-white font-bold py-2 px-2 rounded"
            onClick={() => handleButtonClick('mySessions')}>
           My Sessions  
         </button>
-        <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-2 rounded"
+        <button className="view-button text-white font-bold py-2 px-2 rounded"
             onClick={() => handleButtonClick('createService')}>
           Create Service  
         </button>
@@ -63,7 +63,7 @@ const Profile = () => {
 
         }
         {userDetails.services && userDetails.services.length > 0 &&
-          <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-2 rounded"
+          <button className="view-button text-white font-bold py-2 px-2 rounded"
             onClick={() => handleButtonClick('createSession')}>
             Create Session
           </button>

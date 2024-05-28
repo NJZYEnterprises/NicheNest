@@ -5,14 +5,14 @@ import AddImageForm from "./AddImageForm";
 import { AuthContext } from "../auth/AuthProvider";
 import { UserContext } from "./UserProvider.jsx";
 
-const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserImages}) => {
+const ProfileDetailsCard = ({ userDetails, setUserDetails, userImages, setUserImages }) => {
   const { userId } = useContext(AuthContext);
   const fetcher = new Fetcher("api");
-  const [editMode, setEditMode] = useState(false); 
+  const [editMode, setEditMode] = useState(false);
   const [editModeField, setEditModeField] = useState(null);
   const [originalField, setOriginalField] = useState(editModeField)
   const [deleteMode, setDeleteMode] = useState(false); // New state for delete mode
-  const [showInput, setShowInput] = useState(false); 
+  const [showInput, setShowInput] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [profileDetails, setProfileDetails] = useState({
@@ -45,7 +45,7 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserIma
       setOriginalProfileDetails({ ...profileDetails });
     }
   }, [userDetails]);
-  
+
   const toggleEditMode = () => {
     if (editMode) {
       setProfileDetails(originalProfileDetails);
@@ -53,10 +53,10 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserIma
       setOriginalProfileDetails(profileDetails);
     }
     setEditMode(!editMode);
-    setEditModeField(null); 
+    setEditModeField(null);
   };
   const enterFieldEditMode = (field) => {
-    if(editModeField) {
+    if (editModeField) {
       setEditModeField(originalFieldDetails);
     } else {
       setOriginalField(editModeField)
@@ -68,7 +68,7 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserIma
     if (editModeField) {
       setEditModeField(null);
     }
-    setProfileDetails({ ...profileDetails }); 
+    setProfileDetails({ ...profileDetails });
   };
 
   const handleChange = (e) => {
@@ -87,7 +87,7 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserIma
       }
       setOriginalProfileDetails({ ...originalProfileDetails, [field]: profileDetails[field] });
       exitFieldEditMode();
-      console.log('Updated profile:', profileDetails); 
+      console.log('Updated profile:', profileDetails);
     } catch (error) {
       console.error('Error updating user:', error);
     }
@@ -97,6 +97,7 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserIma
     const inputElement = type === 'textarea' ? (
       <textarea
         className="p-2 text-sm text-white text-center bg-gray-900 border border-gray-700 rounded w-full"
+        style={{backgroundColor: "var(--littleBoyBlue)"}}
         id={id}
         rows="4"
         value={profileDetails[id]}
@@ -105,6 +106,7 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserIma
     ) : (
       <input
         className="p-2 text-sm text-white text-center bg-gray-900 border border-gray-700 rounded w-full"
+        style={{backgroundColor: "var(--littleBoyBlue)"}}
         id={id}
         type={type}
         value={profileDetails[id]}
@@ -113,89 +115,95 @@ const ProfileDetailsCard = ({userDetails, setUserDetails, userImages, setUserIma
     );
     return (
       <div className="mb-3">
-      <label className="block text-gray-400" htmlFor={id}>{label}</label>
-      {editModeField === id ? (
-        <div>
+        <label className="block text-gray-400" htmlFor={id}>{label}</label>
+        {editModeField === id ? (
           <div>
-            {inputElement}
+            <div>
+              {inputElement}
+            </div>
+            <div className="flex justify-end mt-2">
+              <button className="save-icon mr-2" onClick={() => handleSave(id)}>
+                👍
+              </button>
+              <button className="cancel-icon" onClick={exitFieldEditMode}>
+                ❌
+              </button>
+            </div>
           </div>
-          <div className="flex justify-end mt-2">
-            <button className="save-icon mr-2" onClick={() => handleSave(id)}>
-              👍
-            </button>
-            <button className="cancel-icon" onClick={exitFieldEditMode}>
-              ❌
-            </button>
+        ) : (
+          <div className="flex items-center">
+            <p className="text-white flex-grow">{profileDetails[id]}</p>
+            {editMode && editModeField === null && (
+              <button className="edit-icon ml-2" onClick={() => enterFieldEditMode(id)}>
+                🖍️
+              </button>
+            )}
           </div>
-        </div>
-      ) : (
-        <div className="flex items-center">
-          <p className="text-white flex-grow">{profileDetails[id]}</p>
-          {editMode && editModeField === null && (
-            <button className="edit-icon ml-2" onClick={() => enterFieldEditMode(id)}>
-              🖍️
-            </button>
-          )}
-        </div>
-      )}
-    </div>
+        )}
+      </div>
     );
   };
   return (
-    <div className="m-5 bg-gray-700 p-6 rounded-lg shadow-lg">
-    <div className="">
-      <h2 className="text-xl font-bold mb-4">Profile Details</h2>
-    </div>
+    <div className="surface-color card m-5 p-6">
+      <div className="">
+        <h2 className="text-xl font-bold mb-4">Profile Details</h2>
+      </div>
       <div className="m-5">
         {userImages && userImages.length > 0 ? (
-        <div className="flex flex-col">
-          {editMode && (
-              <AddImageForm 
-              setUserImages={setUserImages} 
-              deleteMode={deleteMode} 
-              setDeleteMode={setDeleteMode}
-              selectedImage={selectedImage}
-              setSelectedImage={setSelectedImage}
+          <div className="flex flex-col mr-21 ml-21 ">
+            {editMode && (
+              <AddImageForm
+                setUserImages={setUserImages}
+                deleteMode={deleteMode}
+                setDeleteMode={setDeleteMode}
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
               />
             )
-          }
-          <UserCarousel
-           userImages={userImages}
-           setUserImages={setUserImages}
-           deleteMode={deleteMode}
-           setDeleteMode={setDeleteMode} 
-           selectedImage={selectedImage}
-           setSelectedImage={setSelectedImage}
-           />
-        </div>
-      ) : (
-        <div>Loading...</div>
-      )}
+            }
+            <div className="p-10">
+              <UserCarousel
+                userImages={userImages}
+                setUserImages={setUserImages}
+                deleteMode={deleteMode}
+                setDeleteMode={setDeleteMode}
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
+              />
+            </div>
+          </div>
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
       <div className="flex justify-end mb-4">
       </div>
-      <div className="flex">
-        <div className="w-1/2 pr-4">
-          {renderField('firstName', 'First Name')}
-          {renderField('lastName', 'Last Name')}
-          {renderField('username', 'Username')}
-          {renderField('email', 'Email', 'email')}
-          {renderField('bio', 'Bio', 'textarea')}
-        </div>
-        <div className="w-1/2 pl-4">
-          {renderField('phoneNumber', 'Phone', 'tel')}
-          {renderField('street_address', 'Street Address')}
-          {renderField('zip_code', 'Zip Code')}
-          {renderField('city', 'City')}
-          {renderField('state', 'State')}
+      <div className="flex justify-center m-4">
+        <div className="flex birds-nest card p-16 w-max">
+          <div className="w-1/2 pr-4">
+            {renderField('firstName', 'First Name')}
+            {renderField('lastName', 'Last Name')}
+            {renderField('username', 'Username')}
+            {renderField('email', 'Email', 'email')}
+            {renderField('bio', 'Bio', 'textarea')}
+          </div>
+          <div className="w-1/2 pl-4">
+            {renderField('phoneNumber', 'Phone', 'tel')}
+            {renderField('street_address', 'Street Address')}
+            {renderField('zip_code', 'Zip Code')}
+            {renderField('city', 'City')}
+            {renderField('state', 'State')}
+          </div>
         </div>
       </div>
-      <button
-          className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+      <div>
+        <button
+          className="submit-button text-white font-bold py-2 px-4 rounded"
           onClick={toggleEditMode}
         >
           {editMode ? 'Exit Edit Mode' : 'Enter Edit Mode'}
         </button>
+      </div>
     </div>
   );
 };

@@ -25,7 +25,7 @@ const SingleFreeLancer = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow container mx-auto p-4">
-        <div className="bg-slate-800 shadow-md rounded p-6">
+        <div className="surface-color card p-6">
           <h2 className="text-2xl font-bold mb-4">{freelancer.firstName} {freelancer.lastName}</h2>
           <div className="flex justify-center">
             <div className="flex flex-col">
@@ -50,7 +50,7 @@ const SingleFreeLancer = () => {
           <div className="mt-4">
             {/* TODO: decide whether book now button is applicable for freelancer in general */}
             {/* <button className="bg-blue-500 text-white px-4 py-2 rounded">Book Now</button> */}
-            <button className="bg-gray-500 text-white px-4 py-2 rounded ml-2">Contact</button>
+            <button className="view-button text-white px-4 py-2 rounded ml-2">Contact</button>
           </div>
         </div>
       </div>

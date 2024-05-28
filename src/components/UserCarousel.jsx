@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import Carousel from "react-multi-carousel"
 import CarouselCard from "./CarouselCard.jsx"
-import CustomButtonGroup from "./CustomButtonGroup.jsx"
+import CarouselHomeBtns from "./CarouselHomeBtns.jsx"
+import CarouselProfileBtns from "./CarouselProfileBtns.jsx"
 import "react-multi-carousel/lib/styles.css"
 
 
 const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode, setSelectedImage, selectedImage }) => {
+  const [showArrows, setShowArrows] = useState(false);
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -33,17 +35,26 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
     }
   };
 
+  const handleMouseEnter = () => {
+    setShowArrows(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowArrows(false);
+  };
+
   if (userImages && userImages.length > 0) {
     return (
-      <div className="mr-20 ml-20">
+      <div className="mr-21 ml-21 personal-arrow-hover" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
         <Carousel
           responsive={responsive}
-          customButtonGroup={<CustomButtonGroup/>}
+          customButtonGroup={<CarouselProfileBtns/>}
           additionalTransfrom={0}
           arrows={false}
           containerClass="carousel-container"
           itemClass="carousel-item"
-          className="surface-color"
+          renderButtonGroupOutside={true}
+
         >
           {userImages.map((image, index) => (
             <div key={index} 
@@ -61,7 +72,7 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
   const freelancersToDisplay = topRatedFreelancers || freelancers ;
 
   return (
-    <div className="bg-slate-600 bg-opacity-20 mr-20 ml-20">
+    <div className="surface-color card mr-20 ml-20 home-arrow-hover" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <h1 className="text-2xl pt-3">
         {freelancers ? "Freelancers" : "Top Rated Freelancers"}
       </h1>
@@ -69,9 +80,10 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
         responsive={responsive}
         additionalTransfrom={0}
         arrows={false}
-        customButtonGroup={<CustomButtonGroup />} // Add custom button group
+        customButtonGroup={<CarouselHomeBtns />} 
         containerClass="carousel-container"
         itemClass="carousel-item"
+        renderButtonGroupOutside={true}
       >
         {freelancersToDisplay.map(freelancer => (
           <Link
