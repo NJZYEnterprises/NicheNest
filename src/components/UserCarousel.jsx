@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import Carousel from "react-multi-carousel"
 import CarouselCard from "./CarouselCard.jsx"
-import CarouselHomeBtns from "./CarouselHomeBtns.jsx"
-import CarouselProfileBtns from "./CarouselProfileBtns.jsx"
+import CustomButtonGroup from "./CustomButtonGroup.jsx"
 import "react-multi-carousel/lib/styles.css"
 
 
@@ -45,10 +44,10 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
 
   if (userImages && userImages.length > 0) {
     return (
-      <div className="mr-21 ml-21 personal-arrow-hover" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
+      <div className="mr-21 ml-21 arrow-hover" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
         <Carousel
           responsive={responsive}
-          customButtonGroup={<CarouselProfileBtns/>}
+          customButtonGroup={<CustomButtonGroup isHome={false}/>}
           additionalTransfrom={0}
           arrows={false}
           containerClass="carousel-container"
@@ -72,7 +71,7 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
   const freelancersToDisplay = topRatedFreelancers || freelancers ;
 
   return (
-    <div className="surface-color card mr-20 ml-20 home-arrow-hover" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div className="surface-color card mr-20 ml-20 arrow-hover" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <h1 className="text-2xl pt-3">
         {freelancers ? "Freelancers" : "Top Rated Freelancers"}
       </h1>
@@ -80,7 +79,7 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
         responsive={responsive}
         additionalTransfrom={0}
         arrows={false}
-        customButtonGroup={<CarouselHomeBtns />} 
+        customButtonGroup={<CustomButtonGroup isHome={true} />} 
         containerClass="carousel-container"
         itemClass="carousel-item"
         renderButtonGroupOutside={true}

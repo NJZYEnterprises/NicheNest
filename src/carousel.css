@@ -1,9 +1,8 @@
-
-/* ***HOME PAGE ARROW STYLING*** */
-.home-button-group {
+.button-group {
   position: relative;
 }
-.home-button-group .home-button {
+
+.button-group .button {
   position: absolute;
   top: -13rem;
   transform: translateY(-50%);
@@ -11,62 +10,35 @@
   cursor: pointer;
   font-size: 18px;
   padding: 5px 10px;
-  margin: 0 5px; 
+  margin: 0 5px;
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease; /* Add smooth transitions */
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.home-arrow-hover:hover .home-button-group .home-button {
-  opacity: 1; 
-}
-.home-button-group .left {
-  left: -.5rem; 
-}
-.home-button-group .right {
-  right: -1.5rem; 
-}
-.home-button-group .home-button:hover {
+
+.arrow-hover:hover .button-group .button{
   transform: translateY(-50%) scale(1.3);
+  opacity: 1;
 }
+
 .material-symbols-outlined {
   font-size: 3rem;
 }
 
-
-
-/* ***PERSONAL DETAILS ARROW STYLING*** */
-.personal-button-group {
-  position: relative;
+.isHome .left {
+  left: -0.5rem;
 }
-.personal-button-group .personal-button {
-  position: absolute;
+
+.isHome .right {
+  right: -1.5rem;
+}
+.isDetails .button {
   top: -10rem;
-  transform: translateY(-50%);
-  background-color: transparent;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 5px 10px;
-  margin: 0 5px; 
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease; /* Add smooth transitions */
+}
+.isDetails .left {
+  left: -2rem;
 }
 
-.personal-arrow-hover:hover .personal-button-group .personal-button {
-  opacity: 1; 
-}
-
-.personal-button-group .left {
-  left: -3rem; 
-}
-
-.personal-button-group .right {
-  right: -4rem; 
-}
-
-.personal-button-group .personal-button:hover {
-  transform: translateY(-50%) scale(1.3); /* Increase scale on hover */
-}
-
-.material-symbols-outlined {
-  font-size: 3rem; /* Default font size */
+.isDetails .right {
+  right: -3rem;
 }
 
