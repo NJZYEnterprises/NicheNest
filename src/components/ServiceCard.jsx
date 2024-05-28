@@ -13,6 +13,8 @@ const ServiceCard = ({ service, freelancer }) => {
     // TODO
   }
 
+  const location = service.location ?? freelancer.location;
+
   return <section className="flex justify-center">
     <div className="flex birds-nest card m-4 px-16 py-8">
       <div div className="flex flex-col">
@@ -20,11 +22,12 @@ const ServiceCard = ({ service, freelancer }) => {
         <div className="surface-text m-2 p-2">
           <div>{service.tags}</div>
           {[
+            ["Description", service.description],
             ["Rate", `$${service.rate} per ${service.rate_time}`],
-            ["Address", freelancer.location?.street_address],
-            ["City", freelancer.location?.city],
-            ["State", freelancer.location?.state],
-            ["Zip Code", freelancer.location?.zip_code],
+            ["Address", location?.street_address],
+            ["City", location?.city],
+            ["State", location?.state],
+            ["Zip Code", location?.zip_code],
           ].map(([title, content]) => <ServiceField {...{ title, content }} />)}
         </div>
         <div>
