@@ -14,27 +14,28 @@ datasource db {
 }
 
 model Location {
-  id             Int     @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   street_address String?
   zip_code       String?
   city           String
   state          String
   users          User[]
+  services       Service[]
 }
 
 model User {
-  id               Int           @id @default(autoincrement())
-  uid              String        @unique
-  username         String        @unique
-  email            String        @unique
-  firstName        String?
-  lastName         String?
-  phoneNumber      String?       
+  id          Int     @id @default(autoincrement())
+  uid         String  @unique
+  username    String  @unique
+  email       String  @unique
+  firstName   String?
+  lastName    String?
+  phoneNumber String?
 
   bio              String?
   isAdmin          Boolean?
   location_id      Int?
-  location         Location?      @relation(references: [id], fields: [location_id])
+  location         Location?     @relation(references: [id], fields: [location_id])
   services         Service[]
   reservations     Reservation[]
   links            User_link[]
@@ -74,10 +75,13 @@ model Service {
   id             Int            @id @default(autoincrement())
   name           String
   tags           String?
+  description    String?
   rate           Float
   rate_time      String
   freelancer_id  Int
   freelancer     User           @relation(references: [id], fields: [freelancer_id])
+  location_id    Int?
+  location       Location?      @relation(references: [id], fields: [location_id])
   availabilities Availability[]
   sessions       Session[]
 }
