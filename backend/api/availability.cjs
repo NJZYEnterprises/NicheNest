@@ -3,24 +3,6 @@ const { verifyToken } = require('../auth/middleware.cjs');
 const prisma = require('../db/connection.cjs');
 const availabilityRouter = express.Router();
 
-//get availability
-availabilityRouter.get('/:freelancerId/:serviceId', verifyToken, async (req, res, next) => {
-  const { freelancerId, serviceId } = req.params;
-
-  try {
-    const availabilities = await prisma.availability.findMany({
-      where: {
-        freelancerId: parseInt(freelancerId),
-        serviceId: parseInt(serviceId)
-      }
-    });
-
-    res.send(availabilities);
-  } catch (error) {
-    next(error);
-  }
-});
-
 //create 
 availabilityRouter.post('/', verifyToken, async (req, res, next) => {
   const { freelancerId, serviceId } = req.body;
@@ -40,6 +22,26 @@ availabilityRouter.post('/', verifyToken, async (req, res, next) => {
     next(error);
   }
 });
+
+//get availability
+availabilityRouter.get('/:freelancerId/:serviceId', verifyToken, async (req, res, next) => {
+  const { freelancerId, serviceId } = req.params;
+
+  try {
+    const availabilities = await prisma.availability.findMany({
+      where: {
+        freelancerId: parseInt(freelancerId),
+        serviceId: parseInt(serviceId)
+      }
+    });
+
+    res.send(availabilities);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 
 //update 
 availabilityRouter.put('/:id', verifyToken, async (req, res, next) => {
