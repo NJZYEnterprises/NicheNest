@@ -75,6 +75,7 @@ const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage,
         .setToken(userId.accessToken)
         .post({ imageId: selectedImage.id});
         displayTemporaryMessage('Success!', setSuccessMessage);
+        updateCarousel();
       } catch (error) {
         setError('Error updating carousel')
         console.log('Error updating carousel:', error);
@@ -91,8 +92,6 @@ const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage,
       setSelectedImage(null); 
     }
   };
-
-
 
   const isValidUrl = (url) => {
     const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
