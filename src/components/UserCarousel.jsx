@@ -83,9 +83,9 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
 
   return (
     <div className="surface-color card mr-20 ml-20 arrow-hover" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <h1 className="text-2xl pt-3">
+    <Link to="/freelancers" className="text-2xl pt-3">
         {freelancers ? "Freelancers" : "Top Rated Freelancers"}
-      </h1>
+    </Link>
       <Carousel
         responsive={responsive}
         additionalTransfrom={0}
