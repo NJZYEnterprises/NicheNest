@@ -91,6 +91,17 @@ reservationRouter.get("/count/:userId", async (req, res, next) => {
   }
 });
 
+//Create Reservation
+reservationRouter.post("/", async (req, res, next) => {
+  const data = myPrisma.validate("Reservation", req.body);
+  try {
+    const newService = await prisma.reservation.create({ data })
+    res.send(newService)
+  } catch (error) {
+    next(error)
+  }
+})
+
 
 // delete reservation by uid auth
 reservationRouter.delete("/:reservationId", async (req, res, next) => {
