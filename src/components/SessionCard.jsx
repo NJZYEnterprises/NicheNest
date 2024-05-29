@@ -10,7 +10,7 @@ const SessionCard = () => {
 
   useEffect(() => {
     const fetcher = new Fetcher("api");
-    fetcher.route(["sessions/available/", id]).get(setSessions);
+    fetcher.route(["sessions/open/", id]).get(setSessions);
   }, [id]);
 
   console.log(`AVAIL SESH`, sessions)

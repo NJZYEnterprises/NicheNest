@@ -17,7 +17,7 @@ sessionRouter.get("/", async (req, res, next) => {
 })
 
 //get all sessions by service 
-sessionRouter.get("/available/:service_id", async (req, res, next) => {
+sessionRouter.get("/open/:service_id", async (req, res, next) => {
   const { service_id } = req.params;
   try {
     const serviceSessions = await prisma.session.findMany({
