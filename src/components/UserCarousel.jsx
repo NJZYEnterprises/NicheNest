@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import Carousel from "react-multi-carousel"
 import CarouselCard from "./CarouselCard.jsx"
+import CustomButtonGroup from "./CustomButtonGroup.jsx"
 import "react-multi-carousel/lib/styles.css"
 
 
 const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode, setSelectedImage, selectedImage }) => {
+  const [showArrows, setShowArrows] = useState(false);
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -32,16 +34,26 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
     }
   };
 
+  const handleMouseEnter = () => {
+    setShowArrows(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowArrows(false);
+  };
+
   if (userImages && userImages.length > 0) {
     return (
-      <div className="mr-20 ml-20">
+      <div className="mr-21 ml-21 arrow-hover" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
         <Carousel
           responsive={responsive}
+          customButtonGroup={<CustomButtonGroup isHome={false}/>}
           additionalTransfrom={0}
-          arrows
+          arrows={false}
           containerClass="carousel-container"
           itemClass="carousel-item"
-          // className="surface-color"
+          renderButtonGroupOutside={true}
+
         >
           {userImages.map((image, index) => (
             <div key={index} 
@@ -59,16 +71,18 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
   const freelancersToDisplay = topRatedFreelancers || freelancers ;
 
   return (
-    <div className="surface-color card mr-20 ml-20">
+    <div className="surface-color card mr-20 ml-20 arrow-hover" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <h1 className="text-2xl pt-3">
         {freelancers ? "Freelancers" : "Top Rated Freelancers"}
       </h1>
       <Carousel
         responsive={responsive}
         additionalTransfrom={0}
-        arrows
+        arrows={false}
+        customButtonGroup={<CustomButtonGroup isHome={true} />} 
         containerClass="carousel-container"
         itemClass="carousel-item"
+        renderButtonGroupOutside={true}
       >
         {freelancersToDisplay.map(freelancer => (
           <Link

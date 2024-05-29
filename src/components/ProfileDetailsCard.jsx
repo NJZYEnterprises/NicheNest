@@ -161,14 +161,14 @@ const ProfileDetailsCard = ({ userDetails, setUserDetails, userImages, setUserIm
               />
             )
             }
-            <UserCarousel
-              userImages={userImages}
-              setUserImages={setUserImages}
-              deleteMode={deleteMode}
-              setDeleteMode={setDeleteMode}
-              selectedImage={selectedImage}
-              setSelectedImage={setSelectedImage}
-            />
+              <UserCarousel
+                userImages={userImages}
+                setUserImages={setUserImages}
+                deleteMode={deleteMode}
+                setDeleteMode={setDeleteMode}
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
+              />
           </div>
         ) : (
           <div>Loading...</div>
