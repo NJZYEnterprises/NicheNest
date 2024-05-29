@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 const ServiceField = ({ title, content }) => {
   if (typeof (content) !== "string" || content.length < 1)
     return null;
@@ -8,9 +10,14 @@ const ServiceField = ({ title, content }) => {
   </div>
 }
 
+
+
 const ServiceCard = ({ service, freelancer }) => {
+
+  const navigate = useNavigate();
   const seeAvailability = () => {
-    // TODO
+    navigate(`/availabilities/${service.id}`)
+
   }
 
   const location = service.location ?? freelancer.location;
