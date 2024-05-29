@@ -3,10 +3,11 @@ import { Link } from "react-router-dom"
 import Carousel from "react-multi-carousel"
 import CarouselCard from "./CarouselCard.jsx"
 import CustomButtonGroup from "./CustomButtonGroup.jsx"
+import "../carousel.css"
 import "react-multi-carousel/lib/styles.css"
 
 
-const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode, setSelectedImage, selectedImage }) => {
+const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode, editMode, setSelectedImage, selectedImage }) => {
   const [showArrows, setShowArrows] = useState(false);
   const responsive = {
     superLargeDesktop: {
@@ -55,11 +56,21 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
           renderButtonGroupOutside={true}
 
         >
-          {userImages.map((image, index) => (
+          {userImages
+          .sort((a, b) => (a.isProfile ? -1 : 1)) 
+          .map((image, index) => (
             <div key={index} 
                 className={`p-2 ${deleteMode && selectedImage && selectedImage.id === image.id ? 'border-2 border-red-500' : ''}`}
                 onClick={() => handleImageClick(image)}
             >
+                    {editMode && image.isProfile && (
+            <div className="absolute top-2 right-2 p-1">
+              <span class="material-symbols-outlined profile-icon">
+                account_circle
+              </span>
+            </div>
+      )}
+
               <img src={image.image_url} alt={`User Image ${index}`} />
             </div>
           ))}
