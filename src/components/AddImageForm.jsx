@@ -3,7 +3,7 @@ import Fetcher from "../fetcher.js";
 import { displayTemporaryMessage } from "../utils/tempMessage.cjs";
 import { AuthContext } from "../auth/AuthProvider";
 
-const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage, setSelectedImage, displayTemporaryMessage }) => {
+const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage, setSelectedImage }) => {
   const [imageUrl, setImageUrl] = useState('');
   const [showInput, setShowInput] = useState(false); 
   const [error, setError] = useState('');
