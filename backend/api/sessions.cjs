@@ -16,6 +16,21 @@ sessionRouter.get("/", async (req, res, next) => {
   }
 })
 
+//get all sessions by service 
+sessionRouter.get("/open/:service_id", async (req, res, next) => {
+  const { service_id } = req.params;
+  try {
+    const serviceSessions = await prisma.session.findMany({
+      where: {
+        service_id: Number(service_id)
+      }
+    });
+    res.send(serviceSessions)
+  } catch (error) {
+    next(error)
+  }
+})
+
 //get sessions by Id 
 sessionRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
@@ -40,7 +55,7 @@ sessionRouter.post('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const sessionData = myPrisma.validate("Session", req.body);
-    
+
     const newSession = await prisma.session.create({
       data: {
         ...sessionData,
@@ -82,11 +97,12 @@ sessionRouter.delete("/:id", async (req, res, next) => {
 sessionRouter.patch('/:id', async (req, res, next) => {
   try {
     const data = myPrisma.validate("Session", req.body);
-    const editSession = await prisma.session.update({ 
-      where:{
+    const editSession = await prisma.session.update({
+      where: {
         id: parseInt(req.params.id)
-      }, 
-      data });
+      },
+      data
+    });
     res.send(editSession)
   } catch (error) {
     next(error)

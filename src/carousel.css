@@ -1,0 +1,44 @@
+.button-group {
+  position: relative;
+}
+
+.button-group .button {
+  position: absolute;
+  top: -13rem;
+  transform: translateY(-50%);
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px 10px;
+  margin: 0 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.arrow-hover:hover .button-group .button{
+  transform: translateY(-50%) scale(1.3);
+  opacity: 1;
+}
+
+.material-symbols-outlined {
+  font-size: 3rem;
+}
+
+.isHome .left {
+  left: -0.5rem;
+}
+
+.isHome .right {
+  right: -1.5rem;
+}
+.isDetails .button {
+  top: -10rem;
+}
+.isDetails .left {
+  left: -2rem;
+}
+
+.isDetails .right {
+  right: -3rem;
+}
+
