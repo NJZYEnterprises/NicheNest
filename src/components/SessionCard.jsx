@@ -17,13 +17,27 @@ const SessionCard = () => {
 
   return (
     <>
-    <div>
-    {sessions.map((sessions)=>{
-      return (
-        <h2 key ={sessions.id}>{sessions.description}</h2>
-      )
-    })}
-    </div>
+      <div>
+        {sessions.map((sessions) => {
+          const date = sessions.when_start
+          return (
+            <div className="flex flex-col p-10 m-5 surface-color card">
+              <h2 className="text-lg font-bold" key={sessions.id}>{sessions.description}</h2>
+              <h2>Date:</h2>
+              <p>{date.substring(0,10)}</p>
+              <h2>Time:</h2>
+              <p>{date.substring(11,19)}</p>
+              <p>{date.substring(0,10)}</p>
+              <h2>Capacity:</h2>
+              <p>{sessions.capacity}</p>
+              <button className="view-button text-white font-bold py-2 px-2 rounded">
+              Book Now!
+              </button>
+            </div>
+
+          )
+        })}
+      </div>
 
     </>
   )

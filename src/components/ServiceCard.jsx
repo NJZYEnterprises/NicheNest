@@ -16,6 +16,7 @@ const ServiceCard = ({ service, freelancer }) => {
 
   const navigate = useNavigate();
   const seeAvailability = () => {
+    //TODO: Alert if no sessions active
     navigate(`/availabilities/${service.id}`)
 
   }
