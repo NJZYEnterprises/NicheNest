@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react';
 import Fetcher from "../fetcher.js";
+import { displayTemporaryMessage } from "../utils/tempMessage.cjs";
 import { AuthContext } from "../auth/AuthProvider";
 
 const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage, setSelectedImage }) => {
   const [imageUrl, setImageUrl] = useState('');
   const [showInput, setShowInput] = useState(false); 
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState(false);
   const { userId } = useContext(AuthContext);
   const fetcher = new Fetcher("api");
 
@@ -62,6 +64,23 @@ const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage,
     }
   };
 
+  const handleProfilePic = async () => {
+    if(!selectedImage) {
+      displayTemporaryMessage('Please Select An Image', setError);
+      return null;
+    }
+    try {
+        await fetcher
+        .route(`/images/setProfilePicture`)
+        .setToken(userId.accessToken)
+        .post({ imageId: selectedImage.id});
+        displayTemporaryMessage('Success!', setSuccessMessage);
+      } catch (error) {
+        setError('Error updating carousel')
+        console.log('Error updating carousel:', error);
+      }
+  };
+
   const toggleInputField = () => {
     setShowInput(prevShowInput => !prevShowInput);
   };
@@ -72,6 +91,8 @@ const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage,
       setSelectedImage(null); 
     }
   };
+
+
 
   const isValidUrl = (url) => {
     const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
@@ -108,8 +129,13 @@ const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage,
           <button className="m-1 p-5 error-button text-white rounded" onClick={handleDeleteImage}>
             Delete Selected Image
           </button>
+          <button className="m-1 p-5 error-button text-white rounded" onClick={handleProfilePic}>
+            Make Profile Pic
+          </button>
         </div>
       )}
+      {error && <div className="p-2"><h2 className="text-xl font-bold text-red-700">{error}</h2></div>}
+      {successMessage && <div className="p-2"><h2 className="text-xl font-bold text-green-950">Successfully Set Profile Picture!</h2></div>}
     </div>
   );
 };
