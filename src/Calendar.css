@@ -1,0 +1,14 @@
+.calendar-grid-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns */
+  grid-template-rows: repeat(6, 1fr); /* 5 rows */
+  width: 100%;
+  height: 100%;
+}
+
+.calendar-grid-item {
+  background-color: #c4bb9744;
+  text-align: center;
+  padding: 20px;
+  border: solid black 1px;
+}
