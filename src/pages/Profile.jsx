@@ -57,8 +57,6 @@ const Profile = () => {
       case 'mySessions': return <MySessionsCard />;
       case 'createService': return <CreateServiceForm />;
       case 'createSession': return <CreateSession services={userDetails?.services} />;
-        // return userDetails.services && userDetails.services.length > 0 &&
-        //   <CreateSession service={userDetails?.services[0]} />;
       case 'myCalendar': return <div className='calendar-center'>
         <Calendar user={userDetails}/>
       </div>;
