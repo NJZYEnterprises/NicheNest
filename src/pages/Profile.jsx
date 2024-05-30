@@ -4,7 +4,7 @@ import ProfileDetailsCard from '../components/ProfileDetailsCard'
 import MySessionsCard from '../components/MySessionsCard'
 import UserCarousel from '../components/UserCarousel'
 import Fetcher from "../fetcher.js"
-import CreateServiceForm from '../components/CreateServiceForm.jsx';
+import ServiceForm from '../components/ServiceForm.jsx';
 import CreateSession from '../components/CreateSessionForm.jsx';
 import myString from '../utils/myString.cjs';
 import Calendar from '../components/Calendar.jsx';
@@ -55,7 +55,7 @@ const Profile = () => {
         setUserImages={setUserImages}
       />;
       case 'mySessions': return <MySessionsCard />;
-      case 'createService': return <CreateServiceForm />;
+      case 'createService': return <ServiceForm />;
       case 'createSession': return <CreateSession services={userDetails?.services} />;
       case 'myCalendar': return <div className='calendar-center'>
         <Calendar user={userDetails}/>
