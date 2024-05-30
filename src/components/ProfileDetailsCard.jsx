@@ -166,6 +166,7 @@ const ProfileDetailsCard = ({ userDetails, setUserDetails, userImages, setUserIm
                 setUserImages={setUserImages}
                 deleteMode={deleteMode}
                 setDeleteMode={setDeleteMode}
+                editMode={editMode}
                 selectedImage={selectedImage}
                 setSelectedImage={setSelectedImage}
               />

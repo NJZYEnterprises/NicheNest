@@ -1,0 +1,28 @@
+.calendar-container {
+  width: 90%;
+  height: 90%;
+  padding: 5%;
+  margin: 1%;
+}
+
+.calendar-grid-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns */
+  /*grid-template-rows: repeat(6, 4fr); /* 6 rows */
+  grid-template-rows: auto; /* 6 rows */
+  width: 100%;
+  height: 100%;
+}
+
+.calendar-grid-cell {
+  background-color: #c4bb9744;
+  text-align: center;
+  padding: 20px;
+  border: solid black 1px;
+}
+
+.calendar-center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
