@@ -53,7 +53,9 @@ const Profile = () => {
       case 'createSession':
         return userDetails.services && userDetails.services.length > 0 &&
           <CreateSession service={userDetails?.services[0]} />;
-      case 'myCalendar': return <Calendar />;
+      case 'myCalendar': return <div className='calendar-center'>
+        <Calendar user={userDetails}/>
+      </div>;
     }
 
     return <div>No component found for active card "{activeCard}"</div>;
