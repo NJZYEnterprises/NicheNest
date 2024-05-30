@@ -12,6 +12,8 @@ const CreateServiceForm = () => {
   const submitForm = (serviceData) => {
     serviceData.freelancer_id = user?.id;
     fetcher.setToken(userId.accessToken).route("services").post(serviceData);
+    window.location.reload();
+
   }
 
   const inputs = [

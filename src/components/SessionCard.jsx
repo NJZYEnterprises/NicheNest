@@ -9,12 +9,15 @@ import { UserContext } from "../components/UserProvider";
 const SessionCard = () =>{ 
   const { id } = useParams();
   const [sessions, setSessions] = useState([]);
+  const [reservations, setResservations] = useState([]);
+  const [booked, isBooked] = useState(false);
   const { user } = useContext(UserContext);
   const { userId } = useContext(AuthContext);
   const fetcher = new Fetcher("api");
 
   useEffect(() => {
     fetcher.route(["sessions/open/", id]).get(setSessions);
+    fetcher.route(["reservations/my", id]).get(setSessions);
   }, [id]);
 
 
@@ -29,6 +32,11 @@ const SessionCard = () =>{
     fetcher.setToken(userId.accessToken).route("reservations").post(reservationData);
   }
 
+  const alreadyBooked =()=>{
+    if(reservations.client_id === user.id){
+      isBooked =( true )
+    }
+  }
 
   console.log(`sesh`,sessions)
 
@@ -39,6 +47,7 @@ return (
       {sessions.map((sessions) => {
         const date = sessions.when_start
         {console.log(`SESHID`, sessions.id)}
+        {}
         return (
           <div className="flex flex-col p-10 m-5 surface-color card">
             <h2 className="text-lg font-bold" key={sessions.id}>{sessions.description}</h2>
@@ -50,7 +59,7 @@ return (
             <p>{sessions.capacity}</p>
             <div>
               <button className="view-button text-white font-bold py-2 px-2 rounded"
-                onClick={reserveSession(sessions.id)}>
+                onClick={()=>reserveSession(sessions.id)}>
                 Book Now!
               </button>
             </div>
