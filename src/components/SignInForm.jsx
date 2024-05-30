@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { capitalize } from "../utils/myString.cjs"
 import { AuthContext } from "../auth/AuthProvider.jsx"
 import { UserContext } from "./UserProvider";
@@ -12,13 +12,13 @@ const fetcher = new Fetcher("api");
 const SignInForm = () => {
   // <-- Hooks -->
   const location = useLocation();
+  const navigate = useNavigate();
   const { userId, signIn, fireSignUp } = useContext(AuthContext);
   const { user } = useContext(UserContext);
 
-  // TODO: replace navigate in AuthProvider
-  // useEffect(() => {
-  //   if (userId && user) navigate("/");
-  // }, [userId, user])
+  useEffect(() => {
+    if (userId && user) navigate("/");
+  }, [userId, user])
 
   // <-- Dynamic display -->
   const formType = location.pathname.replaceAll('/', '');
@@ -55,10 +55,10 @@ const SignInForm = () => {
     inputs.push(new InputData({ id: key, label: key, name: inputName(key), type: getType(key), required: true }));
   }
 
-  const createUser = (firebaseResponse, isGoogleSignIn = false) => {
+  const createUser = (firebaseResponse, formData) => {
     const fbUser = firebaseResponse?.user;
     if (fbUser) {
-      const newUserData = isGoogleSignIn ? {} : { ...formData };
+      const newUserData = formData ? { ...formData } : {};
       newUserData.uid = fbUser.uid;
       newUserData.email = fbUser.email;
       if (!newUserData.username)
@@ -83,7 +83,7 @@ const SignInForm = () => {
       case "register":
         result = await fireSignUp(data);
         if (!result) return "Failed to register new user";
-        createUser(result);
+        createUser(result, data);
         break;
     }
   }
