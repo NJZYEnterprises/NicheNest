@@ -30,6 +30,9 @@ const SessionCard = () =>{
   }
 
 
+  console.log(`sesh`,sessions)
+
+
 return (
   <>
     <div>

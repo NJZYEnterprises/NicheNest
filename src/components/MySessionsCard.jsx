@@ -61,10 +61,10 @@ const MySessionsCard = () => {
 
 
 
-  const handleDelete = async (sessionId) => {
+  const handleDelete = async (reservationId, sessionId) => {
     try {
       await fetcher
-        .route(`/sessions/${sessionId}`)
+        .route(`/reservations/${reservationId}`)
         .setToken(userId.accessToken)
         .delete();
 
