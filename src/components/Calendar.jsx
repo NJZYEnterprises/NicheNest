@@ -57,8 +57,8 @@ const Calendar = ({ user: forUser }) => {
   const gridW = 7;
 
   useEffect(() => {
-    if (forUser && !user) {
-      fetcher.route(forUser?.id.toString()).get(setUser);
+    if (forUser?.id && !user) {
+      fetcher.route(forUser.id.toString()).get(setUser);
     }
   }, [forUser])
 

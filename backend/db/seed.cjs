@@ -67,7 +67,7 @@ async function main() {
 
   
   let randomUser = {}
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 10; i++) {
     randomUser = {
       username: faker.internet.userName(),
       email: faker.internet.email(),
@@ -181,7 +181,7 @@ async function main() {
   for (let i = 0; i < users.length; i++) {
     await prisma.user_image.create({
       data: {
-        image_url: faker.image.urlLoremFlickr(),
+        image_url: faker.image.urlLoremFlickr({category: "birds"}),
         description: "this is a profile picture",
         isProfile: true,
         when_added: new Date(),

@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { capitalize } from "../utils/myString.cjs"
 import { AuthContext } from "../auth/AuthProvider.jsx"
+import { UserContext } from "./UserProvider";
 import GoogleButton from "react-google-button"
 import Fetcher from "../fetcher.js";
 import Form, { InputData } from "./Form.jsx";
@@ -11,7 +12,13 @@ const fetcher = new Fetcher("api");
 const SignInForm = () => {
   // <-- Hooks -->
   const location = useLocation();
-  const { signIn, fireSignUp } = useContext(AuthContext);
+  const { userId, signIn, fireSignUp } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
+
+  // TODO: replace navigate in AuthProvider
+  // useEffect(() => {
+  //   if (userId && user) navigate("/");
+  // }, [userId, user])
 
   // <-- Dynamic display -->
   const formType = location.pathname.replaceAll('/', '');
