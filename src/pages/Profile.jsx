@@ -12,7 +12,7 @@ import Calendar from '../components/Calendar.jsx';
 const Profile = () => {
   const cardOptions = ['profileDetails', 'mySessions', 'createService', 'createSession', 'myCalendar'];
   const [activeCard, setActiveCard] = useState(cardOptions[0]);
-  const [userDetails, setUserDetails] = useState([])
+  const [userDetails, setUserDetails] = useState({})
   const [userImages, setUserImages] = useState([])
   const { userId } = useContext(AuthContext)
   const fetcher = new Fetcher("api");
@@ -39,8 +39,14 @@ const Profile = () => {
     return myString.capitalize(myString.splitByCapital(option).join(' '));
   }
 
+  const hideCard = (option) => {
+    switch (option) {
+      case 'createSession': return !userDetails.services || userDetails.services.length < 1;
+    }
+    return false;
+  }
+
   const ActiveCard = ({ activeCard }) => {
-    console.log("ActiveCard is:", activeCard);
     switch (activeCard) {
       case 'profileDetails': return <ProfileDetailsCard
         userDetails={userDetails}
@@ -50,9 +56,9 @@ const Profile = () => {
       />;
       case 'mySessions': return <MySessionsCard />;
       case 'createService': return <CreateServiceForm />;
-      case 'createSession':
-        return userDetails.services && userDetails.services.length > 0 &&
-          <CreateSession service={userDetails?.services[0]} />;
+      case 'createSession': return <CreateSession services={userDetails?.services} />;
+        // return userDetails.services && userDetails.services.length > 0 &&
+        //   <CreateSession service={userDetails?.services[0]} />;
       case 'myCalendar': return <div className='calendar-center'>
         <Calendar user={userDetails}/>
       </div>;
@@ -65,8 +71,8 @@ const Profile = () => {
   //TODO: Add ability that one refresh it displays currently clicked card       *
   //Options to store activeCard state in local storage to refer too on refresh  *
   //****************************************************************************/
-  const handleButtonClick = (cardName) => {
-    setActiveCard(cardName);
+  const handleButtonClick = (cardOption) => {
+    setActiveCard(cardOption);
   };
 
   return (
@@ -75,10 +81,11 @@ const Profile = () => {
       </div>
       <div className="flex justify-center items-center p-10 gap-10 rounded-md" style={{ backgroundImage: "linear-gradient(var(--surfaceColor), var(--cafeNoir) 30% 70%, var(--surfaceColor))" }}>
         {
-          cardOptions.map(key => (
+          cardOptions.map(option => (
+            !hideCard(option) &&
             <button className="view-button text-white font-bold py-2 px-2 rounded"
-              onClick={() => handleButtonClick(key)}>
-              {cardName(key)}
+              onClick={() => handleButtonClick(option)}>
+              {cardName(option)}
             </button>
           ))
         }
