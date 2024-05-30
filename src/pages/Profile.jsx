@@ -6,9 +6,12 @@ import UserCarousel from '../components/UserCarousel'
 import Fetcher from "../fetcher.js"
 import CreateServiceForm from '../components/CreateServiceForm.jsx';
 import CreateSession from '../components/CreateSessionForm.jsx';
+import myString from '../utils/myString.cjs';
+import Calendar from '../components/Calendar.jsx';
 
 const Profile = () => {
-  const [activeCard, setActiveCard] = useState('profileDetails');
+  const cardOptions = ['profileDetails', 'mySessions', 'createService', 'createSession', 'myCalendar'];
+  const [activeCard, setActiveCard] = useState(cardOptions[0]);
   const [userDetails, setUserDetails] = useState([])
   const [userImages, setUserImages] = useState([])
   const { userId } = useContext(AuthContext)
@@ -28,16 +31,40 @@ const Profile = () => {
         console.error('Error fetching user data:', error);
       }
     };
-  
+
     fetchUserData();
   }, [userId]);
-  
 
-  console.log('user services offered',userDetails.services)
-//*****************************************************************************/
-//TODO: Add ability that one refresh it displays currently clicked card       *
-//Options to store activeCard state in local storage to refer too on refresh  *
-//****************************************************************************/
+  const cardName = (option) => {
+    return myString.capitalize(myString.splitByCapital(option).join(' '));
+  }
+
+  const ActiveCard = ({ activeCard }) => {
+    console.log("ActiveCard is:", activeCard);
+    switch (activeCard) {
+      case 'profileDetails': return <ProfileDetailsCard
+        userDetails={userDetails}
+        setUserDetails={setUserDetails}
+        userImages={userImages}
+        setUserImages={setUserImages}
+      />;
+      case 'mySessions': return <MySessionsCard />;
+      case 'createService': return <CreateServiceForm />;
+      case 'createSession':
+        return userDetails.services && userDetails.services.length > 0 &&
+          <CreateSession service={userDetails?.services[0]} />;
+      case 'myCalendar': return <div className='calendar-center'>
+        <Calendar user={userDetails}/>
+      </div>;
+    }
+
+    return <div>No component found for active card "{activeCard}"</div>;
+  }
+
+  //*****************************************************************************/
+  //TODO: Add ability that one refresh it displays currently clicked card       *
+  //Options to store activeCard state in local storage to refer too on refresh  *
+  //****************************************************************************/
   const handleButtonClick = (cardName) => {
     setActiveCard(cardName);
   };
@@ -46,40 +73,18 @@ const Profile = () => {
     <div>
       <div>
       </div>
-      <div className="flex justify-center items-center p-10 gap-10 rounded-md" style={{backgroundImage: "linear-gradient(var(--surfaceColor), var(--cafeNoir) 30% 70%, var(--surfaceColor))" }}>
-        <button className="view-button text-white font-bold py-2 px-2 rounded"
-            onClick={() => handleButtonClick('profileDetails')}>
-          Profile Details
-        </button>
-        <button className="view-button text-white font-bold py-2 px-2 rounded"
-           onClick={() => handleButtonClick('mySessions')}>
-          My Sessions  
-        </button>
-        <button className="view-button text-white font-bold py-2 px-2 rounded"
-            onClick={() => handleButtonClick('createService')}>
-          Create Service  
-        </button>
+      <div className="flex justify-center items-center p-10 gap-10 rounded-md" style={{ backgroundImage: "linear-gradient(var(--surfaceColor), var(--cafeNoir) 30% 70%, var(--surfaceColor))" }}>
         {
-
-        }
-        {userDetails.services && userDetails.services.length > 0 &&
-          <button className="view-button text-white font-bold py-2 px-2 rounded"
-            onClick={() => handleButtonClick('createSession')}>
-            Create Session
-          </button>
+          cardOptions.map(key => (
+            <button className="view-button text-white font-bold py-2 px-2 rounded"
+              onClick={() => handleButtonClick(key)}>
+              {cardName(key)}
+            </button>
+          ))
         }
       </div>
       <div>
-          {activeCard === 'profileDetails' && 
-          <ProfileDetailsCard 
-            userDetails={userDetails} 
-            setUserDetails={setUserDetails} 
-            userImages={userImages}
-            setUserImages={setUserImages}
-          />}
-          {activeCard === 'mySessions' && <MySessionsCard />}
-          {activeCard === 'createService' && <CreateServiceForm />}
-          {activeCard === 'createSession' && <CreateSession service={userDetails?.services[0]}/>}
+        <ActiveCard activeCard={activeCard} />
       </div>
     </div>
   )

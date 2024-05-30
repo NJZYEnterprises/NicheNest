@@ -44,6 +44,39 @@ userRouter.get('/freelancers/:id', async (req, res, next) => {
   }
 })
 
+//get everything needed for a users calendar, by their id
+userRouter.get('/calendar/:id', async (req, res, next) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: parseInt(req.params.id)
+      },
+      include: {
+        reservations: {
+          include: { 
+            session: {
+              include: {
+                service: {
+                  include: { freelancer: true }
+                }
+              }
+            } 
+          }
+        },
+        services: {
+          include: {
+            availabilities: true,
+            sessions: true,
+          }
+        },
+      },
+    })
+    res.send(user)
+  } catch (error) {
+    next(error)
+  }
+})
+
 //get all users
 userRouter.get('/', async (req, res, next) => {
   try {
