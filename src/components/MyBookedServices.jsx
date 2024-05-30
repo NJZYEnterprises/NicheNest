@@ -1,7 +1,7 @@
 import React, { useState, useContext, } from 'react';
 import { AuthContext } from "../auth/AuthProvider";
 import Fetcher from "../fetcher.js";
-import Form, { InputData } from './Form';
+import ServiceForm from './ServiceForm.jsx';
 
 const MyBookedServices = ({ userServices, setUserServices }) => {
   const [serviceIsOpen, setServiceIsOpen] = useState({});
@@ -23,24 +23,6 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
     }));
   };
 
-
-  const updateService = (formData, serviceId) => {
-    fetcher.setToken(userId.accessToken).route(`/services/${serviceId}`).patch(formData);
-    window.location.reload();
-  }
-
-  const inputs = [
-    { name: "name" },
-    { name: "tags", type: "textarea", required: false },
-    { name: "rate", label: "Price per Unit", type: "number" },
-    { name: "rate_time", label: "Billing Unit" },
-  ];
-  for (let i = 0; i < inputs.length; i++) {
-    if (!inputs[i].hasOwnProperty("required"))
-      inputs[i].required = true;
-
-    inputs[i] = new InputData(inputs[i]);
-  }
   const handleDelete = (sessionId) => {
     fetcher.route(`/sessions/${sessionId}`).setToken(userId.accessToken).delete();
     setUserServices((prevServices) =>
@@ -72,9 +54,7 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
             </div>
             {serviceIsOpen[service.id] && (
               <div className="overflow-y-auto max-h-96">
-                <Form title={"Update Service:"} submitFn={(formData) => {
-                  updateService(formData, service.id)
-                }} inputs={inputs} />
+                <ServiceForm editService={service} />
                 {service.sessions.length === 0 ? (
                   <div className="text-white">No sessions</div>
                 ) : (
