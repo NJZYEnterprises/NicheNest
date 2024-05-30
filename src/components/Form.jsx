@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import myString from "../utils/myString.cjs";
 
 export class InputData {
-  constructor({ id, name, label, type, required }) {
+  constructor({ id, name, label, type, required, options, enforceOptions }) {
     Object.entries(arguments[0]).forEach(([key, value]) => this[key] = value);
     if (!this.label) this.label = myString.capitalize(this.name);
-    if (!this.id) this.id = this.name;
+    if (!this.id) this.id = name;
+    if (options) {
+      this.list = name + "Options";
+      if (enforceOptions) this.pattern = options.join('|');
+    }
   }
 
   isValid() {
@@ -73,6 +77,11 @@ const Form = (props) => {
           return <div key={input.id} className="flex justify-end" style={{ margin: "1px 0" }}>
             <label className="mr-2" htmlFor={input.id}>{input.label}:</label>
             <InputTag style={styling} {...input} onChange={onChange}></InputTag>
+            {input.options &&
+              <datalist id={input.list}>
+                {input.options.map((e, i) => <option key={i} value={e} />)}
+              </datalist>
+            }
           </div>
         })}
         <div>
