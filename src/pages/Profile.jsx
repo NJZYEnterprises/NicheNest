@@ -22,8 +22,8 @@ const Profile = () => {
       try {
         if (userId) {
           const userData = await fetcher.route(`/users/user/${userId.uid}`).get();
-          setUserDetails(userData);
-          setUserImages(userData.images)
+          setUserDetails(userData ?? {});
+          setUserImages(userData?.images ?? []);
         } else {
           console.log('Error, userId is not truthy')
         }
