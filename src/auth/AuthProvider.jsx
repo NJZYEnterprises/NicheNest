@@ -68,7 +68,7 @@ function AuthProvider({ children }) {
         email,
         password
       )
-      navigate("/")
+      // navigate("/")
       console.log("User Successfully Created", userCredential);
       return userCredential;
     } catch (error) {
@@ -93,7 +93,7 @@ function AuthProvider({ children }) {
         }
       }
       const userCredential = await methodFn();
-      navigate("/");
+      // navigate("/");
       console.log("User Signed in successfully", userCredential);
       return userCredential;
     } catch (error) {
@@ -106,7 +106,7 @@ function AuthProvider({ children }) {
       await signOut(auth)
       //if we need to navigate on logout
       //setUser(null);
-      navigate("/")
+      // navigate("/")
       console.log("User signed out successfully")
     } catch (error) {
       console.error(error, "logged out unsuccessfully")

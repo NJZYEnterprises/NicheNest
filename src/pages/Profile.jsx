@@ -8,6 +8,9 @@ import ServiceForm from '../components/ServiceForm.jsx';
 import CreateSession from '../components/CreateSessionForm.jsx';
 import myString from '../utils/myString.cjs';
 import Calendar from '../components/Calendar.jsx';
+import { useNavigate } from 'react-router-dom';
+
+const fetcher = new Fetcher("api");
 
 const Profile = () => {
   const cardOptions = ['profileDetails', 'mySessions', 'createService', 'createSession', 'myCalendar'];
@@ -15,22 +18,24 @@ const Profile = () => {
   const [userDetails, setUserDetails] = useState({})
   const [userImages, setUserImages] = useState([])
   const { userId } = useContext(AuthContext)
-  const fetcher = new Fetcher("api");
+  const navigate = useNavigate();
+
+  // TODO: either use this to reload data, or merge this with UserProvider functionality
+  const fetchUserData = async () => {
+    if (userId) {
+      const userData = await fetcher.route(`/users/user/${userId.uid}`).get();
+      setUserDetails(userData ?? {});
+      setUserImages(userData?.images ?? []);
+    } else {
+      console.log('Error, userId is not truthy')
+    }
+  };
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        if (userId) {
-          const userData = await fetcher.route(`/users/user/${userId.uid}`).get();
-          setUserDetails(userData ?? {});
-          setUserImages(userData?.images ?? []);
-        } else {
-          console.log('Error, userId is not truthy')
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
+    if (!userId) {
+      navigate("/");
+      return;
+    }
 
     fetchUserData();
   }, [userId]);
