@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from "../auth/AuthProvider"
+import { UserContext } from '../components/UserProvider.jsx';
 import ProfileDetailsCard from '../components/ProfileDetailsCard'
 import MySessionsCard from '../components/MySessionsCard'
 import UserCarousel from '../components/UserCarousel'
@@ -15,21 +16,30 @@ const fetcher = new Fetcher("api");
 const Profile = () => {
   const cardOptions = ['profileDetails', 'mySessions', 'createService', 'createSession', 'myCalendar'];
   const [activeCard, setActiveCard] = useState(cardOptions[0]);
-  const [userDetails, setUserDetails] = useState({})
-  const [userImages, setUserImages] = useState([])
+  // const [userDetails, setUserDetails] = useState({})
+  const { user } = useContext(UserContext);
   const { userId } = useContext(AuthContext)
   const navigate = useNavigate();
 
+  // const userImages = userDetails?.images ?? [];
+  // const setUserImages = (newImages) => {
+  //   setUserDetails(prevDetails => {
+  //     return {
+  //       ...prevDetails,
+  //       images: newImages,
+  //     }
+  //   });
+  // };
+
   // TODO: either use this to reload data, or merge this with UserProvider functionality
-  const fetchUserData = async () => {
-    if (userId) {
-      const userData = await fetcher.route(`/users/user/${userId.uid}`).get();
-      setUserDetails(userData ?? {});
-      setUserImages(userData?.images ?? []);
-    } else {
-      console.log('Error, userId is not truthy')
-    }
-  };
+  // const fetchUserData = async () => {
+  //   if (userId) {
+  //     const userData = await fetcher.route(`/users/user/${userId.uid}`).get();
+  //     setUserDetails(userData ?? {});
+  //   } else {
+  //     console.log('Error, userId is not truthy')
+  //   }
+  // };
 
   useEffect(() => {
     if (!userId) {
@@ -37,7 +47,7 @@ const Profile = () => {
       return;
     }
 
-    fetchUserData();
+    // fetchUserData();
   }, [userId]);
 
   const cardName = (option) => {
@@ -46,7 +56,7 @@ const Profile = () => {
 
   const hideCard = (option) => {
     switch (option) {
-      case 'createSession': return !userDetails.services || userDetails.services.length < 1;
+      case 'createSession': return !user?.services || user.services.length < 1;
     }
     return false;
   }
@@ -54,10 +64,10 @@ const Profile = () => {
   const ActiveCard = ({ activeCard }) => {
     switch (activeCard) {
       case 'profileDetails': return <ProfileDetailsCard
-        userDetails={userDetails}
-        setUserDetails={setUserDetails}
-        userImages={userImages}
-        setUserImages={setUserImages}
+        // userDetails={userDetails}
+        // setUserDetails={setUserDetails}
+        // userImages={userImages}
+        // setUserImages={setUserImages}
       />;
       case 'mySessions': return <MySessionsCard />;
       case 'createService': return <ServiceForm />;

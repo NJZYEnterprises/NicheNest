@@ -1,22 +1,36 @@
 import { createContext, useState, useEffect, useContext } from "react"
-import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../auth/AuthProvider.jsx"
 import { calculateAverageRating } from "../../utils/profileUtils";
 import Fetcher from "../fetcher.js"
 
-const UserContext = createContext()
+const UserContext = createContext();
+const apiFetcher = new Fetcher("api");
+const authFetcher = new Fetcher("auth");
 
 function UserProvider({ children }) {
   const { userId } = useContext(AuthContext); 
-  const[user, setUser] = useState(null)
-  const[freelancers, setFreelancers] = useState([])
-  const [topRatedFreelancers, setTopRatedFreelancers] = useState([])
-  const navigate = useNavigate()
-  const fetcher = new Fetcher("api")
+  const[user, setUser] = useState(null);
+  const[freelancers, setFreelancers] = useState([]);
+  const [topRatedFreelancers, setTopRatedFreelancers] = useState([]);
 
-//fetch freelancers
+  const updateUser = async () => {
+    if (userId) {
+      return authFetcher.setToken(userId.accessToken).route("me").get(setUser);
+    } else setUser(null);
+  }
+
+  const setImages = (newImages) => {
+    setUser(prevDetails => {
+      return {
+        ...prevDetails,
+        images: newImages,
+      }
+    });
+  };
+
+  //fetch freelancers
   useEffect(() => {
-    fetcher.route("/users/freelancers").get(newFreelancers => {
+    apiFetcher.route("/users/freelancers").get(newFreelancers => {
       newFreelancers.forEach(freelancer => calculateAverageRating(freelancer));
       setFreelancers(newFreelancers);
     })
@@ -32,19 +46,15 @@ function UserProvider({ children }) {
   }, [freelancers])
 
   useEffect(() => {
-    console.log("Entered useEffect in UserProvider on userID change");
-    if (userId) {
-      console.log("userID is not null");
-      const authFetcher = new Fetcher("auth");
-      authFetcher.setToken(userId.accessToken).route("me").get(setUser);
-    } else setUser(null)
+    updateUser();
   }, [userId])
 
   return (
     <UserContext.Provider
       value={{
         user,
-        setUser,
+        updateUser,
+        setImages,
         freelancers,
         setFreelancers,
         topRatedFreelancers,
