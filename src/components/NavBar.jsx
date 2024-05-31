@@ -35,7 +35,7 @@ const Navbar = () => {
       }
     </div>
     <div>
-      <Searchbar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+      <Searchbar />
     </div>
   </div> 
 };

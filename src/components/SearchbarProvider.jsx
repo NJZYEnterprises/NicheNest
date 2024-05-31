@@ -10,10 +10,17 @@ function SearchbarProvider({ children }) {
     type: '',
     query:'',
   });
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setQuery] = useState('')
   const navigate = useNavigate()
   const fetcher = new Fetcher("api")
 
+  const setSearchQuery = (newValue) => {
+    if (!newValue) newValue = '';
+    if (typeof(newValue) != "string") newValue = newValue.toString();
+    console.log("searchQuery newValue:", newValue);
+
+    setQuery(newValue);
+  }
 
   return (
     <SearchbarContext.Provider
