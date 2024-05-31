@@ -104,15 +104,52 @@ reservationRouter.post("/", async (req, res, next) => {
 
 
 // delete reservation by uid auth
-reservationRouter.delete("/:reservationId", async (req, res, next) => {
-  const { reservationId } = req.params;
-  const header = req.headers.authorization;
-  const token = header.replace("Bearer ", "");
+// reservationRouter.delete("/:reservationId", async (req, res, next) => {
+//   const { reservationId } = req.params;
+//   const header = req.headers.authorization;
+//   const token = header.replace("Bearer ", "");
 
+//   try {
+//     const user = await prisma.user.findUnique({
+//       where: {
+//         uid: token,
+//       },
+//     });
+
+//     if (!user) {
+//       return res.status(404).send({ error: "User not found" });
+//     }
+
+//     // Check if the reservation with the given ID belongs to the user
+//     const reservation = await prisma.reservation.findUnique({
+//       where: {
+//         id: parseInt(reservationId),
+//         client_id: user.id,
+//       },
+//     });
+
+//     if (!reservation) {
+//       return res.status(404).send({ error: "Reservation not found or does not belong to the user" });
+//     }
+
+//     // If everything checks out, delete the reservation
+//     const deletedReservation = await prisma.reservation.delete({
+//       where: {
+//         id: parseInt(reservationId),
+//       },
+//     });
+
+//     res.send({ message: "Reservation deleted successfully", deletedReservation });
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
+reservationRouter.delete('/:reservationId', verifyToken, async (req, res, next) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        uid: token,
+        uid: req.user.uid,
       },
     });
 
@@ -120,30 +157,17 @@ reservationRouter.delete("/:reservationId", async (req, res, next) => {
       return res.status(404).send({ error: "User not found" });
     }
 
-    // Check if the reservation with the given ID belongs to the user
-    const reservation = await prisma.reservation.findUnique({
+    const deleteReservation = await prisma.reservation.delete({
       where: {
-        id: parseInt(reservationId),
-        client_id: user.id,
-      },
-    });
-
-    if (!reservation) {
-      return res.status(404).send({ error: "Reservation not found or does not belong to the user" });
-    }
-
-    // If everything checks out, delete the reservation
-    const deletedReservation = await prisma.reservation.delete({
-      where: {
-        id: parseInt(reservationId),
-      },
-    });
-
-    res.send({ message: "Reservation deleted successfully", deletedReservation });
+        id: parseInt(req.params.reservationId),
+        client_id: user.id
+      }
+    })
+    res.send(deleteReservation)
   } catch (error) {
-    next(error);
+    next(error)
   }
-});
+})
 
 
 module.exports = reservationRouter
