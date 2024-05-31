@@ -9,8 +9,8 @@ const AllFreelancers = () => {
   const [filteredFreelancers, setFilteredFreelancers] = useState([])
   const { filters, setFilters, searchQuery, setSearchQuery  } = useContext(SearchbarContext)
   const { freelancers } = useContext(UserContext)
-  console.log('freelancers',freelancers)
-  console.log('filtered', filteredFreelancers);
+
+
   useEffect(() => {
     const filterFreelancers = () => {
       let filtered = [...freelancers];
