@@ -16,8 +16,7 @@ function SearchbarProvider({ children }) {
 
   const setSearchQuery = (newValue) => {
     if (!newValue) newValue = '';
-    if (typeof(newValue) != "string") newValue = newValue.toString();
-    console.log("searchQuery newValue:", newValue);
+    if (typeof(newValue) !== "string") newValue = newValue.toString();
 
     setQuery(newValue);
   }
