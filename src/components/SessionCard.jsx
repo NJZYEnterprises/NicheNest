@@ -26,22 +26,14 @@ const SessionCard = () => {
 
 
  const fetchResservations=()=>{
-
-  fetcher.route(`reservations/${user.id}`).get(setReservations);
-
+  fetcher.route(`reservations/${user?.id}`).get(setReservations);
  }
-
-
-
 
   useEffect(() => {
     fetcher.route(["sessions/open/", id]).get(setSessions);
     fetchResservations();
    
   }, [id,]);
-
-
-
 
   const reserveSession = async (sessionId) => {
     console.log(`SESH`, sessionId)
@@ -55,16 +47,11 @@ const SessionCard = () => {
 
   }
 
-
   const alreadyBooked = (checkId) => {
     console.log(`CHECKID`, checkId)
     const sessionIds = reservations.map(ids=>ids.session_id);
     return sessionIds.includes(checkId)
   }
-
-
-
-
 
 
   return (
@@ -99,10 +86,8 @@ const SessionCard = () => {
           )
         })}
       </div>
-
     </>
   )
-
 }
 
 export default SessionCard
