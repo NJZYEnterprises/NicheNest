@@ -54,7 +54,7 @@ const Searchbar = () => {
         />
         <button
           onClick={handleSearch}
-          className="p-2 text-sm font-medium searchbar-text-color transition duration-300  view-button focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="p-2 text-sm font-medium searchbar-text-color transition duration-300 view-button focus:outline-none focus:ring-2 focus:ring-green-500"
         >
           Search
         </button>
