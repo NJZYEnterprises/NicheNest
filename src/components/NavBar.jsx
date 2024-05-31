@@ -7,7 +7,7 @@ import accountIcon from "../assets/account.svg";
 import logo from "../assets/logo.png";
 
 
-const Navbar = ({ searchQuery, setSearchQuery }) => {
+const Navbar = () => {
   const { userId, handleLogout} = useContext(AuthContext)
   
   return <div className="flex flex-col sticky top-0 p-3 sky-scene" style={{zIndex: 2000/*, backgroundImage: "linear-gradient(var(--primaryColor) 60%, var(--surfaceColor))"*/ }}>
