@@ -33,7 +33,7 @@ const Searchbar = () => {
   
   return (
     <div className="max-w-lg mx-auto">
-      <div className="flex items-center m-5 border searchbar-bg searchbar-border-color rounded-lg overflow-hidden shadow-lg">
+      <div className="flex items-center border searchbar-bg searchbar-border-color rounded-lg overflow-hidden shadow-lg">
         <select
           name="type"
           value={selectedFilter}
