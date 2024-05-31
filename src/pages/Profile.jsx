@@ -7,6 +7,8 @@ import UserCarousel from '../components/UserCarousel'
 import Fetcher from "../fetcher.js"
 import ServiceForm from '../components/ServiceForm.jsx';
 import CreateSession from '../components/CreateSessionForm.jsx';
+import MyReservations from '../components/MyReservations';
+import MyBookedServices from "../components/MyBookedServices";
 import myString from '../utils/myString.cjs';
 import Calendar from '../components/Calendar.jsx';
 import { useNavigate } from 'react-router-dom';
@@ -14,18 +16,18 @@ import { useNavigate } from 'react-router-dom';
 const fetcher = new Fetcher("api");
 
 const Profile = () => {
-  const cardOptions = ['profileDetails', 'mySessions', 'createService', 'createSession', 'myCalendar'];
+  const cardOptions = ['profileDetails', 'myReservations', 'myServices', 'mySessions', 'createService', 'createSession', 'myCalendar'];
   const [activeCard, setActiveCard] = useState(cardOptions[0]);
   const { user } = useContext(UserContext);
   const { userId } = useContext(AuthContext)
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!userId) {
-      navigate("/");
-      return;
-    }
-  }, [userId]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate("/");
+  //     return;
+  //   }
+  // }, [user]);
 
   const cardName = (option) => {
     return myString.capitalize(myString.splitByCapital(option).join(' '));
@@ -41,13 +43,16 @@ const Profile = () => {
   const ActiveCard = ({ activeCard }) => {
     switch (activeCard) {
       case 'profileDetails': return <ProfileDetailsCard />;
+      case 'myReservations': return <MyReservations />;
+      case 'myServices': return <MyBookedServices />;
       case 'mySessions': return <MySessionsCard />;
       case 'createService': return <ServiceForm />;
       case 'createSession': return <CreateSession services={user?.services} />;
       case 'myCalendar': return <div className='calendar-center'>
-        <Calendar user={user}/>
+        <Calendar user={user} />
       </div>;
     }
+
 
     return <div>No component found for active card "{activeCard}"</div>;
   }

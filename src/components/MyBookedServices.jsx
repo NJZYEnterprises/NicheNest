@@ -1,13 +1,19 @@
 import React, { useState, useContext, } from 'react';
 import { AuthContext } from "../auth/AuthProvider";
+import { UserContext } from './UserProvider.jsx';
 import Fetcher from "../fetcher.js";
 import ServiceForm from './ServiceForm.jsx';
 
-const MyBookedServices = ({ userServices, setUserServices }) => {
+const fetcher = new Fetcher("api");
+
+const MyBookedServices = (/*{ userServices, setUserServices }*/) => {
   const [serviceIsOpen, setServiceIsOpen] = useState({});
   const [sessionIsOpen, setSessionIsOpen] = useState({});
   const { userId } = useContext(AuthContext);
-  const fetcher = new Fetcher("api");
+  const {user, updateUser } = useContext(UserContext);
+
+  const userServices = user?.services ?? [];
+  console.log("MyBookedServices userServices", userServices);
 
   const toggleService = (serviceId) => {
     setServiceIsOpen((prevServiceIsOpen) => ({
@@ -23,14 +29,15 @@ const MyBookedServices = ({ userServices, setUserServices }) => {
     }));
   };
 
-  const handleDelete = (sessionId) => {
-    fetcher.route(`/sessions/${sessionId}`).setToken(userId.accessToken).delete();
-    setUserServices((prevServices) =>
-      prevServices.map(service => ({
-        ...service,
-        sessions: service.sessions.filter(session => session.id !== sessionId)
-      }))
-    );
+  const handleDelete = async (sessionId) => {
+    await fetcher.route(`/sessions/${sessionId}`).setToken(userId.accessToken).delete();
+    updateUser();
+    // setUserServices((prevServices) =>
+    //   prevServices.map(service => ({
+    //     ...service,
+    //     sessions: service.sessions.filter(session => session.id !== sessionId)
+    //   }))
+    // );
   };
 
 

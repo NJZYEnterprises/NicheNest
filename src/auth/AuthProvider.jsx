@@ -106,7 +106,7 @@ function AuthProvider({ children }) {
       await signOut(auth)
       //if we need to navigate on logout
       //setUser(null);
-      // navigate("/")
+      navigate("/")
       console.log("User signed out successfully")
     } catch (error) {
       console.error(error, "logged out unsuccessfully")

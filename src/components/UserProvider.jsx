@@ -43,9 +43,9 @@ function UserProvider({ children }) {
     updateUser();
   }, [userId])
 
-  // useEffect(() => {
-  //   console.log("user changed:", user);
-  // }, [user])
+  useEffect(() => {
+    console.log("user changed:", user);
+  }, [user])
 
   return (
     <UserContext.Provider

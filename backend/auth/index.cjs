@@ -14,6 +14,26 @@ authRouter.get("/me", verifyToken, async (req, res, next) => {
       where: { uid: req.user?.uid },
       include: {
         location: true,
+        links: true,
+        images: true,
+        reviews_received: true,
+        reservations: {
+          include: {
+            session: {
+              include: {
+                service: {
+                  include: {
+                    freelancer: {
+                      select: {
+                        username: true,
+                      }
+                    }
+                  }
+                },
+              }
+            }
+          }
+        },
         services: {
           include: {
             availabilities: true,
@@ -24,9 +44,6 @@ authRouter.get("/me", verifyToken, async (req, res, next) => {
             },
           },
         },
-        links: true,
-        images: true,
-        reviews_received: true,
       },
     });
 

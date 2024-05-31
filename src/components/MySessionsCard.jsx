@@ -1,4 +1,4 @@
-import { MyReservations } from './MyReservations';
+import MyReservations from './MyReservations';
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from "../auth/AuthProvider"
 import Fetcher from "../fetcher.js";
