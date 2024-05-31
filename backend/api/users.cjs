@@ -89,44 +89,6 @@ userRouter.get('/', async (req, res, next) => {
   }
 })
 
-//get all user info by Uid
-// userRouter.get("/user/:uid", async (req, res, next) => {
-//   const { uid } = req.params;
-
-//   try {
-//     const user = await prisma.user.findUnique({
-//       where: {
-//         uid: uid,
-//       },
-//       include: {
-//         location: true,
-//         services: {
-//           include: {
-//             availabilities: true,
-//             sessions: {
-//               include: {
-//                 reservations: true,
-//               },
-//             },
-//           },
-//         },
-//         links: true,
-//         images: true,
-//       },
-//     });
-
-//     if (!user) {
-//       return res.status(404).send("User not found");
-//     }
-
-//     res.send(user);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
-
-
 //create single user by id
 userRouter.post('/', verifyToken, async (req, res, next) => {
   try {

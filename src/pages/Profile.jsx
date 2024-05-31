@@ -16,38 +16,15 @@ const fetcher = new Fetcher("api");
 const Profile = () => {
   const cardOptions = ['profileDetails', 'mySessions', 'createService', 'createSession', 'myCalendar'];
   const [activeCard, setActiveCard] = useState(cardOptions[0]);
-  // const [userDetails, setUserDetails] = useState({})
   const { user } = useContext(UserContext);
   const { userId } = useContext(AuthContext)
   const navigate = useNavigate();
-
-  // const userImages = userDetails?.images ?? [];
-  // const setUserImages = (newImages) => {
-  //   setUserDetails(prevDetails => {
-  //     return {
-  //       ...prevDetails,
-  //       images: newImages,
-  //     }
-  //   });
-  // };
-
-  // TODO: either use this to reload data, or merge this with UserProvider functionality
-  // const fetchUserData = async () => {
-  //   if (userId) {
-  //     const userData = await fetcher.route(`/users/user/${userId.uid}`).get();
-  //     setUserDetails(userData ?? {});
-  //   } else {
-  //     console.log('Error, userId is not truthy')
-  //   }
-  // };
 
   useEffect(() => {
     if (!userId) {
       navigate("/");
       return;
     }
-
-    // fetchUserData();
   }, [userId]);
 
   const cardName = (option) => {
@@ -63,17 +40,12 @@ const Profile = () => {
 
   const ActiveCard = ({ activeCard }) => {
     switch (activeCard) {
-      case 'profileDetails': return <ProfileDetailsCard
-        // userDetails={userDetails}
-        // setUserDetails={setUserDetails}
-        // userImages={userImages}
-        // setUserImages={setUserImages}
-      />;
+      case 'profileDetails': return <ProfileDetailsCard />;
       case 'mySessions': return <MySessionsCard />;
       case 'createService': return <ServiceForm />;
-      case 'createSession': return <CreateSession services={userDetails?.services} />;
+      case 'createSession': return <CreateSession services={user?.services} />;
       case 'myCalendar': return <div className='calendar-center'>
-        <Calendar user={userDetails}/>
+        <Calendar user={user}/>
       </div>;
     }
 

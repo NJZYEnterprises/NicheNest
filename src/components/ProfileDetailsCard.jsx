@@ -7,7 +7,7 @@ import { UserContext } from "./UserProvider.jsx";
 
 const fetcher = new Fetcher("api");
 
-const ProfileDetailsCard = (/*{ userDetails, setUserDetails, userImages, setUserImages }*/) => {
+const ProfileDetailsCard = (props) => {
   const { userId } = useContext(AuthContext);
   const { user } = useContext(UserContext);
   const [editMode, setEditMode] = useState(false);

@@ -6,13 +6,13 @@ import { UserContext } from './UserProvider.jsx';
 
 const fetcher = new Fetcher("api");
 
-const AddImageForm = ({ /*setUserImages,*/ deleteMode, setDeleteMode, selectedImage, setSelectedImage }) => {
+const AddImageForm = ({ deleteMode, setDeleteMode, selectedImage, setSelectedImage }) => {
   const [imageUrl, setImageUrl] = useState('');
   const [showInput, setShowInput] = useState(false);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState(false);
   const { userId } = useContext(AuthContext);
-  const { updateUser } = useContext(UserContext);
+  const { updateUser, updateFreelancers } = useContext(UserContext);
 
   const handleUrlChange = (event) => {
     setImageUrl(event.target.value);
@@ -57,15 +57,7 @@ const AddImageForm = ({ /*setUserImages,*/ deleteMode, setDeleteMode, selectedIm
   };
 
   const updateCarousel = async () => {
-    return updateUser();
-    // try {
-    //     await fetcher
-    //     .route('/images')
-    //     .setToken(userId.accessToken)
-    //     .get(setUserImages);
-    // } catch (error) {
-    //   console.log('Error updating carousel:', error);
-    // }
+    return Promise.All([updateUser(), updateFreelancers()]);
   };
 
   const handleProfilePic = async () => {

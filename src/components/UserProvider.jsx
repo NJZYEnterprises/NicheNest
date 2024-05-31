@@ -18,22 +18,16 @@ function UserProvider({ children }) {
       return authFetcher.setToken(userId.accessToken).route("me").get(setUser);
     } else setUser(null);
   }
-
-  const setImages = (newImages) => {
-    setUser(prevDetails => {
-      return {
-        ...prevDetails,
-        images: newImages,
-      }
-    });
-  };
-
-  //fetch freelancers
-  useEffect(() => {
+  const updateFreelancers = async () => {
     apiFetcher.route("/users/freelancers").get(newFreelancers => {
       newFreelancers.forEach(freelancer => calculateAverageRating(freelancer));
       setFreelancers(newFreelancers);
     })
+  }
+
+  //fetch freelancers
+  useEffect(() => {
+    updateFreelancers();
   }, [])
 
   //sorts top rated freelancers, runs everytime freelancers is updated  
@@ -49,16 +43,18 @@ function UserProvider({ children }) {
     updateUser();
   }, [userId])
 
+  // useEffect(() => {
+  //   console.log("user changed:", user);
+  // }, [user])
+
   return (
     <UserContext.Provider
       value={{
         user,
         updateUser,
-        setImages,
         freelancers,
-        setFreelancers,
+        updateFreelancers,
         topRatedFreelancers,
-        setTopRatedFreelancers
       }}
     >
       {children}

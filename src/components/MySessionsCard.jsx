@@ -7,7 +7,6 @@ import MyBookedServices from "./MyBookedServices"
 const MySessionsCard = () => {
   const [userReservations, setUserReservations] = useState();
   const [userServices, setUserServices] = useState();
-  const [freelancers, setFreelancers] = useState([])
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
