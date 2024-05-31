@@ -123,6 +123,18 @@ body {
   min-height: 100vh;
 }
 
+.searchbar-bg {
+  background-color: var(--resedaGreen);
+}
+
+.searchbar-border-color {
+  border: solid 1px var(--calPolyGreen);
+}
+
+.searchbar-text-color {
+  color: var(--cafeNoir)
+}
+
 
 
 

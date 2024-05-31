@@ -34,9 +34,8 @@ const Navbar = () => {
       )
       }
     </div>
-    <div id="TODO: replace with SearchBarComponent">
-      <Searchbar/>
-      <h2>Filters go here</h2>
+    <div>
+      <Searchbar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
     </div>
   </div> 
 };

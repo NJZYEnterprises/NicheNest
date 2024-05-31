@@ -1,7 +1,8 @@
-import React from "react"
+import React, {useState} from "react"
 import { Routes, Route } from "react-router-dom"
 import { AuthProvider } from "./auth/AuthProvider.jsx"
 import { UserProvider } from "./components/UserProvider.jsx"
+import { SearchbarProvider } from "./components/SearchbarProvider.jsx"
 import NavBar from "./components/NavBar.jsx"
 import Footer from "./components/Footer.jsx"
 import Home from "./pages/Home"
@@ -19,19 +20,21 @@ function App() {
     <>
       <AuthProvider>
       <UserProvider>
-        <NavBar />
+      <SearchbarProvider>
+        <NavBar/>
         <Routes>
-          <Route index="/" element={<Home />} />
+          <Route index="/" element={<Home/>} />
           <Route path="/login" element={<SignInForm/>} />
           <Route path="/register" element={<SignInForm/>} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/freelancers" element={<AllFreelancers />} />
+          <Route path="/freelancers" element={<AllFreelancers/>} />
           <Route path="/freelancers/:id" element={<SingleFreeLancer />} />
           <Route path="/availabilities/:id" element={<Availabilities />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
         </Routes>
         <Footer />
+      </SearchbarProvider>
       </UserProvider>
       </AuthProvider>
     </>
