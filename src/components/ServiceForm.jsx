@@ -1,19 +1,23 @@
 import React, { useContext } from 'react';
 import { AuthContext } from "../auth/AuthProvider";
 import Fetcher from "../fetcher";
-import { UserContext } from "../components/UserProvider";
+import { UserContext } from "./UserProvider";
 import Form, { InputData } from './Form';
 
-const CreateServiceForm = () => {
+const ServiceForm = ({ editService }) => {
   const { user } = useContext(UserContext);
   const { userId } = useContext(AuthContext);
   const fetcher = new Fetcher("api");
 
   const submitForm = (serviceData) => {
-    serviceData.freelancer_id = user?.id;
-    fetcher.setToken(userId.accessToken).route("services").post(serviceData);
-    window.location.reload();
-
+    fetcher.setToken(userId.accessToken).route("services");
+    if (editService) {
+      fetcher.addRoute(editService.id).patch(serviceData);
+    } else {
+      serviceData.freelancer_id = user?.id;
+      fetcher.post(serviceData);
+      window.location.reload(); // TODO: refetch instead of reload whole page
+    }
   }
 
   const inputs = [
@@ -31,8 +35,8 @@ const CreateServiceForm = () => {
   }
 
   return <div className='flex justify-center m-4'>
-    <Form title={"New Service:"} submitFn={submitForm} inputs={inputs} />
+    <Form defaultData={editService} title={`${editService ? "Edit" : "New"} Service:`} submitFn={submitForm} inputs={inputs} />
   </div>
 }
 
-export default CreateServiceForm
+export default ServiceForm

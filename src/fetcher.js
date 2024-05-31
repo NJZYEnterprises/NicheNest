@@ -75,6 +75,11 @@ class Fetcher {
 
     return this;
   }
+  addRoute(route) {
+    this.subRoutes = Fetcher.joinRoutes([this.subRoutes, route]);
+
+    return this;
+  }
 
   /**
    * Generic async fetch function that takes in all relevant fetch information

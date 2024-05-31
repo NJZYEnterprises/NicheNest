@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import myString from "../utils/myString.cjs";
+import myObj from "../utils/myObj.cjs";
 
 export class InputData {
   constructor({ id, name, label, type, required, options, enforceOptions }) {
@@ -17,10 +18,13 @@ export class InputData {
   }
 }
 
-const Form = (props) => {
-  const { title, submitFn, inputs, injectComponents } = props;
+const Form = ({ defaultData, title, submitFn, inputs, injectComponents }) => {
+  if (defaultData && Array.isArray(inputs)) {
+    defaultData = myObj.unwrap(defaultData, inputs.map(e => e.name));
+    inputs.forEach(e => { if (defaultData.hasOwnProperty(e)) e.placeholder = defaultData[e]; });
+  }
 
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(defaultData ? { ...defaultData } : {});
   const [errorMsg, setErrorMsg] = useState("");
   const [textareaHeightMap, setTextareaHeightMap] = useState({});
 
@@ -59,7 +63,12 @@ const Form = (props) => {
       return;
     } else setErrorMsg("");
 
-    event.target.reset();
+    if (defaultData) setFormData({ ...defaultData });
+    else {
+      setFormData((prevData) => {
+        return Object.keys(prevData).reduce((acc, e) => { acc[e] = ""; return acc; }, {});
+      });
+    }
   }
 
   return <div className="surface-color card flex justify-center items-center m-2 px-3 py-2 rounded-md shadow-md w-max">
@@ -76,7 +85,7 @@ const Form = (props) => {
           }
           return <div key={input.id} className="flex justify-end" style={{ margin: "1px 0" }}>
             <label className="mr-2" htmlFor={input.id}>{input.label}:</label>
-            <InputTag style={styling} {...input} onChange={onChange}></InputTag>
+            <InputTag style={styling} {...input} value={formData[input.name]} onChange={onChange}></InputTag>
             {input.options &&
               <datalist id={input.list}>
                 {input.options.map((e, i) => <option key={i} value={e} />)}
