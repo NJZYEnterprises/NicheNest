@@ -69,14 +69,8 @@ const MySessionsCard = () => {
         .route(`/reservations/${reservationId}`)
         .setToken(userId.accessToken)
         .delete();
+        fetchReservations();
 
-      // setUserServices((prevServices) => 
-      //   prevServices.map(service => ({
-      //     ...service,
-      //     sessions: service.sessions.filter(session => session.id !== sessionId)
-      //   }))
-      // );
-  
     } catch (error) {
       console.error("Error deleting session:", error);
     }

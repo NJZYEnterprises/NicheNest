@@ -51,7 +51,7 @@ const SessionCard = () => {
       status: "joined"
     }
    await fetcher.setToken(userId.accessToken).route("reservations").post(reservationData);
-    fetchResservations();
+   fetchResservations();
 
   }
 
@@ -76,7 +76,6 @@ const SessionCard = () => {
 
           return (
             <>
-              {!alreadyBooked(session.id) ?
                 <div className="flex flex-col p-10 m-5 surface-color card">
                   <h2 className="text-lg font-bold" key={session.id}>{session.description}</h2>
                   <h2>Date:</h2>
@@ -86,13 +85,16 @@ const SessionCard = () => {
                   <h2>Capacity:</h2>
                   <p>{session.capacity}</p>
                   <div>
+                    {alreadyBooked(session.id) ? 
+                    <div className="text-lg font-bold text-orange-500">
+                      ALREADY RESERVED SESSION
+                    </div> :
                     <button className="view-button text-white font-bold py-2 px-2 rounded"
                       onClick={() => reserveSession(session.id)}>
                       Book Now!
-                    </button>
-                  </div>
-                </div> :
-                <AlreadyBooked />}
+                    </button> }
+                  </div> 
+                </div>
             </>
           )
         })}
