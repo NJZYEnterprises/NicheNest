@@ -33,7 +33,7 @@ const Searchbar = () => {
   
   return (
     <div className="max-w-lg mx-auto">
-      <div className="flex items-center m-5 border searchbar-bg searchbar-border-color rounded-lg overflow-hidden shadow-lg">
+      <div className="flex items-center border searchbar-bg searchbar-border-color rounded-lg overflow-hidden shadow-lg">
         <select
           name="type"
           value={selectedFilter}
@@ -54,7 +54,7 @@ const Searchbar = () => {
         />
         <button
           onClick={handleSearch}
-          className="p-2 text-sm font-medium searchbar-text-color transition duration-300  view-button focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="p-2 text-sm font-medium searchbar-text-color transition duration-300 view-button focus:outline-none focus:ring-2 focus:ring-green-500"
         >
           Search
         </button>

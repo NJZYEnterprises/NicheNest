@@ -13,6 +13,18 @@ authRouter.get("/me", verifyToken, async (req, res, next) => {
     const user = await prisma.user.findUnique({
       where: { uid: req.user?.uid },
       include: {
+        location: true,
+        services: {
+          include: {
+            availabilities: true,
+            sessions: {
+              include: {
+                reservations: true,
+              },
+            },
+          },
+        },
+        links: true,
         images: true,
         reviews_received: true,
       },

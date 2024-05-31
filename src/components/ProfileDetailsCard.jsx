@@ -5,9 +5,11 @@ import AddImageForm from "./AddImageForm";
 import { AuthContext } from "../auth/AuthProvider";
 import { UserContext } from "./UserProvider.jsx";
 
-const ProfileDetailsCard = ({ userDetails, setUserDetails, userImages, setUserImages }) => {
+const fetcher = new Fetcher("api");
+
+const ProfileDetailsCard = (props) => {
   const { userId } = useContext(AuthContext);
-  const fetcher = new Fetcher("api");
+  const { user } = useContext(UserContext);
   const [editMode, setEditMode] = useState(false);
   const [editModeField, setEditModeField] = useState(null);
   const [originalField, setOriginalField] = useState(editModeField)
@@ -29,22 +31,22 @@ const ProfileDetailsCard = ({ userDetails, setUserDetails, userImages, setUserIm
   });
   const [originalProfileDetails, setOriginalProfileDetails] = useState(profileDetails)
   useEffect(() => {
-    if (userDetails) {
+    if (user) {
       setProfileDetails({
-        firstName: userDetails.firstName || "",
-        lastName: userDetails.lastName || "",
-        phoneNumber: userDetails.phoneNumber || "",
-        email: userDetails.email || "",
-        username: userDetails.username || "",
-        bio: userDetails.bio || "",
-        street_address: userDetails.location?.street_address || "",
-        zip_code: userDetails.location?.zip_code || "",
-        city: userDetails.location?.city || "",
-        state: userDetails.location?.state || ""
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        phoneNumber: user.phoneNumber || "",
+        email: user.email || "",
+        username: user.username || "",
+        bio: user.bio || "",
+        street_address: user.location?.street_address || "",
+        zip_code: user.location?.zip_code || "",
+        city: user.location?.city || "",
+        state: user.location?.state || ""
       });
       setOriginalProfileDetails({ ...profileDetails });
     }
-  }, [userDetails]);
+  }, [user]);
 
   const toggleEditMode = () => {
     if (editMode) {
@@ -149,11 +151,11 @@ const ProfileDetailsCard = ({ userDetails, setUserDetails, userImages, setUserIm
         <h2 className="text-xl font-bold mb-4">Profile Details</h2>
       </div>
       <div className="m-5">
-        {userImages && userImages.length > 0 ? (
+        {user?.images && user.images.length > 0 ? (
           <div className="flex flex-col">
             {editMode && (
               <AddImageForm
-                setUserImages={setUserImages}
+                // setUserImages={setUserImages}
                 deleteMode={deleteMode}
                 setDeleteMode={setDeleteMode}
                 selectedImage={selectedImage}
@@ -162,8 +164,8 @@ const ProfileDetailsCard = ({ userDetails, setUserDetails, userImages, setUserIm
             )
             }
               <UserCarousel
-                userImages={userImages}
-                setUserImages={setUserImages}
+                userImages={user?.images ?? []}
+                // setUserImages={setUserImages}
                 deleteMode={deleteMode}
                 setDeleteMode={setDeleteMode}
                 editMode={editMode}

@@ -2,14 +2,17 @@ import React, { useState, useContext } from 'react';
 import Fetcher from "../fetcher.js";
 import { displayTemporaryMessage } from "../utils/tempMessage.cjs";
 import { AuthContext } from "../auth/AuthProvider";
+import { UserContext } from './UserProvider.jsx';
 
-const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage, setSelectedImage }) => {
+const fetcher = new Fetcher("api");
+
+const AddImageForm = ({ deleteMode, setDeleteMode, selectedImage, setSelectedImage }) => {
   const [imageUrl, setImageUrl] = useState('');
-  const [showInput, setShowInput] = useState(false); 
+  const [showInput, setShowInput] = useState(false);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState(false);
   const { userId } = useContext(AuthContext);
-  const fetcher = new Fetcher("api");
+  const { updateUser, updateFreelancers } = useContext(UserContext);
 
   const handleUrlChange = (event) => {
     setImageUrl(event.target.value);
@@ -22,17 +25,17 @@ const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage,
     }
     try {
       await fetcher
-        .route('/images/add') 
-        .setToken(userId.accessToken) 
-        .post({ image_url : imageUrl });
+        .route('/images/add')
+        .setToken(userId.accessToken)
+        .post({ image_url: imageUrl });
 
-        await updateCarousel();
-    
+      await updateCarousel();
+
       setError('');
       setImageUrl('');
     } catch (error) {
       console.error('Error adding image:', error);
-    } 
+    }
   };
 
   const handleDeleteImage = async () => {
@@ -47,39 +50,32 @@ const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage,
         .delete();
 
       await updateCarousel();
-      setSelectedImage(null); 
+      setSelectedImage(null);
     } catch (error) {
       console.error('Error deleting image:', error);
     }
   };
 
   const updateCarousel = async () => {
-    try {
-        await fetcher
-        .route('/images')
-        .setToken(userId.accessToken)
-        .get(setUserImages);
-    } catch (error) {
-      console.log('Error updating carousel:', error);
-    }
+    return Promise.All([updateUser(), updateFreelancers()]);
   };
 
   const handleProfilePic = async () => {
-    if(!selectedImage) {
+    if (!selectedImage) {
       displayTemporaryMessage('Please Select An Image', setError);
       return null;
     }
     try {
-        await fetcher
+      await fetcher
         .route(`/images/setProfilePicture`)
         .setToken(userId.accessToken)
-        .post({ imageId: selectedImage.id});
-        displayTemporaryMessage('Success!', setSuccessMessage);
-        updateCarousel();
-      } catch (error) {
-        setError('Error updating carousel')
-        console.log('Error updating carousel:', error);
-      }
+        .post({ imageId: selectedImage.id });
+      displayTemporaryMessage('Success!', setSuccessMessage);
+      await updateCarousel();
+    } catch (error) {
+      setError('Error updating carousel')
+      console.log('Error updating carousel:', error);
+    }
   };
 
   const toggleInputField = () => {
@@ -89,7 +85,7 @@ const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage,
   const toggleDeleteMode = () => {
     setDeleteMode(!deleteMode);
     if (deleteMode) {
-      setSelectedImage(null); 
+      setSelectedImage(null);
     }
   };
 
@@ -104,26 +100,26 @@ const AddImageForm = ({ setUserImages, deleteMode, setDeleteMode, selectedImage,
         <button className="submit-button m-1 p-5 text-white rounded" onClick={toggleInputField}>
           {showInput ? "Cancel" : "Add Image"}
         </button>
-        <button className={"submit-button m-1 p-5 text-white rounded "} onClick={toggleDeleteMode}>
+        <button className={"submit-button m-1 p-5 text-white rounded "} onClick={toggleDeleteMode}>
           {deleteMode ? "Exit" : "Edit Image"}
         </button>
       </div>
-    {showInput && (
-      <div className="">
-      <input
-        type="text"
-        value={imageUrl}
-        onChange={handleUrlChange}
-        placeholder="Enter image URL"
-        className="p-2 m-2 border rounded w-56"
-      />
-      {error && <p className="text-red-500">{error}</p>}
-      <button className="p-2 w-32 border rounded submit-button text-white" onClick={handleAddImage} disabled={!imageUrl}>
-        Submit Image
-      </button>
-      </div>
-    )}
-    {deleteMode && (
+      {showInput && (
+        <div className="">
+          <input
+            type="text"
+            value={imageUrl}
+            onChange={handleUrlChange}
+            placeholder="Enter image URL"
+            className="p-2 m-2 border rounded w-56"
+          />
+          {error && <p className="text-red-500">{error}</p>}
+          <button className="p-2 w-32 border rounded submit-button text-white" onClick={handleAddImage} disabled={!imageUrl}>
+            Submit Image
+          </button>
+        </div>
+      )}
+      {deleteMode && (
         <div className="flex flex-row-reverse">
           <button className="m-1 p-5 error-button text-white rounded" onClick={handleDeleteImage}>
             Delete Selected Image
