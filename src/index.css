@@ -134,7 +134,9 @@ body {
 .searchbar-text-color {
   color: var(--cafeNoir)
 }
-
+.navbar-text-color {
+  color: var(--calPolyGreen)
+}
 
 
 

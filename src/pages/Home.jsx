@@ -14,7 +14,6 @@ const Home = () => {
   return (
     <div>
       <div className="flex justify-center text-2xl m-10">
-        <h2 className="surface-color card w-max p-2 m-2">Signed In As: {userId?.email ?? "No One.."}</h2>
         {/* { user && // TODO: for testing, remove
           Object.entries(user).map(([key, value]) => <div>{key}: {typeof(value) === "object" ? "object" : value}</div>)
         } */}
