@@ -7,7 +7,6 @@ import MyBookedServices from "./MyBookedServices"
 const MySessionsCard = () => {
   const [userReservations, setUserReservations] = useState();
   const [userServices, setUserServices] = useState();
-  const [freelancers, setFreelancers] = useState([])
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -16,8 +15,7 @@ const MySessionsCard = () => {
   const { userId } = useContext(AuthContext);
   const fetcher = new Fetcher("api");
 
-  useEffect(() => {
-    const fetchReservations = async () => {
+   const fetchReservations = async () => {
       setLoading(true);
       try {
         const reservationData = await fetcher.setToken(userId.accessToken).route(`reservations/my`).get();
@@ -47,6 +45,9 @@ const MySessionsCard = () => {
         setLoading(false);
       }
     }
+
+  useEffect(() => {
+   
     fetchReservations();
   }, [userId]);
 
@@ -61,19 +62,14 @@ const MySessionsCard = () => {
 
 
 
-  const handleDelete = async (sessionId) => {
+  const handleDelete = async (reservationId, sessionId) => {
     try {
       await fetcher
-        .route(`/sessions/${sessionId}`)
+        .route(`/reservations/${reservationId}`)
         .setToken(userId.accessToken)
         .delete();
+        fetchReservations();
 
-      setUserServices((prevServices) => 
-        prevServices.map(service => ({
-          ...service,
-          sessions: service.sessions.filter(session => session.id !== sessionId)
-        }))
-      );
     } catch (error) {
       console.error("Error deleting session:", error);
     }
