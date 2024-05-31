@@ -20,9 +20,6 @@ const SessionCard = () => {
 
   console.log(`USER`, user);
   console.log(`session`, sessions);
-  console.log(`sessionID!!`, sessions.id);
-  console.log(` RESERVATIONS`, reservations);
-  console.log(`SINGLE REZ`, reservations[0]);
 
 
  const fetchResservations=()=>{
@@ -44,11 +41,9 @@ const SessionCard = () => {
     }
    await fetcher.setToken(userId.accessToken).route("reservations").post(reservationData);
    fetchResservations();
-
   }
 
   const alreadyBooked = (checkId) => {
-    console.log(`CHECKID`, checkId)
     const sessionIds = reservations.map(ids=>ids.session_id);
     return sessionIds.includes(checkId)
   }
@@ -59,8 +54,6 @@ const SessionCard = () => {
       <div>
         {sessions.map((session) => {
           const date = session.when_start
-          { console.log(`SESHID`, session.id) }
-
           return (
             <>
                 <div className="flex flex-col p-10 m-5 surface-color card">
@@ -74,7 +67,7 @@ const SessionCard = () => {
                   <div>
                     {alreadyBooked(session.id) ? 
                     <div className="text-lg font-bold text-orange-500">
-                      ALREADY RESERVED SESSION
+                      ALREADY RESERVED SESSION!!
                     </div> :
                     <button className="view-button text-white font-bold py-2 px-2 rounded"
                       onClick={() => reserveSession(session.id)}>
