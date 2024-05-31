@@ -33,8 +33,8 @@ console.log(profileImageUrl);
         {userId ? (
           <div className='flex justify-center items-center'>
             <div className='flex flex-col justify-center items-center gap-2'>
-              <Link to={"/profile"}>
-                <img src={profileImageUrl} style={{ borderRadius: '50%' }} alt="Profile" className='h-16 w-16 transition-transform duration-300 ease-in-out transform hover:scale-105' />
+              <Link to={"/profile"} className="transition-transform duration-300 ease-in-out transform hover:scale-105">
+                <img src={profileImageUrl} style={{ borderRadius: '50%' }} alt="Profile" className='h-16 w-16' />
               </Link> 
               <p className="text-xs searchbar-text-color">Signed In As:<p className="navbar-text-color font-bold">{userId?.email ?? ""}</p></p>
             </div>
