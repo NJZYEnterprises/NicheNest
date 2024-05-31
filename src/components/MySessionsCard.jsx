@@ -16,8 +16,7 @@ const MySessionsCard = () => {
   const { userId } = useContext(AuthContext);
   const fetcher = new Fetcher("api");
 
-  useEffect(() => {
-    const fetchReservations = async () => {
+   const fetchReservations = async () => {
       setLoading(true);
       try {
         const reservationData = await fetcher.setToken(userId.accessToken).route(`reservations/my`).get();
@@ -47,6 +46,9 @@ const MySessionsCard = () => {
         setLoading(false);
       }
     }
+
+  useEffect(() => {
+   
     fetchReservations();
   }, [userId]);
 
@@ -68,12 +70,13 @@ const MySessionsCard = () => {
         .setToken(userId.accessToken)
         .delete();
 
-      setUserServices((prevServices) => 
-        prevServices.map(service => ({
-          ...service,
-          sessions: service.sessions.filter(session => session.id !== sessionId)
-        }))
-      );
+      // setUserServices((prevServices) => 
+      //   prevServices.map(service => ({
+      //     ...service,
+      //     sessions: service.sessions.filter(session => session.id !== sessionId)
+      //   }))
+      // );
+  
     } catch (error) {
       console.error("Error deleting session:", error);
     }
