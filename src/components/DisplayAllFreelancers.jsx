@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import CarouselCard from "./CarouselCard.jsx";
 
 
 
 const DisplayAllFreelancers = ({ freelancers }) => {
+  
+  
   const freelancersToDisplay = freelancers
   return (
     <>
