@@ -22,14 +22,15 @@ const SessionCard = () => {
   console.log(`session`, sessions);
 
 
- const fetchResservations=()=>{
-  fetcher.route(`reservations/${user?.id}`).get(setReservations);
- }
+
+  const fetachAll = () => {
+    fetcher.route(`reservations/${user?.id}`).get(setReservations);
+    fetcher.route(["sessions/open/", id]).get(setSessions);
+  }
 
   useEffect(() => {
-    fetcher.route(["sessions/open/", id]).get(setSessions);
-    fetchResservations();
-   
+    fetachAll();
+
   }, [id,]);
 
   const reserveSession = async (sessionId) => {
@@ -39,14 +40,33 @@ const SessionCard = () => {
       client_id: user?.id,
       status: "joined"
     }
-   await fetcher.setToken(userId.accessToken).route("reservations").post(reservationData);
-   fetchResservations();
+    await fetcher.setToken(userId.accessToken).route("reservations").post(reservationData);
+    fetachAll();
   }
 
   const alreadyBooked = (checkId) => {
-    const sessionIds = reservations.map(ids=>ids.session_id);
-    return sessionIds.includes(checkId)
+    const sessionIds = reservations.map(ids => ids.session_id);
+    if (sessionIds.includes(checkId)) {
+      return (
+        <div className="text-lg font-bold text-orange-500">
+          ALREADY RESERVED SESSION!!
+        </div>
+      )
+    }
   }
+
+  //is full function
+  const fullSession = (sessionInfo) => {
+    console.log(`SESH CAP`, sessionInfo.capacity)
+    console.log(`REZZ LENGTH`, sessionInfo.reservations.length)
+    if (sessionInfo.capacity <= sessionInfo.reservations.length) {
+      return (
+        <div className="text-lg font-bold text-orange-500">
+          SESSION FULL! Check out my other sessions!
+        </div>)
+    }
+  }
+
 
 
   return (
@@ -56,25 +76,23 @@ const SessionCard = () => {
           const date = session.when_start
           return (
             <>
-                <div className="flex flex-col p-10 m-5 surface-color card">
-                  <h2 className="text-lg font-bold" key={session.id}>{session.description}</h2>
-                  <h2>Date:</h2>
-                  <p>{date.substring(0, 10)}</p>
-                  <h2>Time:</h2>
-                  <p>{date.substring(11, 19)}</p>
-                  <h2>Capacity:</h2>
-                  <p>{session.capacity}</p>
-                  <div>
-                    {alreadyBooked(session.id) ? 
-                    <div className="text-lg font-bold text-orange-500">
-                      ALREADY RESERVED SESSION!!
-                    </div> :
-                    <button className="view-button text-white font-bold py-2 px-2 rounded"
-                      onClick={() => reserveSession(session.id)}>
-                      Book Now!
-                    </button> }
-                  </div> 
-                </div>
+              <div className="flex flex-col p-10 m-5 surface-color card">
+                <h2 className="text-lg font-bold" key={session.id}>{session.description}</h2>
+                <h2>Date:</h2>
+                <p>{date.substring(0, 10)}</p>
+                <h2>Time:</h2>
+                <p>{date.substring(11, 19)}</p>
+                <h2>Capacity:</h2>
+                <p>{session.reservations?.length}/{session.capacity}</p>
+                <div>{
+                  alreadyBooked(session.id) ??
+                  fullSession(session) ??
+                  <button className="view-button text-white font-bold py-2 px-2 rounded"
+                    onClick={() => reserveSession(session.id)}>
+                    Book Now!
+                  </button>
+                }</div>
+              </div>
             </>
           )
         })}
