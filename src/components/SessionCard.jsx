@@ -3,10 +3,6 @@ import { useParams } from "react-router-dom";
 import { AuthContext } from "../auth/AuthProvider";
 import Fetcher from "../fetcher";
 import { UserContext } from "../components/UserProvider";
-import AlreadyBooked from "./AlreadyBooked";
-
-
-
 
 const SessionCard = () => {
   const { id } = useParams();
@@ -15,12 +11,6 @@ const SessionCard = () => {
   const { user } = useContext(UserContext);
   const { userId } = useContext(AuthContext);
   const fetcher = new Fetcher("api");
-
-
-
-  console.log(`USER`, user);
-  console.log(`session`, sessions);
-
 
 
   const fetachAll = () => {
@@ -34,7 +24,6 @@ const SessionCard = () => {
   }, [id,]);
 
   const reserveSession = async (sessionId) => {
-    console.log(`SESH`, sessionId)
     const reservationData = {
       session_id: sessionId,
       client_id: user?.id,
@@ -51,21 +40,20 @@ const SessionCard = () => {
         <div className="text-lg font-bold text-orange-500">
           ALREADY RESERVED SESSION!!
         </div>
-      )
-    }
-  }
+      );
+    };
+  };
 
-  //is full function
+  //capacity check function
   const fullSession = (sessionInfo) => {
-    console.log(`SESH CAP`, sessionInfo.capacity)
-    console.log(`REZZ LENGTH`, sessionInfo.reservations.length)
     if (sessionInfo.capacity <= sessionInfo.reservations.length) {
       return (
         <div className="text-lg font-bold text-orange-500">
           SESSION FULL! Check out my other sessions!
-        </div>)
-    }
-  }
+        </div>
+      )
+    };
+  };
 
 
 
@@ -95,7 +83,7 @@ const SessionCard = () => {
               </div>
             </>
           )
-        })}
+        })};
       </div>
     </>
   )
