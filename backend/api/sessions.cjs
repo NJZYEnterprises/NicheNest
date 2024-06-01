@@ -23,6 +23,9 @@ sessionRouter.get("/open/:service_id", async (req, res, next) => {
     const serviceSessions = await prisma.session.findMany({
       where: {
         service_id: Number(service_id)
+      },
+      include: {
+        reservations: true
       }
     });
     res.send(serviceSessions)
@@ -37,7 +40,10 @@ sessionRouter.get("/:id", async (req, res, next) => {
 
   try {
     const session = await prisma.session.findUnique({
-      where: { id: Number(id) }, // Ensure the id is a number if it's stored as an integer in your database
+      where: { id: Number(id) },
+      includes: {
+        reservations: true
+      }
     });
 
     if (session) {
