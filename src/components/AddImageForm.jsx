@@ -97,7 +97,6 @@ const AddImageForm = ({ deleteMode, setDeleteMode, selectedImage, setSelectedIma
   return (
     <div className="">
       <div className="flex flex-row-reverse">
-      
         <button className="submit-button m-1 p-5 text-white rounded" onClick={toggleInputField}>
           {showInput ? "Cancel" : "Add Image"}
         </button>
