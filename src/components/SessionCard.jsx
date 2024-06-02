@@ -55,8 +55,6 @@ const SessionCard = () => {
     };
   };
 
-
-
   return (
     <>
       <div>
@@ -70,8 +68,10 @@ const SessionCard = () => {
                 <p>{date.substring(0, 10)}</p>
                 <h2>Time:</h2>
                 <p>{date.substring(11, 19)}</p>
-                <h2>Capacity:</h2>
+                <h2>Total Allowed Participants:</h2>
                 <p>{session.reservations?.length}/{session.capacity}</p>
+                <h2>Open slots remaining:</h2>
+                <p>{session.capacity-session.reservations?.length}</p>
                 <div>{
                   alreadyBooked(session.id) ??
                   fullSession(session) ??

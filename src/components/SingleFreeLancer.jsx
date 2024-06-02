@@ -7,6 +7,7 @@ import ServiceCard from "./ServiceCard"
 const SingleFreeLancer = () => {
   const { id } = useParams();
   const [freelancer, setFreelancer] = useState(null);
+  const [rateToggle, setRateToggle] = useState(false);
 
   useEffect(() => {
     const fetcher = new Fetcher("api");
@@ -16,6 +17,11 @@ const SingleFreeLancer = () => {
     }
     fetcher.route(["users/freelancers", id]).get(setModifiedFreelancer);
   }, [id]);
+
+  const handleRating = () => {
+    setRateToggle(!rateToggle)
+    console.log(`RATE TGL`, rateToggle)
+  }
 
   if (!freelancer) return <div> Loading...</div>;
   calculateAverageRating(freelancer);
@@ -33,10 +39,19 @@ const SingleFreeLancer = () => {
               <div className="mt-4">
                 <p>
                   <span aria-label="a rocket blasting off" role="img">
-                    ⭐
+                    <button onClick={handleRating}>
+                      ⭐
+                    </button>
                   </span>
                   {`${freelancer.averageRating} (${freelancer.reviews_received.length} ratings)`}
                 </p>
+                <div>
+                      <button >1⭐</button>
+                      <button >2⭐</button>
+                      <button >3⭐</button>
+                      <button >4⭐</button>
+                      <button >5⭐</button>  
+                    </div>
                 <p className="mt-2">{freelancer.bio}</p>
               </div>
             </div>
