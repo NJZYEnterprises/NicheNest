@@ -5,19 +5,19 @@ import { UserContext } from "./UserProvider";
 import Form, { InputData } from './Form';
 
 const ServiceForm = ({ editService }) => {
-  const { user } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
   const { userId } = useContext(AuthContext);
   const fetcher = new Fetcher("api");
 
-  const submitForm = (serviceData) => {
+  const submitForm = async (serviceData) => {
     fetcher.setToken(userId.accessToken).route("services");
     if (editService) {
-      fetcher.addRoute(editService.id).patch(serviceData);
+      await fetcher.addRoute(editService.id).patch(serviceData);
     } else {
       serviceData.freelancer_id = user?.id;
-      fetcher.post(serviceData);
-      window.location.reload(); // TODO: refetch instead of reload whole page
+      await fetcher.post(serviceData);
     }
+    updateUser();
   }
 
   const inputs = [

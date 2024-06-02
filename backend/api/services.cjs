@@ -91,12 +91,29 @@ serviceRouter.patch("/:serviceid", async (req, res, next) => {
 //delete service
 serviceRouter.delete('/:serviceid', async (req, res, next) => {
   try {
-    const deleteService = await prisma.service.delete({
-      where: {
-        id: parseInt(req.params.serviceid)
-      }
-    })
-    res.send(deleteService)
+    const service_id = parseInt(req.params.serviceid);
+
+    // find all associated sessions
+    const sessions = await prisma.session.findMany({
+      where: { service_id },
+      select: { id: true }
+    });
+
+    // delete sessions
+    const deleteSession = async (session) => {
+      const session_id = parseInt(session.id);
+      // delete associated reservations
+      await prisma.reservation.deleteMany({ where: { session_id } });
+      // delete session
+      await prisma.session.delete({ where: { id: session_id } });
+    }
+    await Promise.all(sessions.map(s => deleteSession(s)));
+
+    // finally delete service after all relations are deleted
+    const deletedService = await prisma.service.delete({
+      where: { id: service_id }
+    });
+    res.send(deletedService);
   } catch (error) {
     next(error)
   }

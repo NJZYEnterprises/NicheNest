@@ -14,19 +14,40 @@ authRouter.get("/me", verifyToken, async (req, res, next) => {
       where: { uid: req.user?.uid },
       include: {
         location: true,
+        links: true,
+        images: true,
+        reviews_received: true,
+        reservations: {
+          include: {
+            session: {
+              include: {
+                service: {
+                  include: {
+                    freelancer: {
+                      select: {
+                        username: true,
+                      }
+                    }
+                  }
+                },
+              }
+            }
+          }
+        },
         services: {
           include: {
             availabilities: true,
             sessions: {
               include: {
-                reservations: true,
+                reservations: {
+                  include: {
+                    client: true
+                  }
+                },
               },
             },
           },
         },
-        links: true,
-        images: true,
-        reviews_received: true,
       },
     });
 

@@ -1,6 +1,6 @@
 const myString = {
   validate: (str) => {
-    return typeof (str) === "string" || str.length > 0
+    return typeof (str) === "string" && str.length > 0
   },
   /**
    * Returns a copy of the string with the first letter capitalized
