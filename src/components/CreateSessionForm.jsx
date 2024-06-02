@@ -2,27 +2,30 @@ import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from "../auth/AuthProvider";
 import Fetcher from "../fetcher";
 import Form, { InputData } from './Form';
+import { UserContext } from './UserProvider';
 
 const fetcher = new Fetcher("api");
 
-const CreateSession = ({ services }) => {
-  if (!services || services.length < 1) return (
+const CreateSession = ({ service, services }) => {
+  if (!service && (!services || services.length < 1)) return (
     <div className="surface-color card w-max p-2 m-2">
       Session form does not have any services to create a session for!
     </div>
   )
 
-  const { userId } = useContext(AuthContext)
+  const { userId } = useContext(AuthContext);
+  const { updateUser } = useContext(UserContext);
 
-  const handleSubmit = (sessionData) => {
+  const handleSubmit = async (sessionData) => {
     sessionData.when_start = `${sessionData.date}` + `T` + `${sessionData.time}` + `:00.000Z`
 
-    const service_id = services.find(srvc => srvc.name === sessionData.service_name)?.id;
-    fetcher.setToken(userId.accessToken).route(["sessions", service_id]).post(sessionData);
+    const service_id = service?.id ?? services.find(srvc => srvc.name === sessionData.service_name)?.id;
+    await fetcher.setToken(userId.accessToken).route(["sessions", service_id]).post(sessionData);
+    
+    updateUser();
   }
 
   const inputs = [
-    { name: "service_name", label: "Service", options: services.map(s => s.name), enforceOptions: true },
     { name: "date", type: "date" },
     { name: "time", type: "time" },
     { name: "duration_min", label: "How Many Minutes", type: "Number", },
@@ -30,6 +33,10 @@ const CreateSession = ({ services }) => {
     { name: "capacity", type: "Number", label: "Capacity" },
     { name: "description", type: "textarea", label: "Description" },
   ];
+  if (Array.isArray(services)) inputs.unshift({
+    name: "service_name", label: "Service", options: services.map(s => s.name), enforceOptions: true 
+  });
+
   for (let i = 0; i < inputs.length; i++) {
     if (!inputs[i].hasOwnProperty("required"))
       inputs[i].required = true;

@@ -39,7 +39,11 @@ authRouter.get("/me", verifyToken, async (req, res, next) => {
             availabilities: true,
             sessions: {
               include: {
-                reservations: true,
+                reservations: {
+                  include: {
+                    client: true
+                  }
+                },
               },
             },
           },

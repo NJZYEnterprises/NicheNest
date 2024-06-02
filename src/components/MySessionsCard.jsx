@@ -2,7 +2,7 @@ import MyReservations from './MyReservations';
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from "../auth/AuthProvider"
 import Fetcher from "../fetcher.js";
-import MyBookedServices from "./MyBookedServices"
+import MyServices from "./MyServices.jsx"
 
 const MySessionsCard = () => {
   const [userReservations, setUserReservations] = useState();
@@ -87,7 +87,7 @@ const MySessionsCard = () => {
         />
       </div>
       <div>
-        <MyBookedServices 
+        <MyServices 
           userServices={userServices}
           setUserReservations={setUserReservations}
          />

@@ -8,26 +8,22 @@ import Fetcher from "../fetcher.js"
 import ServiceForm from '../components/ServiceForm.jsx';
 import CreateSession from '../components/CreateSessionForm.jsx';
 import MyReservations from '../components/MyReservations';
-import MyBookedServices from "../components/MyBookedServices";
+import MyServices from "../components/MyServices.jsx";
 import myString from '../utils/myString.cjs';
 import Calendar from '../components/Calendar.jsx';
-import { useNavigate } from 'react-router-dom';
+import MyButton from '../components/buttons/MyButton.jsx';
 
 const fetcher = new Fetcher("api");
 
 const Profile = () => {
-  const cardOptions = ['profileDetails', 'myReservations', 'myServices', 'mySessions', 'createService', 'createSession', 'myCalendar'];
-  const [activeCard, setActiveCard] = useState(cardOptions[0]);
+  const cardOptions = ['profileDetails', 'myReservations', 'myServices', 'myCalendar'];
+  const [activeCard, setActiveCard] = useState(localStorage.getItem('activeCard') ?? cardOptions[0]);
   const { user } = useContext(UserContext);
   const { userId } = useContext(AuthContext)
-  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/");
-  //     return;
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    localStorage.setItem("activeCard", activeCard);
+  }, [activeCard]);
 
   const cardName = (option) => {
     return myString.capitalize(myString.splitByCapital(option).join(' '));
@@ -44,23 +40,15 @@ const Profile = () => {
     switch (activeCard) {
       case 'profileDetails': return <ProfileDetailsCard />;
       case 'myReservations': return <MyReservations />;
-      case 'myServices': return <MyBookedServices />;
-      case 'mySessions': return <MySessionsCard />;
-      case 'createService': return <ServiceForm />;
-      case 'createSession': return <CreateSession services={user?.services} />;
+      case 'myServices': return <MyServices />;
       case 'myCalendar': return <div className='calendar-center'>
         <Calendar user={user} />
       </div>;
     }
 
-
-    return <div>No component found for active card "{activeCard}"</div>;
+    return <div className='surface_color card'>No component found for active card "{activeCard}"</div>;
   }
 
-  //*****************************************************************************/
-  //TODO: Add ability that one refresh it displays currently clicked card       *
-  //Options to store activeCard state in local storage to refer too on refresh  *
-  //****************************************************************************/
   const handleButtonClick = (cardOption) => {
     setActiveCard(cardOption);
   };
@@ -73,10 +61,7 @@ const Profile = () => {
         {
           cardOptions.map(option => (
             !hideCard(option) &&
-            <button className="view-button text-white font-bold py-2 px-2 rounded"
-              onClick={() => handleButtonClick(option)}>
-              {cardName(option)}
-            </button>
+            <MyButton text={cardName(option)} onClick={() => handleButtonClick(option)} />
           ))
         }
       </div>

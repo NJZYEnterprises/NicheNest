@@ -9,7 +9,7 @@ function MyReservations(props) {
 
   return <div className="flex flex-col p-8 m-8 surface-color card">
     <div className="flex flex-col mb-4">
-      <h1 className='text-3xl font-bold'>My Reservations</h1>
+      <h1 className='text-4xl font-bold'>My Reservations</h1>
     </div>
     <div className="flex flex-row justify-around flex-wrap m-5">
       {userReservations.map((reservation, i) => (
