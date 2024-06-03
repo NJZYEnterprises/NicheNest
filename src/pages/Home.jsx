@@ -13,16 +13,16 @@ const Home = () => {
   }
   return (
     <div>
-      <div className="flex justify-center text-2xl m-10">
+      <div className="flex justify-center text-2xl m-1">
         {/* { user && // TODO: for testing, remove
           Object.entries(user).map(([key, value]) => <div>{key}: {typeof(value) === "object" ? "object" : value}</div>)
         } */}
       </div>
-      <div className="flex flex-col gap-10">
-        <div className="m-10">
+      <div className="flex flex-col gap-3">
+        <div className="m-2 flex justify-center items-center">
           <UserCarousel freelancers={freelancers}/>
         </div>
-        <div className="m-10" >
+        <div className="m-2 flex justify-center items-center" >
           <UserCarousel topRatedFreelancers={topRatedFreelancers}/>
         </div>
       </div>

@@ -42,72 +42,79 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
   const handleMouseLeave = () => {
     setShowArrows(false);
   };
+    const freelancersToDisplay = topRatedFreelancers || freelancers;
 
-  if (userImages && userImages.length > 0) {
     return (
-      <div className="mr-21 ml-21 arrow-hover" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
-        <Carousel
-          responsive={responsive}
-          customButtonGroup={<CustomButtonGroup isHome={false}/>}
-          additionalTransfrom={0}
-          arrows={false}
-          containerClass="carousel-container"
-          itemClass="carousel-item"
-          renderButtonGroupOutside={true}
-
-        >
-          {userImages
-          .sort((a, b) => (a.isProfile ? -1 : 1)) 
-          .map((image, index) => (
-            <div key={index} 
-                className={`p-2 ${deleteMode && selectedImage && selectedImage.id === image.id ? 'border-2 border-red-500' : ''}`}
-                onClick={() => handleImageClick(image)}
+      <div className="carousel-wrapper width" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        {userImages && userImages.length > 0 && (
+          <div className="carousel-size profile-carousel arrow-hover">
+            <div className="flex flex-col justify-around">
+            <Carousel
+              responsive={responsive}
+              customButtonGroup={<CustomButtonGroup isHome={false} />}
+              additionalTransfrom={0}
+              arrows={false}
+              containerClass="carousel-container"
+              itemClass="carousel-item"
+              renderButtonGroupOutside={true}
             >
+              {userImages
+                .sort((a, b) => (a.isProfile ? -1 : 1))
+                .map((image, index) => (
+                  <div
+                    key={index}
+                    className={`p-2 ${deleteMode && selectedImage && selectedImage.id === image.id ? 'border-2 border-red-500' : ''}`}
+                    onClick={() => handleImageClick(image)}
+                  >
                     {editMode && image.isProfile && (
-            <div className="absolute top-2 right-2 p-1">
-              <span class="material-symbols-outlined profile-icon">
-                account_circle
-              </span>
+                      <div className="absolute top-2 right-2 p-1">
+                        <span className="material-symbols-outlined profile-icon">
+                          account_circle
+                        </span>
+                      </div>
+                    )}
+                    <img src={image.image_url} alt={`User Image ${index}`} />
+                  </div>
+                ))}
+            </Carousel>
             </div>
-      )}
-
-              <img src={image.image_url} alt={`User Image ${index}`} />
+          </div>
+        )}
+        {freelancersToDisplay && freelancersToDisplay.length > 0 && (
+          <div className="carousel-size arrow-hover">
+            <div className="surface-color card carousel-container">
+              <Link to="/freelancers" className="home-title-text text-4xl searchbar-text-color">
+                {freelancers ? (
+                  <h1 className='pt-3 transition-transform duration-300 ease-in-out transform hover:scale-105'>Freelancers</h1>
+                ) : (
+                  <h1 className='pt-3 transition-transform duration-300 ease-in-out transform hover:scale-105'>Top Rated Freelancers</h1>
+                )}
+              </Link>
+              <Carousel
+                responsive={responsive}
+                additionalTransfrom={0}
+                arrows={false}
+                customButtonGroup={<CustomButtonGroup isHome={true} />}
+                containerClass="carousel-container"
+                itemClass="carousel-item"
+                renderButtonGroupOutside={true}
+              >
+                {freelancersToDisplay.map(freelancer => (
+                  <Link
+                    key={freelancer.id}
+                    to={`/freelancers/${freelancer.id}`}
+                    className="block m-5 transition-transform duration-300 ease-in-out transform hover:scale-105"
+                  >
+                    <CarouselCard freelancer={freelancer} />
+                  </Link>
+                ))}
+              </Carousel>
             </div>
-          ))}
-        </Carousel>
+          </div>
+        )}
       </div>
-    );
-  }
-  
-  const freelancersToDisplay = topRatedFreelancers || freelancers ;
-
-  return (
-    <div className="surface-color card mr-20 ml-20 arrow-hover" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-    <Link to="/freelancers" className="home-title-text text-4xl searchbar-text-color">
-        {freelancers ? <h1 className='pt-3 transition-transform duration-300 ease-in-out transform hover:scale-105'>Freelancers</h1> : <h1 className='pt-3 transition-transform duration-300 ease-in-out transform hover:scale-105'>Top Rated Freelancers</h1>}
-    </Link>
-      <Carousel
-        responsive={responsive}
-        additionalTransfrom={0}
-        arrows={false}
-        customButtonGroup={<CustomButtonGroup isHome={true} />} 
-        containerClass="carousel-container"
-        itemClass="carousel-item"
-        renderButtonGroupOutside={true}
-      >
-        {freelancersToDisplay.map(freelancer => (
-          <Link
-            key={freelancer.id}
-            to={`/freelancers/${freelancer.id}`}
-            className="block m-5 transition-transform duration-300 ease-in-out transform hover:scale-105"
-          >
-            <CarouselCard freelancer={freelancer} />
-          </Link>
-        ))}
-      </Carousel>
-    </div>
-  )
-}
+);
+};
 
 
 export default UserCarousel
