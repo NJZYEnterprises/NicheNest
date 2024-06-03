@@ -160,10 +160,10 @@ const ProfileDetailsCard = (props) => {
   return (
     <div className="surface-color card m-5 p-6">
       <div className="">
-        <h2 className="text-xl font-bold mb-4">Profile Details</h2>
       </div>
       <div className="flex flex-col">
     {editMode && addImageForm}
+    <h2 className="home-title-text searchbar-text-color text-3xl font-bold pt-3 transition-transform duration-300 ease-in-out transform hover:scale-105">Profile Details</h2>
     {user?.images && user.images.length > 0 ? (
       <UserCarousel
         userImages={user?.images ?? []}

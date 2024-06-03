@@ -4,7 +4,7 @@ const CarouselCard = ({ freelancer }) => {
   const profileImage = freelancer.images.find(image => image.isProfile)
 
   return (
-    <div className="rounded shadow-m p-10 birds-nest">
+    <div className="rounded shadow-m p-10 birds-nest carousel-card">
       {profileImage && (
         <img
           className="rounded-md"
