@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Fetcher from "../fetcher";
 import { calculateAverageRating } from "../../utils/profileUtils";
-import ServiceCard from "./ServiceCard"
+import ServiceCard from "./ServiceCard";
+import UserContact from "../pages/UserContact";
 
 const SingleFreeLancer = () => {
   const { id } = useParams();
   const [freelancer, setFreelancer] = useState(null);
+  const [showContactForm, setShowContactForm] = useState(false);
 
   useEffect(() => {
     const fetcher = new Fetcher("api");
@@ -21,6 +23,14 @@ const SingleFreeLancer = () => {
   calculateAverageRating(freelancer);
 
   const profilePic = freelancer.images?.find(e => e.isProfile) ?? freelancer.images?.at(0);
+
+  const handleContactClick = () => {
+    setShowContactForm(true);
+  };
+
+  const handleCloseContactForm = () => {
+    setShowContactForm(false);
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -47,16 +57,24 @@ const SingleFreeLancer = () => {
               <ServiceCard key={service.id} {...{ service, freelancer }} />)
             )}
           </div>
-          <div className="mt-4">
-            {/* TODO: decide whether book now button is applicable for freelancer in general */}
-            {/* <button className="bg-blue-500 text-white px-4 py-2 rounded">Book Now</button> */}
-            <button className="view-button text-white px-4 py-2 rounded ml-2">Contact</button>
+          <div className="mt-4 flex justify-center">
+            <button
+              onClick={handleContactClick}
+              className="view-button text-white px-4 py-2 rounded ml-2"
+            >
+              Contact
+            </button>
           </div>
         </div>
       </div>
+      {showContactForm && (
+        <UserContact
+          freelancer={freelancer}
+          onClose={handleCloseContactForm}
+        />
+      )}
     </div>
   );
 };
 
 export default SingleFreeLancer;
-

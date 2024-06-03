@@ -13,6 +13,7 @@
     "seed": "npx prisma migrate reset --force && node ./backend/db/seed.cjs"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.3.3",
     "@prisma/client": "^5.13.0",
     "axios": "^1.6.8",
     "cors": "^2.8.5",
