@@ -3,13 +3,19 @@ import "../Calendar.css"
 import { useEffect } from "react";
 import Fetcher from "../fetcher";
 import { useState } from "react";
+import MyButton from './buttons/MyButton';
+import ToggleButton from "./buttons/ToggleButton";
+import CreateSession from "./CreateSessionForm";
+import myString from "../utils/myString.cjs";
 
 const fetcher = new Fetcher("api/users/calendar");
+const alphaHex = "d0";
 const colors = {
-  unavailable: "#000000d0",
-  available: "#c4bb97d0",
-  reservation: "#2a4a1cd0",
-  session: "#6b9fdbd0",
+  unavailable: "#000000" + alphaHex,
+  available: "#c4bb97" + alphaHex,
+  reservation: "#5ca904" + alphaHex,
+  // reservation: "#2a4a1c" + alphaHex,
+  session: "#6b9fdb" + alphaHex,
 }
 
 const daysOfTheMonth = (date) => {
@@ -51,9 +57,15 @@ const daysOfTheMonth = (date) => {
   return result;
 }
 
+// <-- Main Component -->
 const Calendar = ({ user: forUser }) => {
   const [user, setUser] = useState(null);
+  const [currDisplay, setCurrDisplay] = useState("Month");
   const [viewDate, setViewDate] = useState(new Date());
+  const toggleAdding = useState(false);
+  const isAdding = toggleAdding[0];
+  const [formDefault, setFormDefault] = useState({});
+
   const gridW = 7;
 
   useEffect(() => {
@@ -61,22 +73,6 @@ const Calendar = ({ user: forUser }) => {
       fetcher.route(forUser.id.toString()).get(setUser);
     }
   }, [forUser])
-
-  // useEffect(() => {
-  //   console.log("calendar user changed:", user);
-  // }, [user])
-
-  const buttonClassCSS = (isSubmit) => (isSubmit ? "submit" : "view") + `-button rounded m-1 p-1 text-lg`;
-  const Button = ({ content, onClick }) => {
-    return <button className={buttonClassCSS(false)} onClick={onClick}>{content}</button>;
-  }
-
-  const Event = ({ pos, size }) => {
-    return <div className="primary-color-t"
-      style={{ gridRow: "3 / span 2", gridColumn: "3 / span 2", zIndex: 10 }}>
-      Event
-    </div>
-  }
 
   const toCellPos = (index) => {
     return [Math.floor(index / gridW) + 1, index % gridW + 1];
@@ -90,13 +86,10 @@ const Calendar = ({ user: forUser }) => {
     };
   }
 
-  const visibleDays = daysOfTheMonth(viewDate);
-  // console.log(visibleDays.map(d => moment(d).format("MMMM Do")));
-
-  const getVisibleDayIdx = (checkDate) => {
+  const getDayIdx = (checkDate) => {
     const checkFormat = "MMMM DD YYYY";
     const checkMoment = moment(checkDate).format(checkFormat);
-    return visibleDays.findIndex(date => moment(date).format(checkFormat) === checkMoment);
+    return calendarData.findIndex(({ date }) => moment(date).format(checkFormat) === checkMoment);
   }
 
   const incrementMonth = (byNum) => {
@@ -107,49 +100,80 @@ const Calendar = ({ user: forUser }) => {
     });
   }
 
-  return <section className="flex flex-col surface-color card calendar-container">
-    <div className="flex justify-around">
-      <Button content={"Today"} onClick={(e) => setViewDate(new Date())} />
-      <div>{[
-        { content: "Previous", onClick: (e) => incrementMonth(-1) },
-        { content: "Next", onClick: (e) => incrementMonth(1) },
-      ].map(e => <Button {...e} />)}</div>
+  const calendarData = daysOfTheMonth(viewDate).map((e, i) => { return { index: i, date: e, reservations: [], sessions: [] } });
+  // console.log(visibleDays.map(d => moment(d).format("MMMM Do")));
 
-      <div className="text-xl">{moment(viewDate).format("MMMM YYYY")}</div>
+  user?.services?.forEach(srvc => {
+    srvc.sessions?.forEach((sn) => {
+      const dayIndex = getDayIdx(sn.when_start);
+      if (dayIndex >= 0) {
+        calendarData[dayIndex].sessions.push(sn);
+      }
+    })
+  });
 
-      <div>{["Week", "Month", "Agenda"].map(e => <Button content={e} />)}</div>
-      <button className={buttonClassCSS(true)}>Add</button>
+  user?.reservations?.forEach(rsvp => {
+    const dayIndex = getDayIdx(rsvp.session?.when_start);
+    if (dayIndex >= 0) {
+      calendarData[dayIndex].reservations.push(rsvp);
+    }
+  })
+
+  const CellContents = ({ data }) => {
+    // console.log("cell data:", data);
+    return <div className="flex flex-col justify-start" style={{ ...cellStyle(gridW + data.index) }}>
+      {data.date.getDate()}
+      {["sessions", "reservations"].map(e => {
+        const singular = e.slice(0, -1);
+        return <div className="calendar-cell-line" style={{ backgroundColor: colors[singular], opacity: data[e].length > 0 ? 1 : 0 }}>
+          {`${data[e].length} ${myString.capitalize(data[e].length === 1 ? singular : e)}`}
+        </div>
+      })}
     </div>
+  }
+
+  const onClickCell = (e, i) => {
+    // console.log(`Cell ${i} clicked`);
+
+    if (isAdding) {
+      setFormDefault((prev) => {
+        return {
+          ...prev,
+          date: moment(calendarData[i]?.date).format("YYYY-MM-DD")
+        }
+      })
+    }
+  }
+
+  return <section className="flex flex-col surface-color card calendar-container">
+    <div className="flex justify-around p-1 m-1">
+      <div className="buttonContainer flexItemUniformSize">
+        <MyButton text={"Today"} onClick={(e) => setViewDate(new Date())} />
+        {[
+          { text: "Previous", onClick: (e) => incrementMonth(-1) },
+          { text: "Next", onClick: (e) => incrementMonth(1) },
+        ].map(e => <MyButton {...e} />)}
+      </div>
+
+      <div className="flexItemUniformSize justify-center">
+        <div className="text-xl surface-text p-2 ">{moment(viewDate).format("MMMM YYYY")}</div>
+      </div>
+
+      <div className="buttonContainer flexItemUniformSize">
+        {["Week", "Month", "Agenda"].map(e => <MyButton text={e} />)}
+        {/* <MyButton text={"Add"} cssType={"submit"} /> */}
+        <ToggleButton text={["Add", "Cancel"]} cssType={"submit"} state={toggleAdding} />
+      </div>
+    </div>
+    {isAdding && <CreateSession services={user?.services} reactiveData={formDefault} />}
     <div className="calendar-grid-container">
       {moment.weekdays().map((e, i) => <div key={e} className="calendar-grid-cell" style={cellStyle(i)}>{e}</div>)}
-      {visibleDays.map((e, i) => (
-        <div key={i} className="calendar-grid-cell" style={cellStyle(gridW + i)}>
-          {e.getDate()}
-        </div>
+      {calendarData.map((e, i) => (
+        <button key={i} className="calendar-grid-cell clickable" style={cellStyle(gridW + i)} onClick={(e) => onClickCell(e, i)}>
+          <CellContents data={e} />
+        </button>
       ))}
-      {user && <>
-        <>{user.reservations &&
-          user.reservations.map(rsvp => {
-            const dayIndex = getVisibleDayIdx(rsvp.session?.when_start);
-            if (dayIndex < 0) return null;
-            return <div style={{...cellStyle(gridW + dayIndex), backgroundColor: colors.reservation}}>
-            {/* return <div className="primary-color-t" style={cellStyle(gridW + dayIndex)}> */}
-              {`R: ${rsvp.session?.service?.name ?? "Service"}`}
-            </div>
-          })
-        }</>
-        <>{user.services &&
-          user.services.map(srvc => {
-            return srvc.sessions?.map((sn) => {
-              const dayIndex = getVisibleDayIdx(sn.when_start);
-              if (dayIndex < 0) return null;
-              return <div style={{...cellStyle(gridW + dayIndex), backgroundColor: colors.session}}>
-                {`S: ${srvc.name ?? "Service"}`}
-              </div>
-            })
-          })
-        }</>
-      </>}
+
     </div>
   </section>
 }
