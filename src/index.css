@@ -137,6 +137,14 @@ body {
 .navbar-text-color {
   color: var(--calPolyGreen)
 }
+.home-title-text {
+  font-family: "Alfa Slab One", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+
 
 
 

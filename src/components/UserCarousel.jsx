@@ -83,8 +83,8 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
 
   return (
     <div className="surface-color card mr-20 ml-20 arrow-hover" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-    <Link to="/freelancers" className="text-2xl pt-3">
-        {freelancers ? "Freelancers" : "Top Rated Freelancers"}
+    <Link to="/freelancers" className="home-title-text text-4xl searchbar-text-color">
+        {freelancers ? <h1 className='pt-3 transition-transform duration-300 ease-in-out transform hover:scale-105'>Freelancers</h1> : <h1 className='pt-3 transition-transform duration-300 ease-in-out transform hover:scale-105'>Top Rated Freelancers</h1>}
     </Link>
       <Carousel
         responsive={responsive}
@@ -99,7 +99,7 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
           <Link
             key={freelancer.id}
             to={`/freelancers/${freelancer.id}`}
-            className="block m-5"
+            className="block m-5 transition-transform duration-300 ease-in-out transform hover:scale-105"
           >
             <CarouselCard freelancer={freelancer} />
           </Link>
