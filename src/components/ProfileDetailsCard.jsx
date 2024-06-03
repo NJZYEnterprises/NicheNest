@@ -159,24 +159,26 @@ const ProfileDetailsCard = (props) => {
 
   return (
     <div className="surface-color card m-5 p-6">
-      <div className="">
-        <h2 className="text-xl font-bold mb-4">Profile Details</h2>
+      <div className="home-title-text text-4xl searchbar-text-color">
+        <h2 className="text-3xl font-bold mb-4">Profile Details</h2>
       </div>
-      <div className="flex flex-col">
-    {editMode && addImageForm}
-    {user?.images && user.images.length > 0 ? (
-      <UserCarousel
-        userImages={user?.images ?? []}
-        deleteMode={deleteMode}
-        setDeleteMode={setDeleteMode}
-        editMode={editMode}
-        selectedImage={selectedImage}
-        setSelectedImage={setSelectedImage}
-      />
-    ) : (
-      !editMode && addImageForm
-    )}
-  </div>
+      <div className="flex flex-col justify-center items-center">
+      <div>
+        {editMode && addImageForm}
+      </div>
+      {!user?.images ? (
+        <div className="spinner"></div> 
+      ) : (
+        <UserCarousel
+          userImages={user.images}
+          deleteMode={deleteMode}
+          setDeleteMode={setDeleteMode}
+          editMode={editMode}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+        />
+      )}
+    </div>
       <div className="flex justify-end mb-4">
       </div>
       <div className="flex justify-center m-4">
