@@ -18,7 +18,7 @@ export class InputData {
   }
 }
 
-const Form = ({ defaultData, title, submitFn, inputs, injectComponents }) => {
+const Form = ({ defaultData, reactiveData, title, submitFn, inputs, injectComponents }) => {
   if (defaultData && Array.isArray(inputs)) {
     defaultData = myObj.unwrap(defaultData, inputs.map(e => e.name));
     inputs.forEach(e => { if (defaultData.hasOwnProperty(e)) e.placeholder = defaultData[e]; });
@@ -31,6 +31,15 @@ const Form = ({ defaultData, title, submitFn, inputs, injectComponents }) => {
   let inputWidth = "10em";
   if (inputs.some(i => i.type === "textarea"))
     inputWidth = "15em";
+
+  useEffect(() => {
+    setFormData((prevData) => {
+      return {
+        ...prevData,
+        ...myObj.unwrap(reactiveData, inputs.map(e => e.name)),
+      }
+    })
+  }, [reactiveData])
 
   const onChange = event => {
     const { name, value } = event.target;

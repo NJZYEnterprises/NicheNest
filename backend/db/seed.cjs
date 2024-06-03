@@ -23,6 +23,15 @@ async function main() {
       bio: "I am not a lizard person.",
       phoneNumber: "7777777777"
     },
+    {
+      uid: "WzsxSqOixobSlnpBQG5CIRf7lqE3",
+      username: "zanderstest",
+      email: "zanderstest551@gmail.com",
+      firstName: "Zander",
+      lastName: "Test",
+      bio: "Gotta have a long bio here. Need to test longer strings in places where they will likely be longer. I shall be the guinea pig for the good of the website. How long do people usually make their bio's anyway? Beats me.",
+      phoneNumber: "0123456789"
+    },
     // Nick
     {
       uid: "Qdwp8MT9cHXprHxoPJWs6Pa47mc2",
@@ -110,6 +119,12 @@ async function main() {
       tags: "#dnd #ttrpg",
       rate: 40,
       rate_time: "session",
+    },
+    {
+      name: "Programming Tutor",
+      tags: "#code #computerscience #softwaredeveloper",
+      rate: 40,
+      rate_time: "hour",
     },
     {
       name: "Lizard cleaner",
