@@ -11,7 +11,6 @@ const participant = (reservation) => {
     : "<unknown>"
 }
 export function getSessionDetails(session) {
-  console.log("session", session);
   const reservations = session?.reservations ?? [];
 
   const participantsStr = reservations.length > 0 ?
