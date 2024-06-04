@@ -17,40 +17,6 @@ const SessionCard = () => {
     fetchAll();
   }, [id,]);
 
-  const reserveSession = async (sessionId) => {
-    const reservationData = {
-      session_id: sessionId,
-      client_id: user?.id,
-      status: "joined"
-    }
-    await fetcher.setToken(userId.accessToken).route("reservations").post(reservationData);
-    fetachAll();
-  }
-
-  const alreadyBooked = (checkId) => {
-    const sessionIds = reservations.map(ids => ids.session_id);
-    if (sessionIds.includes(checkId)) {
-      return (
-        <div className="text-lg font-bold text-orange-500">
-          ALREADY RESERVED SESSION!!
-        </div>
-      );
-    };
-  };
-
-  //capacity check function
-  const fullSession = (sessionInfo) => {
-    if (sessionInfo.capacity <= sessionInfo.reservations.length) {
-      return (
-        <div className="text-lg font-bold text-orange-500">
-          SESSION FULL! Check out my other sessions!
-        </div>
-      )
-    };
-  };
-
-
-
   return (
     <>
       <div>
@@ -66,14 +32,9 @@ const SessionCard = () => {
                 <p>{date.substring(11, 19)}</p>
                 <h2>Total Allowed Participants:</h2>
                 <p>{session.reservations?.length}/{session.capacity}</p>
-                <div>{
-                  alreadyBooked(session.id) ??
-                  fullSession(session) ??
-                  <button className="view-button text-white font-bold py-2 px-2 rounded"
-                    onClick={() => reserveSession(session.id)}>
-                    Book Now!
-                  </button>
-                }</div>
+                <div>
+                  <BookButton session={session} updateFn={fetchAll} />
+                </div>
               </div>
             </>
           )
