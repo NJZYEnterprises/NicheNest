@@ -217,7 +217,15 @@ async function main() {
   for (const user of users) {
     user.isAdmin = true
     if (!user.uid) user.uid = String(++uid);
-    user.location_id = 1
+    const location = await prisma.location.create({
+      data: {
+        city: faker.location.city(),
+        state: faker.location.state(),
+        street_address: faker.location.streetAddress(),
+        zip_code: faker.location.zipCode(),
+      },
+    })
+    user.location_id = location.id;
     await prisma.user.create({ data: user })
   }
 
