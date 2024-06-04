@@ -17,7 +17,6 @@ function MyReservations(props) {
         <ReservationCard key={i} reservation={reservation} />
       ))}
     </div>
-    <RateFreelancer/>
   </div>;
 }
 
