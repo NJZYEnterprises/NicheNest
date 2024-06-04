@@ -224,7 +224,7 @@ const Calendar = ({ user: forUser }) => {
       }
 
       return [{ 
-        label: event.service?.name + (isMe(event) ? "" : ` (${event.service?.freelancer.username})`),
+        label: event.service?.name + (isMe(event) ? "" : ` (${event.service?.freelancer?.username})`),
         content: myDate.timeframeDur(event.when_start, event.duration_min), tag: "h1" 
       }];
     }
@@ -306,7 +306,7 @@ const Calendar = ({ user: forUser }) => {
           result += " - " + moment(allEvents.at(-1).when_start).format("MM/DD/YYYY")
         return result;
     }
-    return moment(viewDate).format("MMMM Do YYYY");
+    return moment(viewDate).format("dddd, MMMM Do, YYYY");
   }
 
   return <section className="flex flex-col surface-color card calendar-container">
