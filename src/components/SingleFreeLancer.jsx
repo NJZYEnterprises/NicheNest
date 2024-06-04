@@ -10,17 +10,27 @@ import Calendar from "./Calendar";
 const SingleFreeLancer = () => {
   const { id } = useParams();
   const [freelancer, setFreelancer] = useState(null);
-  const [showContactForm, setShowContactForm] = useState(false);
   const toggleCalendar = useState(false);
 
   useEffect(() => {
+    fetchFreelancer();
+  }, [id]);
+
+  const fetchFreelancer = () => {
     const fetcher = new Fetcher("api");
     const setModifiedFreelancer = (f) => {
       calculateAverageRating(f);
       setFreelancer(f);
     }
     fetcher.route(["users/freelancers", id]).get(setModifiedFreelancer);
-  }, [id]);
+  }
+
+
+
+  const handleRating = () => {
+    setRateToggle(!rateToggle)
+    console.log(`RATE TGL`, rateToggle)
+  }
 
   if (!freelancer) return <div> Loading...</div>;
   calculateAverageRating(freelancer);
@@ -50,6 +60,9 @@ const SingleFreeLancer = () => {
                   </span>
                   {`${freelancer.averageRating} (${freelancer.reviews_received.length} ratings)`}
                 </p>
+                <RateFreelancer freelancerId={freelancer.id} fetchFreelancer ={fetchFreelancer} />
+                <div>
+                </div>
                 <p className="mt-2">{freelancer.bio}</p>
               </div>
             </div>

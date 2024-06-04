@@ -1,6 +1,7 @@
 import React, { useContext, } from "react";
 import { UserContext } from './UserProvider.jsx';
-import ReservationCard from "./ReservationCard.jsx";
+import ReservationCard from "./ReservationCard.jsx"; 
+import RateFreelancer from "./FreelancerRating.jsx";
 
 function MyReservations(props) {
   const { user } = useContext(UserContext);
@@ -16,6 +17,7 @@ function MyReservations(props) {
         <ReservationCard key={i} reservation={reservation} />
       ))}
     </div>
+    <RateFreelancer/>
   </div>;
 }
 
