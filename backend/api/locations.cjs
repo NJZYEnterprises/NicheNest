@@ -34,7 +34,7 @@ locationRouter.post('/:userId', async (req, res, next) => {
 locationRouter.patch('/:uid/location', async (req, res, next) => {
   try {
     const { uid } = req.params;
-    const { street_address, zip_code, city, state } = req.body;
+    let { street_address, zip_code, city, state } = req.body;
 
     const user = await prisma.user.findUnique({
       where: { uid: uid }, 
@@ -62,6 +62,8 @@ locationRouter.patch('/:uid/location', async (req, res, next) => {
         include: { location: true }
       });
     } else {
+      if (!city) city = "Undisclosed";
+      if (!state) state = "Undisclosed";
       updatedUser = await prisma.user.update({
         where: { uid: uid }, 
         data: {
