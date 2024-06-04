@@ -6,6 +6,7 @@ import ServiceCard from "./ServiceCard";
 import UserContact from "../pages/UserContact";
 import ToggleButton from "./buttons/ToggleButton";
 import Calendar from "./Calendar";
+import RateFreelancer from "./FreelancerRating";
 
 const SingleFreeLancer = () => {
   const { id } = useParams();
@@ -25,25 +26,10 @@ const SingleFreeLancer = () => {
     fetcher.route(["users/freelancers", id]).get(setModifiedFreelancer);
   }
 
-
-
-  const handleRating = () => {
-    setRateToggle(!rateToggle)
-    console.log(`RATE TGL`, rateToggle)
-  }
-
   if (!freelancer) return <div> Loading...</div>;
   calculateAverageRating(freelancer);
 
   const profilePic = freelancer.images?.find(e => e.isProfile) ?? freelancer.images?.at(0);
-
-  const handleContactClick = () => {
-    setShowContactForm(true);
-  };
-
-  const handleCloseContactForm = () => {
-    setShowContactForm(false);
-  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -75,24 +61,12 @@ const SingleFreeLancer = () => {
           </div>
           <div className="mt-4 flex justify-center">
             <ToggleButton text={["Show Calendar", "Hide Calendar"]} state={toggleCalendar} />
-            <button
-              onClick={handleContactClick}
-              className="view-button text-white px-4 py-2 rounded ml-2"
-            >
-              Contact
-            </button>
           </div>
         </div>
         {toggleCalendar[0] && <div className="flex justify-center">
           <Calendar user={freelancer} />
         </div>}
       </div>
-      {showContactForm && (
-        <UserContact
-          freelancer={freelancer}
-          onClose={handleCloseContactForm}
-        />
-      )}
     </div>
   );
 };
