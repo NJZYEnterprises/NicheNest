@@ -72,6 +72,107 @@ async function main() {
     },
     //many randos
 
+    {
+      username: "TylerWright Web Course",
+      email: "tylerwright@fullstackademy.com",
+      firstName: "Tyler",
+      lastName: "Wright",
+      bio: "Fullstack Academy Teacher - No one codes Pokemon better than me",
+      phoneNumber: "1234567890"
+      },
+
+      {
+        username: "JonathanEleiott Web Course",
+        email: "jonathaneleiott@fullstackacademy.com",
+        firstName: "Jonathan",
+        lastName: "Eleiott",
+        bio: "Fullstack Academy Teacher - Building the future, one line of code at a time",
+        phoneNumber: "0987654321"
+        },
+        
+        {
+          username: "",
+          email: "",
+          firstName: "",
+          lastName: "",
+          bio: "",
+          phoneNumber: "",
+
+        },
+
+        {
+          username: "Jayoma Law Firm",
+          email: "jayomalawfirm@gmail.com",
+          firstName: "Alain",
+          lastName: "Jayoma",
+          bio: "24/7 Criminal Defense Lawyer, 100% Legal, 100% Professional, Whatever the case maybe, I'll work it",
+          phoneNumber: "1111111111",
+
+        },
+
+        {
+          username: "Jacob's Detailing Inc.",
+          email: "jacobdetails@gmail.com",
+          firstName: "Jacob",
+          lastName: "Tate",
+          bio: "Cleaning car is something I've always wanted to do. I'm a big fan of the Detailing industry.",
+          phoneNumber: "7777777777",
+        },
+
+        {
+          username: "Gordon Ramsey",
+          email: "gordonramsey@gmail.com",
+          firstName: "Gordon",
+          lastName: "Ramsey",
+          bio: "Your favorite chef on duty.",
+          phoneNumber: "7777777777",
+        },
+
+        {
+          username: "AptHero",
+          email: "apthero@gmail.com",
+          firstName: "Alex",
+          lastName: "Miller",
+          bio: "Finding your dream apartment just got easier! Let me handle the search, filtering options based on your needs and budget. Stress-free apartment hunting starts here!",
+          phoneNumber: "555-111-2233"
+          },
+
+          {
+          username: "TaxWhiz",
+          email: "taxwhiz@gmail.com",
+          firstName: "Susan",
+          lastName: "Chen",
+          bio: "Certified Public Accountant (CPA) here to help you navigate taxes with ease. I offer tax preparation, filing, and consulting services for individuals and small businesses.",
+          phoneNumber: "666-222-3344"
+          },
+
+          {
+          username: "Designify",
+          email: "designify@gmail.com",
+          firstName: "Michael",
+          lastName: "Brown",
+          bio: "Bringing your vision to life! I specialize in graphic design services including logo creation, branding materials, social media graphics, and website design.",
+          phoneNumber: "777-333-4455"
+          },
+
+          {
+          username: "ContentCreator extraordinaire",
+          email: "contentcreator@gmail.com",
+          firstName: "Emily",
+          lastName: "Johnson",
+          bio: "Skilled writer and content creator offering captivating blog posts, website content, and social media copy. Let me help you engage your audience and achieve your content marketing goals.",
+          phoneNumber: "888-444-5566"
+          },
+
+          {
+          username: "VirtualHandyman",
+          email: "virtualhandyman@gmail.com",
+          firstName: "David",
+          lastName: "Garcia",
+          bio: "Need help with small tasks around the house or office? I can assist with furniture assembly, handyman services, errands, and more! Free up your time and get things done efficiently.",
+          phoneNumber: "999-555-6677"
+          },
+
   ]
 
   
