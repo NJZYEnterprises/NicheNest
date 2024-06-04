@@ -70,7 +70,30 @@ async function main() {
       bio: "nothing to see here",
       phoneNumber: "7777777777"
     },
-    //many randos
+    // {
+    //   username: "DBAquatics",
+    //   email: "DBAquatics@gmail.com",
+    //   firstName: "Duece",
+    //   lastName: "Biggalow",
+    //   bio: "I Enjoy cleaning and caring for aquatic life",
+    //   phoneNumber: "6564568907"
+    // },
+    // {
+    //   username: "FamiliaMechanics",
+    //   email: "familiamotors@gmail.com",
+    //   firstName: "Dominic",
+    //   lastName: "DToretto",
+    //   bio: "Small time familia owned car mechanic",
+    //   phoneNumber: "3435672345"
+    // },
+    // {
+    //   username: "Iron Seagale Martial Arts",
+    //   email: "IronSeagale@gmail.com",
+    //   firstName: "Steven",
+    //   lastName: "Segaul",
+    //   bio: "Black Belt In Akido and magical arts",
+    //   phoneNumber: "7573456578"
+    // },
 
   ]
 

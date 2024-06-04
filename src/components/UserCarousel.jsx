@@ -63,7 +63,7 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
                 .map((image, index) => (
                   <div
                     key={index}
-                    className={`p-2 ${deleteMode && selectedImage && selectedImage.id === image.id ? 'border-2 border-red-500' : ''}`}
+                    className={`rounded-xl m-3${deleteMode && selectedImage && selectedImage.id === image.id ? 'border-2 border-red-500' : ''}`}
                     onClick={() => handleImageClick(image)}
                   >
                     {editMode && image.isProfile && (
@@ -73,7 +73,9 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
                         </span>
                       </div>
                     )}
-                    <img src={image.image_url} alt={`User Image ${index}`} />
+                    <div className="">
+                      <img src={image.image_url} alt={`User Image ${index}`} className="h-64 w-full rounded-lg shadow-md shadow-black transition-transform duration-300 ease-in-out transform hover:scale-105" />
+                    </div>
                   </div>
                 ))}
             </Carousel>
