@@ -4,6 +4,8 @@ import { UserContext } from './UserProvider.jsx';
 import myString from "../utils/myString.cjs";
 import ToggleButton from "./buttons/ToggleButton.jsx";
 import DeleteButton from "./buttons/DeleteButton.jsx";
+import myDate from "../utils/myDate.cjs";
+import moment from "moment";
 
 // Helper Component
 export function Detail({ label, content, tag, hideEmpty }) {
@@ -19,20 +21,14 @@ export function Detail({ label, content, tag, hideEmpty }) {
   </div>
 }
 
-// Main Component
-function ReservationCard({ reservation }) {
-  const { userId } = useContext(AuthContext);
-  const { updateUser } = useContext(UserContext);
-  const showMoreState = useState(false);
-  const showMore = showMoreState[0];
-
+export function getReservationDetails(reservation, showMore) {
   const session = reservation?.session;
   const service = session?.service;
   const details = [
     { label: "Service Name", content: service?.name, tag: "h2" },
-    { label: "Session Start", content: new Date(session?.when_start).toLocaleString() },
-    { label: "Session Duration", content: `${session?.duration_min} minutes` },
     { label: "Session Host", content: service?.freelancer?.username },
+    { label: "Session Date", content: myDate.dateRangeDur(session?.when_start, session?.duration_min) },
+    { label: "Session Time", content: myDate.timeframeDur(session?.when_start, session?.duration_min) },
   ];
 
   if (showMore) details.push(...[
@@ -42,6 +38,18 @@ function ReservationCard({ reservation }) {
     { label: "Created At", content: new Date(reservation?.when_created).toLocaleString() },
     { label: "Session Description", content: session?.description },
   ]);
+
+  return details;
+}
+
+// Main Component
+function ReservationCard({ reservation }) {
+  const { userId } = useContext(AuthContext);
+  const { updateUser } = useContext(UserContext);
+  const showMoreState = useState(false);
+  const showMore = showMoreState[0];
+
+  const details = getReservationDetails(reservation, showMore);
 
   return <div className="primary-color-t card flex flex-col mx-4 my-6 p-6" style={{ alignSelf: "flex-start" }}>
     <div className="flex flex-col justify-around gap-6">

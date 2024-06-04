@@ -21,7 +21,7 @@
   border: solid black 1px;
 }
 .calendar-grid-cell.clickable:hover {
-  background-color: #c5b36d44;
+  background-color: #c4ae5744;
 }
 .calendar-cell-line {
   border-radius: 8px;

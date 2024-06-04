@@ -67,8 +67,17 @@ userRouter.get('/calendar/:id', async (req, res, next) => {
         },
         services: {
           include: {
+            freelancer: true,
             availabilities: true,
-            sessions: true,
+            sessions: {
+              include: {
+                reservations: {
+                  include: {
+                    client: true
+                  }
+                }
+              }
+            },
           }
         },
       },
