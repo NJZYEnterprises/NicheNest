@@ -6,7 +6,7 @@ import { UserContext } from './UserProvider.jsx';
 
 const fetcher = new Fetcher("api");
 
-const AddImageForm = ({ deleteMode, setDeleteMode, selectedImage, setSelectedImage }) => {
+const AddImageForm = ({ deleteMode, setDeleteMode, selectedImage, setSelectedImage, hasImages }) => {
   const [imageUrl, setImageUrl] = useState('');
   const [showInput, setShowInput] = useState(false);
   const [error, setError] = useState('');
@@ -95,14 +95,16 @@ const AddImageForm = ({ deleteMode, setDeleteMode, selectedImage, setSelectedIma
   };
 
   return (
-    <div className="">
+    <div className="flex">
       <div className="flex flex-row-reverse">
         <button className="submit-button m-1 p-5 text-white rounded" onClick={toggleInputField}>
           {showInput ? "Cancel" : "Add Image"}
         </button>
-        <button className={"submit-button m-1 p-5 text-white rounded "} onClick={toggleDeleteMode}>
+        {hasImages && 
+          <button className={"submit-button m-1 p-5 text-white rounded "} onClick={toggleDeleteMode}>
           {deleteMode ? "Exit" : "Edit Image"}
         </button>
+        }
       </div>
       {showInput && (
         <div className="">

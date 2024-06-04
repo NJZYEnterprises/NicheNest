@@ -36,3 +36,9 @@ body {
 .textShadow {
   text-shadow: 0.1em 0.1em 0.2em black;
 }
+
+.buttonContainer {
+  display: flex;
+  place-content: center;
+  place-items: center;
+}

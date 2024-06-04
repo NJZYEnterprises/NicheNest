@@ -6,7 +6,8 @@ import { UserContext } from './UserProvider';
 
 const fetcher = new Fetcher("api");
 
-const CreateSession = ({ service, services }) => {
+const CreateSession = ({ service, services, reactiveData }) => {
+
   if (!service && (!services || services.length < 1)) return (
     <div className="surface-color card w-max p-2 m-2">
       Session form does not have any services to create a session for!
@@ -21,7 +22,7 @@ const CreateSession = ({ service, services }) => {
 
     const service_id = service?.id ?? services.find(srvc => srvc.name === sessionData.service_name)?.id;
     await fetcher.setToken(userId.accessToken).route(["sessions", service_id]).post(sessionData);
-    
+
     updateUser();
   }
 
@@ -33,9 +34,12 @@ const CreateSession = ({ service, services }) => {
     { name: "capacity", type: "Number", label: "Capacity" },
     { name: "description", type: "textarea", label: "Description" },
   ];
-  if (Array.isArray(services)) inputs.unshift({
-    name: "service_name", label: "Service", options: services.map(s => s.name), enforceOptions: true 
-  });
+  if (Array.isArray(services) && !service) {
+    if (services.length === 1) service = services[0];
+    else inputs.unshift({
+      name: "service_name", label: "Service", options: services.map(s => s.name), enforceOptions: true
+    });
+  }
 
   for (let i = 0; i < inputs.length; i++) {
     if (!inputs[i].hasOwnProperty("required"))
@@ -47,7 +51,7 @@ const CreateSession = ({ service, services }) => {
   return (
     <>
       <div className='flex justify-center m-4'>
-        <Form title={"New Session:"} submitFn={handleSubmit} inputs={inputs} />
+        <Form title={"New Session:"} submitFn={handleSubmit} {...{ inputs, reactiveData }} />
       </div>
     </>
   )

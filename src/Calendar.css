@@ -20,6 +20,13 @@
   padding: 20px;
   border: solid black 1px;
 }
+.calendar-grid-cell.clickable:hover {
+  background-color: #c4ae5744;
+}
+.calendar-cell-line {
+  border-radius: 8px;
+  margin: 0.15em;
+}
 
 .calendar-center {
   display: flex;

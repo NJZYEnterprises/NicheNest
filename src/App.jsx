@@ -13,6 +13,7 @@ import SingleFreeLancer from "./components/SingleFreeLancer.jsx"
 import Availabilities from "./pages/SingleIeFreelancerAvailability.jsx"
 import Contact from "./pages/Contact.jsx"
 import About from "./pages/About.jsx"
+import UserContact from "./pages/UserContact.jsx";
 import "./App.css"
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/availabilities/:id" element={<Availabilities />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
+          <Route path="/contact/:id" element={<UserContact />} />
         </Routes>
         <Footer />
       </SearchbarProvider>

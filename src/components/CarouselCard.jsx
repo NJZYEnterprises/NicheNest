@@ -12,15 +12,18 @@ const CarouselCard = ({ freelancer }) => {
           alt="Profile"
         />
       )}
-      <h2 className="text-lg font-bold">{freelancer.username}</h2>
-      <h2>
-        <span aria-label="a rocket blasting off" role="img">
-          ⭐
-        </span>
-        {freelancer.averageRating}
-      </h2>
+      <div className="mt-3">
+        <h2 className="text-lg font-bold">{freelancer.username}</h2>
+        <h2>
+          <span aria-label="a rocket blasting off" role="img">
+            ⭐
+          </span>
+          {freelancer.averageRating}
+        </h2>
 
-      <p className="text-gray-600">{freelancer.email}</p>
+        <p className="text-gray-900 font-bold">{freelancer.email}</p>
+      </div>
+
     </div>
   )
 }
