@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Fetcher from "../fetcher";
 import { calculateAverageRating } from "../../utils/profileUtils";
-import ServiceCard from "./ServiceCard"
+import ServiceCard from "./ServiceCard";
+import RateFreelancer from "./FreelancerRating";
 
 const SingleFreeLancer = () => {
   const { id } = useParams();
@@ -39,19 +40,13 @@ const SingleFreeLancer = () => {
               <div className="mt-4">
                 <p>
                   <span aria-label="a rocket blasting off" role="img">
-                    <button onClick={handleRating}>
-                      ⭐
-                    </button>
+                    ⭐
                   </span>
                   {`${freelancer.averageRating} (${freelancer.reviews_received.length} ratings)`}
                 </p>
+                <RateFreelancer freelancerId={freelancer.id}/>
                 <div>
-                      <button >1⭐</button>
-                      <button >2⭐</button>
-                      <button >3⭐</button>
-                      <button >4⭐</button>
-                      <button >5⭐</button>  
-                    </div>
+                </div>
                 <p className="mt-2">{freelancer.bio}</p>
               </div>
             </div>
