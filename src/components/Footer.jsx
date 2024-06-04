@@ -2,8 +2,9 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 const Footer = () => {
+  
   return (
-    <div className="bottom-0 left-0 right-0 ground-scene" /*style={{backgroundImage: "linear-gradient(var(--surfaceColor), var(--primaryColor) 20%)" }}*/>
+    <div className="footer-fix bottom-0 left-0 right-0 ground-scene">
       <div className="flex justify-center gap-20 pb-10 pt-10">
         <div>
           <h2 className="flex flex-col pb-2">About</h2>
