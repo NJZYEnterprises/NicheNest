@@ -4,11 +4,14 @@ import Fetcher from "../fetcher";
 import { calculateAverageRating } from "../../utils/profileUtils";
 import ServiceCard from "./ServiceCard";
 import UserContact from "../pages/UserContact";
+import ToggleButton from "./buttons/ToggleButton";
+import Calendar from "./Calendar";
 
 const SingleFreeLancer = () => {
   const { id } = useParams();
   const [freelancer, setFreelancer] = useState(null);
   const [showContactForm, setShowContactForm] = useState(false);
+  const toggleCalendar = useState(false);
 
   useEffect(() => {
     const fetcher = new Fetcher("api");
@@ -58,6 +61,7 @@ const SingleFreeLancer = () => {
             )}
           </div>
           <div className="mt-4 flex justify-center">
+            <ToggleButton text={["Show Calendar", "Hide Calendar"]} state={toggleCalendar} />
             <button
               onClick={handleContactClick}
               className="view-button text-white px-4 py-2 rounded ml-2"
@@ -66,6 +70,9 @@ const SingleFreeLancer = () => {
             </button>
           </div>
         </div>
+        {toggleCalendar[0] && <div className="flex justify-center">
+          <Calendar user={freelancer} />
+        </div>}
       </div>
       {showContactForm && (
         <UserContact
