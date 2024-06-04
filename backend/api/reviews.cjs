@@ -15,15 +15,38 @@ reviewsRouter.post("/", async (req, res) => {
   }
 });
 
+//Get Reviews by FreelancerId
+reviewsRouter.get("/review/:id", async (req, res) => {
+
+  const { id } = req.params;
+  console.log(`CLIENT ID`, id);
+  try{
+    const freelancerReviews = await prisma.review.findMany({
+      where:{
+        freelancer_id: Number(id)
+      },
+    });
+    res.send(freelancerReviews)
+  }catch(error){
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 //Get all reviews
 reviewsRouter.get("/", async (req, res) => {
   const reviews = await prisma.review.findMany();
   res.json(reviews);
 });
 
+
+
+  
+
+
 // Updates reviews
 reviewsRouter.put("/:id", async (req, res) => {
-  const { id } = req.params;
+  
   const { star_review } = req.body;
   try {
     const updatedReview = await prisma.review.update({

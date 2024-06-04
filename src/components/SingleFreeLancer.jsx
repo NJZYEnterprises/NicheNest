@@ -11,13 +11,19 @@ const SingleFreeLancer = () => {
   const [rateToggle, setRateToggle] = useState(false);
 
   useEffect(() => {
+    fetchFreelancer();
+  }, [id]);
+
+  const fetchFreelancer = () => {
     const fetcher = new Fetcher("api");
     const setModifiedFreelancer = (f) => {
       calculateAverageRating(f);
       setFreelancer(f);
     }
     fetcher.route(["users/freelancers", id]).get(setModifiedFreelancer);
-  }, [id]);
+  }
+
+
 
   const handleRating = () => {
     setRateToggle(!rateToggle)
@@ -44,7 +50,7 @@ const SingleFreeLancer = () => {
                   </span>
                   {`${freelancer.averageRating} (${freelancer.reviews_received.length} ratings)`}
                 </p>
-                <RateFreelancer freelancerId={freelancer.id}/>
+                <RateFreelancer freelancerId={freelancer.id} fetchFreelancer ={fetchFreelancer} />
                 <div>
                 </div>
                 <p className="mt-2">{freelancer.bio}</p>
