@@ -96,6 +96,7 @@ async function main() {
     // },
 
     {
+      uid: "6Uao652c9XULzRxPnp0kFrIs9cI2",
       username: "TylerWright Web Course",
       email: "tylerwright@fullstackademy.com",
       firstName: "Tyler",
@@ -105,6 +106,7 @@ async function main() {
       },
 
       {
+        uid: "qlGdqJMmLLNnO7UARi0L7FosWOF3",
         username: "JonathanEleiott Web Course",
         email: "jonathaneleiott@fullstackacademy.com",
         firstName: "Jonathan",
@@ -112,18 +114,9 @@ async function main() {
         bio: "Fullstack Academy Teacher - Building the future, one line of code at a time",
         phoneNumber: "0987654321"
         },
-        
+      
         {
-          username: "",
-          email: "",
-          firstName: "",
-          lastName: "",
-          bio: "",
-          phoneNumber: "",
-
-        },
-
-        {
+          uid: "RU2Ra7dvMAc4ma4mowGioomadeY2",
           username: "Jayoma Law Firm",
           email: "jayomalawfirm@gmail.com",
           firstName: "Alain",
@@ -134,6 +127,7 @@ async function main() {
         },
 
         {
+          uid:"ptmbKaSTZrTi4EXyyjD4wRwsNeB2",
           username: "Jacob's Detailing Inc.",
           email: "jacobdetails@gmail.com",
           firstName: "Jacob",
@@ -143,6 +137,7 @@ async function main() {
         },
 
         {
+          uid:"edSzxt8YQmXlGRA1zNFaB2QcHG93",
           username: "Gordon Ramsey",
           email: "gordonramsey@gmail.com",
           firstName: "Gordon",
@@ -152,6 +147,7 @@ async function main() {
         },
 
         {
+          uid: "FTSrWY7oDoQWoiUq2ozPmG2fjPV2",
           username: "AptHero",
           email: "apthero@gmail.com",
           firstName: "Alex",
@@ -161,6 +157,7 @@ async function main() {
           },
 
           {
+          uid: "epXvuFvagjSReoPAJEKRv1EJerb2",
           username: "TaxWhiz",
           email: "taxwhiz@gmail.com",
           firstName: "Susan",
@@ -170,6 +167,7 @@ async function main() {
           },
 
           {
+          uid: "Of0E1AAYF7SrqgDVOyQeSZEsEHH2",
           username: "Designify",
           email: "designify@gmail.com",
           firstName: "Michael",
@@ -179,6 +177,7 @@ async function main() {
           },
 
           {
+          uid: "bXl65K2ttRTPAMhvJwwYVqPR2oS2",
           username: "ContentCreator extraordinaire",
           email: "contentcreator@gmail.com",
           firstName: "Emily",
@@ -188,6 +187,7 @@ async function main() {
           },
 
           {
+          uid: "sdsfsrFHehhNEqWpX9ROx5RRKEp1",
           username: "VirtualHandyman",
           email: "virtualhandyman@gmail.com",
           firstName: "David",
