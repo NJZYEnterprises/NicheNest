@@ -31,14 +31,6 @@ const SingleFreeLancer = () => {
 
   const profilePic = freelancer.images?.find(e => e.isProfile) ?? freelancer.images?.at(0);
 
-  const handleContactClick = () => {
-    setShowContactForm(true);
-  };
-
-  const handleCloseContactForm = () => {
-    setShowContactForm(false);
-  };
-
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow container mx-auto p-4">
@@ -69,24 +61,12 @@ const SingleFreeLancer = () => {
           </div>
           <div className="mt-4 flex justify-center">
             <ToggleButton text={["Show Calendar", "Hide Calendar"]} state={toggleCalendar} />
-            <button
-              onClick={handleContactClick}
-              className="view-button text-white px-4 py-2 rounded ml-2"
-            >
-              Contact
-            </button>
           </div>
         </div>
         {toggleCalendar[0] && <div className="flex justify-center">
           <Calendar user={freelancer} />
         </div>}
       </div>
-      {showContactForm && (
-        <UserContact
-          freelancer={freelancer}
-          onClose={handleCloseContactForm}
-        />
-      )}
     </div>
   );
 };
