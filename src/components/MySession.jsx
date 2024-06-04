@@ -3,6 +3,29 @@ import { UserContext } from './UserProvider.jsx';
 import ToggleButton from './buttons/ToggleButton.jsx';
 import DeleteButton from './buttons/DeleteButton.jsx';
 import { Detail } from './ReservationCard.jsx';
+import myDate from '../utils/myDate.cjs';
+
+const participant = (reservation) => {
+  return reservation?.client
+    ? `${reservation.client.firstName} ${reservation.client.lastName}`
+    : "<unknown>"
+}
+export function getSessionDetails(session) {
+  console.log("session", session);
+  const reservations = session?.reservations ?? [];
+
+  const participantsStr = reservations.length > 0 ?
+    reservations.map(r => participant(r)).join(', ') : "none";
+
+  return [
+    { label: "Description", content: session?.description, hideEmpty: true },
+    { label: "Date", content: myDate.dateRangeDur(session?.when_start, session?.duration_min) },
+    { label: "Time", content: myDate.timeframeDur(session?.when_start, session?.duration_min) },
+    { label: "Status", content: session?.status },
+    { label: "Capacity", content: `${reservations.length} / ${session?.capacity}` },
+    { label: "Participants", content: participantsStr },
+  ];
+}
 
 function MySession({ session }) {
   const { updateUser } = useContext(UserContext);
@@ -10,29 +33,7 @@ function MySession({ session }) {
   const showMoreState = useState(false);
   const showMore = showMoreState[0];
 
-  const reservations = session?.reservations ?? [];
-
-  const participant = (reservation) => {
-    return reservation?.client
-      ? `${reservation.client.firstName} ${reservation.client.lastName}`
-      : "<unknown>"
-  }
-  const Participant = ({ reservation }) => {
-    return <span className="text-lg font-bold text-orange-500">
-      {participant(reservation)}
-    </span>
-  }
-  const participantsStr = reservations.length > 0 ?
-    reservations.map(r => participant(r)).join(', ') : "none";
-
-  const details = [
-    { label: "Description", content: session?.description, hideEmpty: true },
-    { label: "Start", content: new Date(session?.when_start).toLocaleString() },
-    { label: "Duration", content: `${session?.duration_min} minutes` },
-    { label: "Status", content: session?.status },
-    { label: "Capacity", content: `${reservations.length} / ${session?.capacity}` },
-    { label: "Participants", content: participantsStr },
-  ];
+  const details = getSessionDetails(session);
 
   return <div className="mb-4">
     <div className="flex justify-between items-center mb-2">
@@ -48,15 +49,6 @@ function MySession({ session }) {
     {showMore && (
       <div>
         <div className="surface-text p-3 m-6">{details.map(d => <Detail {...d} />)}</div>
-        {/* {reservations.length === 0
-          ? <div className="text-white">No reservations</div>
-          : reservations.map((reservation, i) => (
-            <div key={i} className="mb-2">
-              <h1>Participants</h1>
-              <Participant reservation={reservation} />
-            </div>
-          ))
-        } */}
       </div>
     )}
   </div>
