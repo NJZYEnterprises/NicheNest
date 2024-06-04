@@ -79,6 +79,7 @@ const SignInForm = () => {
       case "login":
         result = await signIn("form", data);
         if (!result) return "Invalid credentials";
+        createUser(result, data);
         break;
       case "register":
         result = await fireSignUp(data);

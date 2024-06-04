@@ -7,6 +7,7 @@ import {
   getRedirectResult,
   getAdditionalUserInfo,
   createUserWithEmailAndPassword,
+  updateProfile,
   onAuthStateChanged,
   signOut,
 } from "firebase/auth"
@@ -61,13 +62,14 @@ function AuthProvider({ children }) {
   //   console.log("userId:", userId);
   // }, [userId]);
 
-  const fireSignUp = async ({ email, password }) => {
+  const fireSignUp = async ({ email, password, username }) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       )
+      updateProfile(auth.currentUser, {displayName: username});
       // navigate("/")
       console.log("User Successfully Created", userCredential);
       return userCredential;
