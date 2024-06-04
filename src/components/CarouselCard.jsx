@@ -4,13 +4,15 @@ const CarouselCard = ({ freelancer }) => {
   const profileImage = freelancer.images.find(image => image.isProfile)
 
   return (
-    <div className="rounded shadow-m p-10 birds-nest">
+    <div className="rounded shadow-m p-10 birds-nest ">
       {profileImage && (
-        <img
-          className="rounded-md"
-          src={profileImage.image_url}
-          alt="Profile"
-        />
+        <div>
+          <img
+            className="rounded-md h-48 w-full"
+            src={profileImage.image_url}
+            alt="Profile"
+          />
+        </div>
       )}
       <div className="mt-3">
         <h2 className="text-lg font-bold">{freelancer.username}</h2>
