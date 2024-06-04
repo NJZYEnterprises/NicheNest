@@ -15,9 +15,9 @@ export function Detail({ label, content, tag, hideEmpty }) {
   let labelClass = "text-white text-left textShadow";
   if (tag.startsWith('h')) labelClass = [labelClass, "text-lg", "font-bold"].join(' ');
 
-  return <div className="flex flex-row flex-wrap gap-x-2 mb-2">
+  return <div className="flex flex-row flex-wrap gap-x-2 my-1 items-center">
     <tag className={labelClass} style={{ minWidth: "10rem" }}>{label}:</tag>
-    <div className="text-lg font-bold text-orange-500 text-left textShadow">{content}</div>
+    <div className="text-lg font-bold text-orange-500 text-left textShadow max-w-full" style={{overflowWrap: 'break-word'}}>{content}</div>
   </div>
 }
 

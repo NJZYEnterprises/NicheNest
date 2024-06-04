@@ -3,6 +3,7 @@ import { AuthContext } from "../auth/AuthProvider";
 import Fetcher from "../fetcher";
 import Form, { InputData } from './Form';
 import { UserContext } from './UserProvider';
+import moment from 'moment';
 
 const fetcher = new Fetcher("api");
 
@@ -18,7 +19,7 @@ const CreateSession = ({ service, services, reactiveData }) => {
   const { updateUser } = useContext(UserContext);
 
   const handleSubmit = async (sessionData) => {
-    sessionData.when_start = `${sessionData.date}` + `T` + `${sessionData.time}` + `:00.000Z`
+    sessionData.when_start = new Date(`${sessionData.date}` + `T` + `${sessionData.time}`).toISOString();
 
     const service_id = service?.id ?? services.find(srvc => srvc.name === sessionData.service_name)?.id;
     await fetcher.setToken(userId.accessToken).route(["sessions", service_id]).post(sessionData);

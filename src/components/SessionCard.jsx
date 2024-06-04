@@ -1,26 +1,20 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "../auth/AuthProvider";
+import BookButton from "./buttons/BookButton";
 import Fetcher from "../fetcher";
-import { UserContext } from "../components/UserProvider";
+
+const fetcher = new Fetcher("api");
 
 const SessionCard = () => {
   const { id } = useParams();
   const [sessions, setSessions] = useState([]);
-  const [reservations, setReservations] = useState([]);
-  const { user } = useContext(UserContext);
-  const { userId } = useContext(AuthContext);
-  const fetcher = new Fetcher("api");
 
-
-  const fetachAll = () => {
-    fetcher.route(`reservations/${user?.id}`).get(setReservations);
+  const fetchAll = () => {
     fetcher.route(["sessions/open/", id]).get(setSessions);
   }
 
   useEffect(() => {
-    fetachAll();
-
+    fetchAll();
   }, [id,]);
 
   const reserveSession = async (sessionId) => {
@@ -55,6 +49,8 @@ const SessionCard = () => {
     };
   };
 
+
+
   return (
     <>
       <div>
@@ -70,8 +66,6 @@ const SessionCard = () => {
                 <p>{date.substring(11, 19)}</p>
                 <h2>Total Allowed Participants:</h2>
                 <p>{session.reservations?.length}/{session.capacity}</p>
-                <h2>Open slots remaining:</h2>
-                <p>{session.capacity-session.reservations?.length}</p>
                 <div>{
                   alreadyBooked(session.id) ??
                   fullSession(session) ??
