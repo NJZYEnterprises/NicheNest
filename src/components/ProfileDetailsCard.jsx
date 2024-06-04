@@ -48,6 +48,17 @@ const ProfileDetailsCard = (props) => {
     }
   }, [user]);
 
+  const addImageForm = (
+    <AddImageForm
+      deleteMode={deleteMode}
+      setDeleteMode={setDeleteMode}
+      selectedImage={selectedImage}
+      setSelectedImage={setSelectedImage}
+      hasImages={user?.images && user.images.length > 0}
+    />
+  );
+  
+
   const toggleEditMode = () => {
     if (editMode) {
       setProfileDetails(originalProfileDetails);
@@ -145,38 +156,29 @@ const ProfileDetailsCard = (props) => {
       </div>
     );
   };
+
   return (
     <div className="surface-color card m-5 p-6">
-      <div className="">
-        <h2 className="text-xl font-bold mb-4">Profile Details</h2>
+      <div className="home-title-text text-4xl searchbar-text-color">
+        <h2 className="text-3xl font-bold mb-4">Profile Details</h2>
       </div>
-      <div className="m-5">
-        {user?.images && user.images.length > 0 ? (
-          <div className="flex flex-col">
-            {editMode && (
-              <AddImageForm
-                // setUserImages={setUserImages}
-                deleteMode={deleteMode}
-                setDeleteMode={setDeleteMode}
-                selectedImage={selectedImage}
-                setSelectedImage={setSelectedImage}
-              />
-            )
-            }
-              <UserCarousel
-                userImages={user?.images ?? []}
-                // setUserImages={setUserImages}
-                deleteMode={deleteMode}
-                setDeleteMode={setDeleteMode}
-                editMode={editMode}
-                selectedImage={selectedImage}
-                setSelectedImage={setSelectedImage}
-              />
-          </div>
-        ) : (
-          <div>Loading...</div>
-        )}
+      <div className="flex flex-col justify-center items-center">
+      <div>
+        {editMode && addImageForm}
       </div>
+      {!user?.images ? (
+        <div className="spinner"></div> 
+      ) : (
+        <UserCarousel
+          userImages={user.images}
+          deleteMode={deleteMode}
+          setDeleteMode={setDeleteMode}
+          editMode={editMode}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+        />
+      )}
+    </div>
       <div className="flex justify-end mb-4">
       </div>
       <div className="flex justify-center m-4">
