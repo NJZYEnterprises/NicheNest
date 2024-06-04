@@ -63,7 +63,7 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
                 .map((image, index) => (
                   <div
                     key={index}
-                    className={`rounded-xl m-3 shadow-gray shadow-lg${deleteMode && selectedImage && selectedImage.id === image.id ? 'border-2 border-red-500' : ''}`}
+                    className={`rounded-xl m-3${deleteMode && selectedImage && selectedImage.id === image.id ? 'shadow-lg shadow-red' : ''}`}
                     onClick={() => handleImageClick(image)}
                   >
                     {editMode && image.isProfile && (
@@ -74,7 +74,7 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
                       </div>
                     )}
                     <div className="">
-                      <img src={image.image_url} alt={`User Image ${index}`} className="h-64 w-full rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-105" />
+                      <img src={image.image_url} alt={`User Image ${index}`} className="h-64 w-full rounded-lg" />
                     </div>
                   </div>
                 ))}
@@ -105,7 +105,7 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
                   <Link
                     key={freelancer.id}
                     to={`/freelancers/${freelancer.id}`}
-                    className="block m-5 transition-transform duration-300 ease-in-out transform hover:scale-105"
+                    className="block m-5 transition-transform duration-300 ease-in-out transform hover:scale-105 rounded-lg"
                   >
                     <CarouselCard freelancer={freelancer} />
                   </Link>
