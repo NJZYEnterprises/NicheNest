@@ -6,6 +6,7 @@ import ServiceCard from "./ServiceCard";
 import UserContact from "../pages/UserContact";
 import ToggleButton from "./buttons/ToggleButton";
 import Calendar from "./Calendar";
+import RateFreelancer from "./FreelancerRating";
 
 const SingleFreeLancer = () => {
   const { id } = useParams();
@@ -23,13 +24,6 @@ const SingleFreeLancer = () => {
       setFreelancer(f);
     }
     fetcher.route(["users/freelancers", id]).get(setModifiedFreelancer);
-  }
-
-
-
-  const handleRating = () => {
-    setRateToggle(!rateToggle)
-    console.log(`RATE TGL`, rateToggle)
   }
 
   if (!freelancer) return <div> Loading...</div>;
