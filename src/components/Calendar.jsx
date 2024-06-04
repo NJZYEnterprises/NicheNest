@@ -1,7 +1,7 @@
 import moment from "moment";
 import myDate, { compareDays } from "../utils/myDate.cjs";
 import "../Calendar.css"
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Fetcher from "../fetcher";
 import { useState } from "react";
 import MyButton from './buttons/MyButton';
@@ -10,6 +10,8 @@ import CreateSession from "./CreateSessionForm";
 import myString from "../utils/myString.cjs";
 import { Detail, getReservationDetails } from './ReservationCard.jsx';
 import { getSessionDetails } from './MySession.jsx';
+import { UserContext } from "./UserProvider.jsx";
+import BookButton from "./buttons/BookButton.jsx";
 
 const fetcher = new Fetcher("api/users/calendar");
 const alphaHex = "7c"; // "d0";
@@ -62,7 +64,8 @@ const daysOfTheMonth = (date) => {
 
 // <-- Main Component -->
 const Calendar = ({ user: forUser }) => {
-  const [user, setUser] = useState(null);
+  const { user } = useContext(UserContext);
+  const [displayUser, setDisplayUser] = useState(null);
   const [currDisplay, setCurrDisplay] = useState("Month");
   const [viewDate, setViewDate] = useState(new Date());
   const toggleAdding = useState(false);
@@ -70,10 +73,17 @@ const Calendar = ({ user: forUser }) => {
   const [formDefault, setFormDefault] = useState({});
 
   const gridW = 7;
+  const isMyCalendar = user && user.id === displayUser?.id;
+
+  const fetchDisplayUser = () => {
+    if (forUser?.id) {
+      fetcher.route(forUser.id.toString()).get(setDisplayUser);
+    }
+  }
 
   useEffect(() => {
-    if (forUser?.id && !user) {
-      fetcher.route(forUser.id.toString()).get(setUser);
+    if (!displayUser) {
+      fetchDisplayUser();
     }
   }, [forUser])
 
@@ -119,7 +129,7 @@ const Calendar = ({ user: forUser }) => {
 
   // combine sessions and reservations into more versatile "event"
   const allEvents = [];
-  const allSessions = user?.services.reduce((acc, srvc) => {
+  const allSessions = displayUser?.services.reduce((acc, srvc) => {
     if (!Array.isArray(srvc.sessions)) return acc;
 
     acc.push(...srvc.sessions.map(sess => {
@@ -134,8 +144,8 @@ const Calendar = ({ user: forUser }) => {
   }, []);
   if (Array.isArray(allSessions)) allEvents.push(...allSessions);
 
-  if (Array.isArray(user?.reservations)) {
-    allEvents.push(...user.reservations.map(rsvp => {
+  if (isMyCalendar && Array.isArray(displayUser?.reservations)) {
+    allEvents.push(...displayUser.reservations.map(rsvp => {
       const session = rsvp.session;
       return {
         when_start: session?.when_start,
@@ -163,7 +173,6 @@ const Calendar = ({ user: forUser }) => {
   })
 
   const CellContents = ({ data }) => {
-    // console.log("cell data:", data);
     return <div className="flex flex-col justify-start" style={{ ...cellStyle(gridW + data.index) }}>
       {data.date.getDate()}
       {["sessions", "reservations"].map(e => {
@@ -182,7 +191,6 @@ const Calendar = ({ user: forUser }) => {
   }
 
   const onClickCell = (e, i) => {
-    // console.log(`Cell ${i} clicked`);
     const clickedDate = calendarMonthData[i]?.date;
 
     if (isAdding) {
@@ -223,15 +231,20 @@ const Calendar = ({ user: forUser }) => {
         }
       }
 
-      return [{ 
+      return [{
         label: event.service?.name + (isMe(event) ? "" : ` (${event.service?.freelancer?.username})`),
-        content: myDate.timeframeDur(event.when_start, event.duration_min), tag: "h1" 
+        content: myDate.timeframeDur(event.when_start, event.duration_min), tag: "h1"
       }];
     }
 
-    return <div className="card p-3 m-6" style={{ backgroundColor, position: 'relative' }} >
-      {eventDetails(event, toggleMore[0]).map(d => <Detail {...d} />)}
-      <div style={{ position: 'absolute', top: "0.75rem", right: 0 }}>
+    return <div className="card p-3 m-6 flex items-center" style={{ backgroundColor, position: 'relative' }} >
+      <div className="flex flex-col justify-center justify-items-center  max-w-full">
+        {eventDetails(event, toggleMore[0]).map(d => <Detail {...d} />)}
+      </div>
+      <div className="flex flex-row" style={{ placeItems: 'center', position: 'absolute', top: "0.75rem", right: 0 }}>
+        {!isMyCalendar && event.session &&
+          <BookButton session={event.session} updateFn={fetchDisplayUser} />
+        }
         <ToggleButton text={["Show More", "Show Less"]} state={toggleMore} />
       </div>
     </div>
@@ -328,7 +341,7 @@ const Calendar = ({ user: forUser }) => {
         <ToggleButton text={["Add", "Cancel"]} cssType={"submit"} state={toggleAdding} />
       </div>
     </div>
-    {isAdding && <CreateSession services={user?.services} reactiveData={formDefault} />}
+    {isAdding && <CreateSession services={displayUser?.services} reactiveData={formDefault} />}
     <CurrentDisplay />
   </section >
 }

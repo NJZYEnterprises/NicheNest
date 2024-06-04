@@ -1,6 +1,7 @@
 .calendar-container {
-  width: 90%;
-  height: 90%;
+  width: 1340px;
+  max-width: 100vw;
+  min-height: 600px;
   padding: 5%;
   margin: 1%;
 }
@@ -9,9 +10,10 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr); /* 7 columns */
   /*grid-template-rows: repeat(6, 4fr); /* 6 rows */
-  grid-template-rows: auto; /* 6 rows */
+  grid-template-rows: auto;
   width: 100%;
   height: 100%;
+  overflow: auto;
 }
 
 .calendar-grid-cell {
@@ -25,6 +27,7 @@
 }
 .calendar-cell-line {
   border-radius: 8px;
+  padding: 0 0.4em;
   margin: 0.15em;
 }
 
