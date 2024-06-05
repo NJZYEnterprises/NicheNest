@@ -233,14 +233,14 @@ async function main() {
   for (let c = 1; c <= users.length; c++) {
     // for (let f = 1; f <= users.length - 1; f++) {
     for (let r = 0; r < 3; r++) {
-      const f = faker.number.int({max: users.length - 1});
-      if (c === f) continue
+      const f = faker.number.int({max: users.length - 1}) + 1;
+      if (c === f) continue;
       const star_review = Math.floor(Math.random() * 3) + 3
       await prisma.review.create({
         data: {
           star_review: star_review,
           client_id: c,
-          freelancer_id: f + 1,
+          freelancer_id: f,
         },
       })
     }
