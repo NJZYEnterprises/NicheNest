@@ -240,7 +240,7 @@ async function main() {
         data: {
           star_review: star_review,
           client_id: c,
-          freelancer_id: f,
+          freelancer_id: f + 1,
         },
       })
     }
