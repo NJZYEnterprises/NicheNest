@@ -27,7 +27,7 @@ server.get('/', (req, res, next) => {
 })
 
 
-for (const path of ["login", "register", "profile", "freelancers", "freelancers/:id", "availabilities/:id"])
+for (const path of ["login", "register", "profile", "freelancers", "freelancers/:id", "availabilities/:id", "about", "contact"])
   server.use("/" + path, express.static('dist'));
 
 server.use(express.static(path.join(__dirname, './dist')))

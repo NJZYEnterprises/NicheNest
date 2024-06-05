@@ -4,6 +4,7 @@ import UserCarousel from "./UserCarousel";
 import AddImageForm from "./AddImageForm";
 import { AuthContext } from "../auth/AuthProvider";
 import { UserContext } from "./UserProvider.jsx";
+import ToggleButton from './buttons/ToggleButton.jsx';
 
 const fetcher = new Fetcher("api");
 
@@ -128,7 +129,7 @@ const ProfileDetailsCard = (props) => {
     );
     return (
       <div className="mb-3">
-        <label className="block text-gray-400" htmlFor={id}>{label}</label>
+        <label className="block text-white" htmlFor={id}>{label}</label>
         {editModeField === id ? (
           <div>
             <div>
@@ -145,7 +146,7 @@ const ProfileDetailsCard = (props) => {
           </div>
         ) : (
           <div className="flex items-center">
-            <p className="text-white flex-grow">{profileDetails[id]}</p>
+            <p className="text-orange-500 flex-grow">{profileDetails[id]}</p>
             {editMode && editModeField === null && (
               <button className="edit-icon ml-2" onClick={() => enterFieldEditMode(id)}>
                 🖍️
@@ -158,9 +159,9 @@ const ProfileDetailsCard = (props) => {
   };
 
   return (
-    <div className="surface-color card m-5 p-6">
-      <div className="home-title-text text-4xl searchbar-text-color">
-        <h2 className="text-3xl font-bold mb-4">Profile Details</h2>
+    <div className="surface-color card profile-spacing textShadow">
+      <div className="home-title-text  searchbar-text-color">
+        <h2 className="font-bold mb-4">Profile Details</h2>
       </div>
       <div className="flex flex-col justify-center items-center">
       <div>
@@ -182,26 +183,28 @@ const ProfileDetailsCard = (props) => {
       <div className="flex justify-end mb-4">
       </div>
       <div className="flex justify-center m-4">
-        <div className="flex birds-nest card p-16 w-max">
-          <div className="w-1/2 pr-4">
-            {renderField('firstName', 'First Name')}
-            {renderField('lastName', 'Last Name')}
-            {renderField('username', 'Username')}
-            {renderField('email', 'Email', 'email')}
-            {renderField('bio', 'Bio', 'textarea')}
-          </div>
-          <div className="w-1/2 pl-4">
-            {renderField('phoneNumber', 'Phone', 'tel')}
-            {renderField('street_address', 'Street Address')}
-            {renderField('zip_code', 'Zip Code')}
-            {renderField('city', 'City')}
-            {renderField('state', 'State')}
+        <div className="flex flex-col primary-color-t card p-16 w-max">
+          <div className="flex flex-grow surface-text card px-4 py-2">
+            <div className="w-1/2 pr-4">
+              {renderField('firstName', 'First Name')}
+              {renderField('lastName', 'Last Name')}
+              {renderField('username', 'Username')}
+              {renderField('email', 'Email', 'email')}
+              {renderField('bio', 'Bio', 'textarea')}
+            </div>
+            <div className="w-1/2 pl-4">
+              {renderField('phoneNumber', 'Phone', 'tel')}
+              {renderField('street_address', 'Street Address')}
+              {renderField('zip_code', 'Zip Code')}
+              {renderField('city', 'City')}
+              {renderField('state', 'State')}
+            </div>
           </div>
         </div>
       </div>
       <div>
         <button
-          className="submit-button text-white font-bold py-2 px-4 rounded"
+          className="submit-button text-white font-bold py-2 px-4 rounded textShadow"
           onClick={toggleEditMode}
         >
           {editMode ? 'Exit Edit Mode' : 'Enter Edit Mode'}

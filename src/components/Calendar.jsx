@@ -73,7 +73,8 @@ const Calendar = ({ user: forUser }) => {
   const [formDefault, setFormDefault] = useState({});
 
   const gridW = 7;
-  const isMyCalendar = user && user.id === displayUser?.id;
+  // const isMyCalendar = user && user.id === displayUser?.id;
+  const isMyCalendar = !displayUser || user?.id === displayUser.id;
 
   const fetchDisplayUser = () => {
     if (forUser?.id) {
@@ -322,7 +323,10 @@ const Calendar = ({ user: forUser }) => {
     return moment(viewDate).format("dddd, MMMM Do, YYYY");
   }
 
-  return <section className="flex flex-col surface-color card calendar-container">
+  return <section className="flex flex-col surface-color card calendar-container textShadow">
+    <h1 className="home-title-text searchbar-text-color font-bold mb-4">
+      {(isMyCalendar ? "My" : `${displayUser?.username ?? "Who"}'s`) + " Calendar"}
+    </h1>
     <div className="flex justify-around p-1 m-1">
       <div className="buttonContainer flexItemUniformSize">
         <MyButton text={"Today"} onClick={(e) => setViewDate(new Date())} />

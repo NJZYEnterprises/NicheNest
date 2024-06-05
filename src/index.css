@@ -6,7 +6,7 @@
   --calPolyGreen: #2A4A1c;
   --cafeNoir: #3C2F16;
   --fireEngineRed: #c41D1D;
-  --resedaGreen : #717F4A;
+  --resedaGreen: #717F4A;
   --darkMossGreen: #4F5A20;
   --leafGreen: #5ca904;
   --sage: #C4BB97;
@@ -25,19 +25,23 @@
   background-color: var(--primaryColor);
   color: var(--alabaster);
 }
+
 .primary-color-t {
   background-color: #2a4a1cd0;
   color: var(--alabaster);
 }
+
 .secondary-color {
   background-color: var(--secondaryColor);
   color: var(--alabaster);
 }
-.background-color{
+
+.background-color {
   background-image: radial-gradient(var(--resedaGreen), var(--sage) 90%);
   /* background-color: var(--sage); */
   color: black;
 }
+
 /* , .react-multi-carousel-list */
 .surface-color {
   /* background-image: linear-gradient(var(--resedaGreen), var(--sage)); */
@@ -45,8 +49,14 @@
   /* background-color: var(--surfaceColor); */
   color: black;
 }
+
 .surface-text {
   background-color: #c4bb9744;
+  border-radius: 12px;
+}
+
+.surface-text-2 {
+  background-color: #F0ECE222;
   border-radius: 12px;
 }
 
@@ -54,7 +64,8 @@
   background: radial-gradient(var(--sage), var(--cafeNoir) 20% 40%, var(--resedaGreen), var(--calPolyGreen) 80%);
 }
 
-.tree-background, :root {
+.tree-background,
+:root {
   /* background: url("./assets/Watercolor-Tree-Branch-Seamless-Pattern-81721942-1.png"); */
   background: url("./assets/Watercolor-Painting-Tree-Branches-Seamless-Pattern-Green-And-Brown-81721873-1.png");
   /* background-size: 20%; */
@@ -65,24 +76,27 @@
 .forest-scene {
   /* background: conic-gradient(from 0deg at 0% 85%, var(--sunYellow), var(--resedaGreen) 90deg, var(--cafeNoir) 120deg); */
   /* background: linear-gradient(to bottom right, var(--sunYellow) 0%, var(--skyBirdBlue) 30%, var(--resedaGreen) 80%); */
-  background: 
+  background:
     /* linear-gradient(to bottom right, var(--sunYellow), var(--skyBirdBlue)), */
     conic-gradient(from 0deg at 0% 85%, var(--sunYellow), var(--skyBirdBlue) 90deg),
     linear-gradient(var(--skyBirdBlue), var(--resedaGreen), var(--calPolyGreen), var(--cafeNoir));
-    background-size: 100% 30%, 100% 70%;
-    background-position: left top, left bottom; /* Position for each gradient */
-    background-repeat: no-repeat; /* Prevent repeating */
+  background-size: 100% 30%, 100% 70%;
+  background-position: left top, left bottom;
+  /* Position for each gradient */
+  background-repeat: no-repeat;
+  /* Prevent repeating */
 }
 
 .sky-scene {
-  background: 
-  /* linear-gradient(to bottom right, var(--sunYellow), var(--skyBirdBlue)), */
-  conic-gradient(from 0deg at 0% 85%, var(--sunYellow), var(--skyBirdBlue) 90deg),
-  linear-gradient(var(--skyBirdBlue), var(--resedaGreen));
-  background-size: 100% 70%, 100% 30%;
+  background:
+    /* linear-gradient(to bottom right, var(--sunYellow), var(--skyBirdBlue)), */
+    conic-gradient(from 0deg at 0% 85%, var(--sunYellow), var(--skyBirdBlue) 90deg),
+    linear-gradient(var(--skyBirdBlue), var(--resedaGreen));
+  background-size: 100% 72%, 100% 32%;
   background-position: left top, left bottom; /* Position for each gradient */
   background-repeat: no-repeat; /* Prevent repeating */
 }
+
 .ground-scene {
   background: linear-gradient(var(--sage), var(--resedaGreen), var(--calPolyGreen), var(--cafeNoir));
 }
@@ -91,23 +105,29 @@
   background-color: var(--leafGreen);
   color: white;
 }
+
 .view-button:hover {
   background-color: #85df1f;
 }
+
 .submit-button {
   background-color: var(--littleBoyBlue);
   color: white;
 }
+
 .submit-button:hover {
   background-color: var(--skyBirdBlue);
 }
+
 .error-button {
   background-color: var(--fireEngineRed);
   color: var(--alabaster);
 }
+
 .error-button:hover {
   background-color: #ff6767;
 }
+
 .error-text {
   color: #C41D1D;
 }
@@ -134,18 +154,21 @@ body {
 .searchbar-text-color {
   color: var(--cafeNoir)
 }
+
 .navbar-text-color {
   color: var(--calPolyGreen)
 }
+
 .home-title-text {
   font-family: "Alfa Slab One", serif;
   font-weight: 400;
   font-style: normal;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  text-shadow: 0.1em 0.1em 0.2em rgba(0, 0, 0, 0.4);
 }
+
 .footer-margin {
-  margin-top:2.45rem;
+  /* margin-top: 2.45rem; */
+  margin-top: 1rem;
 }
-
-
-
-

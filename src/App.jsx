@@ -22,20 +22,24 @@ function App() {
       <AuthProvider>
       <UserProvider>
       <SearchbarProvider>
-        <NavBar/>
-        <Routes>
-          <Route index="/" element={<Home/>} />
-          <Route path="/login" element={<SignInForm/>} />
-          <Route path="/register" element={<SignInForm/>} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/freelancers" element={<AllFreelancers/>} />
-          <Route path="/freelancers/:id" element={<SingleFreeLancer />} />
-          <Route path="/availabilities/:id" element={<Availabilities />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact/:id" element={<UserContact />} />
-        </Routes>
-        <Footer />
+        <div className="app-container">
+          <NavBar/>
+          <div className="app-body">
+            <Routes>
+              <Route index="/" element={<Home/>} />
+              <Route path="/login" element={<SignInForm/>} />
+              <Route path="/register" element={<SignInForm/>} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/freelancers" element={<AllFreelancers/>} />
+              <Route path="/freelancers/:id" element={<SingleFreeLancer />} />
+              <Route path="/availabilities/:id" element={<Availabilities />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact/:id" element={<UserContact />} />
+            </Routes>
+          </div>
+          <Footer />
+        </div>
       </SearchbarProvider>
       </UserProvider>
       </AuthProvider>

@@ -74,7 +74,7 @@ const UserCarousel = ({ freelancers, topRatedFreelancers, userImages, deleteMode
                       </div>
                     )}
                     <div className="">
-                      <img src={image.image_url} alt={`User Image ${index}`} className="h-64 w-full rounded-lg" />
+                      <img src={image.image_url} alt={`User Image ${index}`} className="h-64 w-full rounded-lg object-contain" />
                     </div>
                   </div>
                 ))}

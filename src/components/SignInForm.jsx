@@ -98,14 +98,18 @@ const SignInForm = () => {
     }
   };
 
+  // px-32 py-16
+
   // <-- Render -->
-  return <div className="flex flex-col justify-center items-center m-4">
-    <Form title={"Sign In"} submitFn={submitForm} inputs={inputs} />
-    <div className="m-1 p-1">{(formType === "login" ? "Don't" : "Already") + " have an account? "}
-      <Link to={"/" + otherFormType}>{capitalize(otherFormType)}</Link>
-    </div>
-    <div className="flex justify-center m-1 p-1">
-      <GoogleButton onClick={handleSignInWithGoogle} />
+  return <div className="flex flex-col justify-center items-center flex-grow m-6">
+    <div className="surface-color card flex flex-col flex-grow justify-center items-center py-6" style={{aspectRatio: '4/3', maxWidth: '100%'}}>
+      <Form title={"Sign In"} submitFn={submitForm} inputs={inputs} />
+      <div className="m-1 p-1">{(formType === "login" ? "Don't" : "Already") + " have an account? "}
+        <Link to={"/" + otherFormType}>{capitalize(otherFormType)}</Link>
+      </div>
+      <div className="flex justify-center m-1 p-1">
+        <GoogleButton onClick={handleSignInWithGoogle} />
+      </div>
     </div>
   </div>
 }

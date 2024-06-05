@@ -14,10 +14,10 @@ const MyServices = () => {
 
   // TODO: min height screen?
   return (
-    <div className="surface-color card flex flex-col p-10 m-5">
+    <div className="surface-color card flex flex-col flex-grow profile-spacing">
       <div className="mb-4 flex flex-row">
         <div className='flexItemUniformSize'></div>
-        <h1 className="text-4xl font-bold">My Services</h1>
+        <h1 className="home-title-text searchbar-text-color font-bold">My Services</h1>
         <div className='flexItemUniformSize flex-row justify-end gap-4'>
           <ToggleButton state={toggleCreate} text={['Create New', 'Cancel New']} cssType='submit' />
         </div>
