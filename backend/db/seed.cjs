@@ -12,7 +12,7 @@ async function main() {
 
   // User
   const users = [
-    
+
     // Alexander
     {
       uid: "h3NdGZvEXxUJfSNhXpWtEHiTljy2",
@@ -103,102 +103,102 @@ async function main() {
       lastName: "Wright",
       bio: "Fullstack Academy Teacher - No one codes Pokemon better than me",
       phoneNumber: "1234567890"
-      },
+    },
 
-      {
-        uid: "qlGdqJMmLLNnO7UARi0L7FosWOF3",
-        username: "JonathanEleiott Web Course",
-        email: "jonathaneleiott@fullstackacademy.com",
-        firstName: "Jonathan",
-        lastName: "Eleiott",
-        bio: "Fullstack Academy Teacher - Building the future, one line of code at a time",
-        phoneNumber: "0987654321"
-        },
-      
-        {
-          uid: "RU2Ra7dvMAc4ma4mowGioomadeY2",
-          username: "Jayoma Law Firm",
-          email: "jayomalawfirm@gmail.com",
-          firstName: "Alain",
-          lastName: "Jayoma",
-          bio: "24/7 Criminal Defense Lawyer, 100% Legal, 100% Professional, Whatever the case maybe, I'll work it",
-          phoneNumber: "1111111111",
+    {
+      uid: "qlGdqJMmLLNnO7UARi0L7FosWOF3",
+      username: "JonathanEleiott Web Course",
+      email: "jonathaneleiott@fullstackacademy.com",
+      firstName: "Jonathan",
+      lastName: "Eleiott",
+      bio: "Fullstack Academy Teacher - Building the future, one line of code at a time",
+      phoneNumber: "0987654321"
+    },
 
-        },
+    {
+      uid: "RU2Ra7dvMAc4ma4mowGioomadeY2",
+      username: "Jayoma Law Firm",
+      email: "jayomalawfirm@gmail.com",
+      firstName: "Alain",
+      lastName: "Jayoma",
+      bio: "24/7 Criminal Defense Lawyer, 100% Legal, 100% Professional, Whatever the case maybe, I'll work it",
+      phoneNumber: "1111111111",
 
-        {
-          uid:"ptmbKaSTZrTi4EXyyjD4wRwsNeB2",
-          username: "Jacob's Detailing Inc.",
-          email: "jacobdetails@gmail.com",
-          firstName: "Jacob",
-          lastName: "Tate",
-          bio: "Cleaning car is something I've always wanted to do. I'm a big fan of the Detailing industry.",
-          phoneNumber: "7777777777",
-        },
+    },
 
-        {
-          uid:"edSzxt8YQmXlGRA1zNFaB2QcHG93",
-          username: "Gordon Ramsey",
-          email: "gordonramsey@gmail.com",
-          firstName: "Gordon",
-          lastName: "Ramsey",
-          bio: "Your favorite chef on duty.",
-          phoneNumber: "7777777777",
-        },
+    {
+      uid: "ptmbKaSTZrTi4EXyyjD4wRwsNeB2",
+      username: "Jacob's Detailing Inc.",
+      email: "jacobdetails@gmail.com",
+      firstName: "Jacob",
+      lastName: "Tate",
+      bio: "Cleaning car is something I've always wanted to do. I'm a big fan of the Detailing industry.",
+      phoneNumber: "7777777777",
+    },
 
-        {
-          uid: "FTSrWY7oDoQWoiUq2ozPmG2fjPV2",
-          username: "AptHero",
-          email: "apthero@gmail.com",
-          firstName: "Alex",
-          lastName: "Miller",
-          bio: "Finding your dream apartment just got easier! Let me handle the search, filtering options based on your needs and budget. Stress-free apartment hunting starts here!",
-          phoneNumber: "555-111-2233"
-          },
+    {
+      uid: "edSzxt8YQmXlGRA1zNFaB2QcHG93",
+      username: "Gordon Ramsey",
+      email: "gordonramsey@gmail.com",
+      firstName: "Gordon",
+      lastName: "Ramsey",
+      bio: "Your favorite chef on duty.",
+      phoneNumber: "7777777777",
+    },
 
-          {
-          uid: "epXvuFvagjSReoPAJEKRv1EJerb2",
-          username: "TaxWhiz",
-          email: "taxwhiz@gmail.com",
-          firstName: "Susan",
-          lastName: "Chen",
-          bio: "Certified Public Accountant (CPA) here to help you navigate taxes with ease. I offer tax preparation, filing, and consulting services for individuals and small businesses.",
-          phoneNumber: "666-222-3344"
-          },
+    {
+      uid: "FTSrWY7oDoQWoiUq2ozPmG2fjPV2",
+      username: "AptHero",
+      email: "apthero@gmail.com",
+      firstName: "Alex",
+      lastName: "Miller",
+      bio: "Finding your dream apartment just got easier! Let me handle the search, filtering options based on your needs and budget. Stress-free apartment hunting starts here!",
+      phoneNumber: "555-111-2233"
+    },
 
-          {
-          uid: "Of0E1AAYF7SrqgDVOyQeSZEsEHH2",
-          username: "Designify",
-          email: "designify@gmail.com",
-          firstName: "Michael",
-          lastName: "Brown",
-          bio: "Bringing your vision to life! I specialize in graphic design services including logo creation, branding materials, social media graphics, and website design.",
-          phoneNumber: "777-333-4455"
-          },
+    {
+      uid: "epXvuFvagjSReoPAJEKRv1EJerb2",
+      username: "TaxWhiz",
+      email: "taxwhiz@gmail.com",
+      firstName: "Susan",
+      lastName: "Chen",
+      bio: "Certified Public Accountant (CPA) here to help you navigate taxes with ease. I offer tax preparation, filing, and consulting services for individuals and small businesses.",
+      phoneNumber: "666-222-3344"
+    },
 
-          {
-          uid: "bXl65K2ttRTPAMhvJwwYVqPR2oS2",
-          username: "ContentCreator extraordinaire",
-          email: "contentcreator@gmail.com",
-          firstName: "Emily",
-          lastName: "Johnson",
-          bio: "Skilled writer and content creator offering captivating blog posts, website content, and social media copy. Let me help you engage your audience and achieve your content marketing goals.",
-          phoneNumber: "888-444-5566"
-          },
+    {
+      uid: "Of0E1AAYF7SrqgDVOyQeSZEsEHH2",
+      username: "Designify",
+      email: "designify@gmail.com",
+      firstName: "Michael",
+      lastName: "Brown",
+      bio: "Bringing your vision to life! I specialize in graphic design services including logo creation, branding materials, social media graphics, and website design.",
+      phoneNumber: "777-333-4455"
+    },
 
-          {
-          uid: "sdsfsrFHehhNEqWpX9ROx5RRKEp1",
-          username: "VirtualHandyman",
-          email: "virtualhandyman@gmail.com",
-          firstName: "David",
-          lastName: "Garcia",
-          bio: "Need help with small tasks around the house or office? I can assist with furniture assembly, handyman services, errands, and more! Free up your time and get things done efficiently.",
-          phoneNumber: "999-555-6677"
-          },
+    {
+      uid: "bXl65K2ttRTPAMhvJwwYVqPR2oS2",
+      username: "ContentCreator extraordinaire",
+      email: "contentcreator@gmail.com",
+      firstName: "Emily",
+      lastName: "Johnson",
+      bio: "Skilled writer and content creator offering captivating blog posts, website content, and social media copy. Let me help you engage your audience and achieve your content marketing goals.",
+      phoneNumber: "888-444-5566"
+    },
+
+    {
+      uid: "sdsfsrFHehhNEqWpX9ROx5RRKEp1",
+      username: "VirtualHandyman",
+      email: "virtualhandyman@gmail.com",
+      firstName: "David",
+      lastName: "Garcia",
+      bio: "Need help with small tasks around the house or office? I can assist with furniture assembly, handyman services, errands, and more! Free up your time and get things done efficiently.",
+      phoneNumber: "999-555-6677"
+    },
 
   ]
 
-  
+
   let randomUser = {}
   for (let i = 0; i < 10; i++) {
     randomUser = {
@@ -231,7 +231,9 @@ async function main() {
 
   // Review
   for (let c = 1; c <= users.length; c++) {
-    for (let f = 1; f <= users.length - 1; f++) {
+    // for (let f = 1; f <= users.length - 1; f++) {
+    for (let r = 0; r < 3; r++) {
+      const f = faker.number.int({max: users.length - 1});
       if (c === f) continue
       const star_review = Math.floor(Math.random() * 3) + 3
       await prisma.review.create({
@@ -277,22 +279,30 @@ async function main() {
       rate_time: "cat",
     },
   ]
+  for (let i = services.length; i < users.length; i++) {
+    services.push({
+      name: faker.word.noun() + " " + faker.word.verb(),
+      tags: `#${faker.word.noun()} #${faker.word.noun()} #${faker.word.noun()+faker.word.noun()}"`,
+      rate: faker.number.int({ min: 5, max: 300}),
+      rate_time: ["minute", "hour", "session"].at(faker.number.int({ max: 2})),
+    });
+  }
   for (let i = 0; i < services.length; i++) {
     services[i].freelancer_id = i + 1
     await prisma.service.create({ data: services[i] })
   }
 
   // Availability
-  for (let i = 0; i < services.length; i++) {
-    await prisma.availability.create({
-      data: {
-        when_start: new Date(),
-        duration_min: 30,
-        isRecurring: false,
-        service_id: i + 1,
-      },
-    })
-  }
+  // for (let i = 0; i < services.length; i++) {
+  //   await prisma.availability.create({
+  //     data: {
+  //       when_start: new Date(),
+  //       duration_min: 30,
+  //       isRecurring: false,
+  //       service_id: i + 1,
+  //     },
+  //   })
+  // }
 
   // Session
   for (let i = 0; i < services.length; i++) {
@@ -328,7 +338,7 @@ async function main() {
   for (let i = 0; i < users.length; i++) {
     await prisma.user_image.create({
       data: {
-        image_url: faker.image.urlLoremFlickr({category: "birds"}),
+        image_url: faker.image.urlLoremFlickr({ category: "birds" }),
         description: "this is a profile picture",
         isProfile: true,
         when_added: new Date(),

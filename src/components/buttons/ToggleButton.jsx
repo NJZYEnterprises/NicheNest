@@ -1,7 +1,7 @@
 import myString from "../../utils/myString.cjs";
 import MyButton from "./MyButton";
 
-function ToggleButton({ text, state, bool, setBool, cssType }) {
+function ToggleButton({ text, state, bool, setBool, cssType, cssSpacing }) {
   if (state) [bool, setBool] = state;
   const onClick = (e) => {
     setBool(!bool);
@@ -16,7 +16,7 @@ function ToggleButton({ text, state, bool, setBool, cssType }) {
   if (!myString.validate(displayText))
     displayText = "Toggle";
 
-  return <MyButton text={displayText} {...{ cssType, onClick }} />
+  return <MyButton text={displayText} {...{ cssType, cssSpacing, onClick }} />
 }
 
 export default ToggleButton;

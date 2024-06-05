@@ -1,11 +1,17 @@
 #root {
-  width: 100vw;
   margin: 0;
   text-align: center;
 }
 
-body {
-  min-width: 100vw;
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.app-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .containerColumn {
@@ -34,11 +40,16 @@ body {
 }
 
 .textShadow {
-  text-shadow: 0.1em 0.1em 0.2em black;
+  text-shadow: 0.1em 0.1em 0.2em rgba(0, 0, 0, 0.4);
 }
 
 .buttonContainer {
   display: flex;
   place-content: center;
   place-items: center;
+}
+
+.profile-spacing {
+  padding: 2rem;
+  margin: 2rem;
 }

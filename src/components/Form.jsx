@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import myString from "../utils/myString.cjs";
 import myObj from "../utils/myObj.cjs";
+import MyButton from "./buttons/MyButton";
 
 export class InputData {
   constructor({ id, name, label, type, required, options, enforceOptions }) {
@@ -18,7 +19,7 @@ export class InputData {
   }
 }
 
-const Form = ({ defaultData, reactiveData, title, submitFn, inputs, injectComponents }) => {
+const Form = ({ defaultData, reactiveData, title, submitFn, inputs, injectComponents, css }) => {
   if (defaultData && Array.isArray(inputs)) {
     defaultData = myObj.unwrap(defaultData, inputs.map(e => e.name));
     inputs.forEach(e => { if (defaultData.hasOwnProperty(e)) e.placeholder = defaultData[e]; });
@@ -80,14 +81,14 @@ const Form = ({ defaultData, reactiveData, title, submitFn, inputs, injectCompon
     }
   }
 
-  return <div className="surface-color card flex justify-center items-center m-2 px-3 py-2 rounded-md shadow-md w-max">
-    <section className="containerForm">
+  return <div className={`${css?.colorClass ?? "primary-color-t"} card flex justify-center items-center m-2 px-3 py-2 rounded-md shadow-md w-max`}>
+    <section className="containerForm textShadow">
       {title && <h2 className="text-2xl font-bold mb-2 p-1">{title}</h2>}
       <form onSubmit={onSubmit} className="flex flex-col" >
         {Array.isArray(inputs) && inputs.map(input => {
           if (!(input instanceof InputData && input.isValid())) return null;
           const InputTag = input.type === "textarea" ? "textarea" : "input";
-          const styling = { width: inputWidth };
+          const styling = { width: inputWidth, color: "black" };
           if (input.type === "textarea") {
             styling.minHeight = "1.5em";
             styling.height = textareaHeightMap[input.name] ?? styling.minHeight;
@@ -103,7 +104,7 @@ const Form = ({ defaultData, reactiveData, title, submitFn, inputs, injectCompon
           </div>
         })}
         <div>
-          <button className="submit-button font-bold mt-4 py-2 px-4 rounded" type="submit">{submitFn?.value ?? "Submit"}</button>
+          <MyButton text={submitFn?.value ?? "Submit"} cssType="submit" cssAdd={"mt-4"} />
         </div>
         {errorMsg && <div className="error-text" >{errorMsg}</div>}
       </form>

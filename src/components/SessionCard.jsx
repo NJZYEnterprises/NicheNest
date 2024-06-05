@@ -24,7 +24,7 @@ const SessionCard = () => {
           const date = session.when_start
           return (
             <>
-              <div className="flex flex-col p-10 m-5 surface-color card">
+              <div className="flex flex-col p-10 m-5 surface-color card textShadow">
                 <h2 className="text-lg font-bold" key={session.id}>{session.description}</h2>
                 <h2>Date:</h2>
                 <p>{date.substring(0, 10)}</p>

@@ -54,10 +54,9 @@ const Profile = () => {
   };
 
   return (
-    <div>
-      <div>
-      </div>
-      <div className="flex justify-center items-center p-10 gap-10 rounded-md" style={{ backgroundImage: "linear-gradient(var(--surfaceColor), var(--cafeNoir) 30% 70%, var(--surfaceColor))" }}>
+    <div className='flex flex-col flex-grow'>
+      <div className="flex justify-center items-center p-10 gap-10 rounded-md"
+        style={{ backgroundImage: "linear-gradient(var(--surfaceColor), var(--cafeNoir) 30% 70%, var(--surfaceColor))"}}>
         {
           cardOptions.map(option => (
             !hideCard(option) &&
@@ -65,7 +64,7 @@ const Profile = () => {
           ))
         }
       </div>
-      <div>
+      <div className='flex flex-col flex-grow'>
         <ActiveCard activeCard={activeCard} />
       </div>
     </div>

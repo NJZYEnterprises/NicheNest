@@ -97,11 +97,11 @@ const AddImageForm = ({ deleteMode, setDeleteMode, selectedImage, setSelectedIma
   return (
     <div className="flex">
       <div className="flex flex-row-reverse">
-        <button className="submit-button m-1 p-5 text-white rounded" onClick={toggleInputField}>
+        <button className="submit-button m-1 p-5 text-white rounded textShadow" onClick={toggleInputField}>
           {showInput ? "Cancel" : "Add Image"}
         </button>
         {hasImages && 
-          <button className={"submit-button m-1 p-5 text-white rounded "} onClick={toggleDeleteMode}>
+          <button className={"submit-button m-1 p-5 text-white rounded textShadow"} onClick={toggleDeleteMode}>
           {deleteMode ? "Exit" : "Edit Image"}
         </button>
         }
@@ -116,17 +116,17 @@ const AddImageForm = ({ deleteMode, setDeleteMode, selectedImage, setSelectedIma
             className="p-2 m-2 border rounded w-56"
           />
           {error && <p className="text-red-500">{error}</p>}
-          <button className="p-2 w-32 border rounded submit-button text-white" onClick={handleAddImage} disabled={!imageUrl}>
+          <button className="p-2 w-32 border rounded submit-button text-white textShadow" onClick={handleAddImage} disabled={!imageUrl}>
             Submit Image
           </button>
         </div>
       )}
       {deleteMode && (
         <div className="flex flex-row-reverse">
-          <button className="m-1 p-5 error-button text-white rounded" onClick={handleDeleteImage}>
+          <button className="m-1 p-5 error-button text-white rounded textShadow" onClick={handleDeleteImage}>
             Delete Selected Image
           </button>
-          <button className="m-1 p-5 error-button text-white rounded" onClick={handleProfilePic}>
+          <button className="m-1 p-5 error-button text-white rounded textShadow" onClick={handleProfilePic}>
             Make Profile Pic
           </button>
         </div>
