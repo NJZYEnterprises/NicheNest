@@ -7,10 +7,17 @@ const publicKey = 'PR3ArNr0_tK99xmju';
 
 emailjs.init(publicKey);
 
-export const sendEmail = (freelancerName, form) => {
-  emailjs.sendForm(serviceID, templateID, form, publicKey, {
-    freelancer_name: freelancerName,
-  }).then(() => {
-    emailjs.sendForm(serviceID, autoReply, form, publicKey);
+export const sendEmail = (form) => {
+  const templateParams = {
+    to_email: form.email.value,
+    from_name: form.fullName.value,
+    message: form.message.value,
+  };
+
+  return emailjs.send(serviceID, templateID, templateParams).then(() => {
+    return emailjs.send(serviceID, autoReply, templateParams);
   });
 };
+
+
+

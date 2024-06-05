@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { sendEmail } from '../../emailJS.js';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ fullName: '', email: '', message: '' });
@@ -14,8 +15,16 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => navigate('/'), 2000); // After someone presses submit, it will take them back to homepage in 2 seconds.
+
+    sendEmail(e.target)
+      .then((result) => {
+        console.log('Email sent successfully:', result.text);
+        setSubmitted(true);
+        setTimeout(() => navigate('/'), 2000);
+      })
+      .catch((error) => {
+        console.error('Error sending email:', error);
+      });
   };
 
   return (
